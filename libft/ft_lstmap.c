@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/02 17:36:47 by soksak           ###   ########.fr       */
+/*   Created: 2023/10/22 14:03:24 by soksak            #+#    #+#             */
+/*   Updated: 2023/10/25 14:01:32 by soksak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int main(int argc, char **argv, char **envp)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void*))
 {
-	t_state	*state;
+	t_list	*tmp;
+	t_list	*save;
 
-	state = (t_state *)malloc(sizeof(t_state));
-	state->env = get_env(state, envp);
-	system("leaks minishell");
-	(void)argc;
-	(void)argv;
-	return (0);
+	if (!lst || !f || !del)
+		return (0);
+	tmp = ft_lstnew(f(lst->content));
+	save = tmp;
+	lst = lst->next;
+	while (lst)
+	{
+		tmp->next = ft_lstnew(f(lst->content));
+		if (!tmp->next)
+		{
+			ft_lstclear(&save, del);
+			return (0);
+		}
+		tmp = tmp->next;
+		lst = lst->next;
+	}
+	return (save);
 }

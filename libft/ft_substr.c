@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/02 17:36:47 by soksak           ###   ########.fr       */
+/*   Created: 2023/10/12 11:28:32 by soksak            #+#    #+#             */
+/*   Updated: 2023/10/19 18:34:32 by soksak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int main(int argc, char **argv, char **envp)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	t_state	*state;
+	size_t	i;
+	char	*ns;
 
-	state = (t_state *)malloc(sizeof(t_state));
-	state->env = get_env(state, envp);
-	system("leaks minishell");
-	(void)argc;
-	(void)argv;
-	return (0);
+	if (start > ft_strlen(s))
+		return (ft_strdup(""));
+	if (ft_strlen(s) < len)
+		len = ft_strlen(s);
+	ns = (char *)malloc(sizeof(char) * len + 1);
+	if (ns == NULL)
+		return (NULL);
+	i = 0;
+	while (s[start] && len > 0)
+	{
+		ns[i] = s[start];
+		i++;
+		start++;
+		len--;
+	}
+	ns[i] = '\0';
+	return (ns);
 }

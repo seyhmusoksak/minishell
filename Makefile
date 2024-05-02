@@ -1,15 +1,17 @@
 NAME = minishell
+LIBFT = libft/libft.a
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 LDFLAGS = -lreadline
-SRCS = minishell.c \
+SRCS = minishell.c get_env.c \
 
 OBJ = $(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LDFLAGS)
+	make -C libft
+	$(CC) $(CFLAGS) -o $(NAME) $(LIBFT) $(OBJ) $(LDFLAGS)
 
 clean:
 	rm -rf $(OBJ)

@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/02 17:36:47 by soksak           ###   ########.fr       */
+/*   Created: 2023/10/11 00:07:01 by soksak            #+#    #+#             */
+/*   Updated: 2023/10/11 21:03:18 by soksak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int main(int argc, char **argv, char **envp)
+int	ft_strncmp(const char *s1, const char *s2,	size_t n)
 {
-	t_state	*state;
+	size_t	i;
 
-	state = (t_state *)malloc(sizeof(t_state));
-	state->env = get_env(state, envp);
-	system("leaks minishell");
-	(void)argc;
-	(void)argv;
-	return (0);
+	if (n == 0)
+		return (0);
+	i = 0;
+	while ((s1[i] != '\0' && s2[i] != '\0') && (s1[i] == s2[i])
+		&& (i < n - 1))
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

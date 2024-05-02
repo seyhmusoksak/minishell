@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/02 17:36:47 by soksak           ###   ########.fr       */
+/*   Created: 2023/10/10 23:08:33 by soksak            #+#    #+#             */
+/*   Updated: 2023/10/18 19:29:33 by soksak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int main(int argc, char **argv, char **envp)
+char	*ft_strrchr(const char *s, int c)
 {
-	t_state	*state;
+	int	i;
 
-	state = (t_state *)malloc(sizeof(t_state));
-	state->env = get_env(state, envp);
-	system("leaks minishell");
-	(void)argc;
-	(void)argv;
-	return (0);
+	i = ft_strlen(s);
+	while (i >= 0)
+	{
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		i--;
+	}
+	return (NULL);
 }
