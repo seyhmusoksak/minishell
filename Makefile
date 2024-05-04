@@ -3,7 +3,7 @@ LIBFT = libft/libft.a
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 LDFLAGS = -lreadline
-SRCS = minishell.c get_env.c \
+SRCS = minishell.c get_env.c
 
 OBJ = $(SRCS:.c=.o)
 
