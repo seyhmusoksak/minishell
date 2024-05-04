@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/02 17:30:03 by soksak           ###   ########.fr       */
+/*   Updated: 2024/05/04 14:46:57 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef	struct	s_env
 {
 	char			*key;
 	char			*value;
+	char			**sep_path;
 	struct s_env	*next;
 }	t_env;
 
@@ -43,5 +44,6 @@ typedef struct s_state
 
 t_env	*get_env(t_state *state, char **env);
 void	env_addback(t_env **lst, t_env *new);
+void	ft_exec(t_state *state);
 
 #endif
