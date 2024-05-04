@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
+/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 23:56:10 by soksak            #+#    #+#             */
-/*   Updated: 2023/10/25 14:00:22 by soksak           ###   ########.fr       */
+/*   Updated: 2024/05/04 15:51:41 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct s_list{
+typedef struct s_list
+{
 	void			*content;
 	struct s_list	*next;
 }	t_list;
