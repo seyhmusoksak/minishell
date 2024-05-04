@@ -1,9 +1,9 @@
 NAME = minishell
-SRCS = exec.c get_env.c minishell.c
+SRCS = exec.c get_env.c minishell.c lexer.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror -lreadline
 LDFLAGS = -lreadline
 all: $(NAME)
 $(NAME): $(OBJS) $(SRCS)

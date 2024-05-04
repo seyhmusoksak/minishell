@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/04 16:08:00 by ekose            ###   ########.fr       */
+/*   Updated: 2024/05/04 19:51:14 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_env
 typedef struct s_lexer
 {
 	char				*command;
+	char				**flag;
 	int					type;
 	struct s_lexer		*next;
 }	t_lexer;
@@ -38,14 +39,15 @@ typedef struct s_lexer
 typedef struct s_state
 {
 	char	**sep_path;
+	char	*line;
 	t_lexer	*lexer;
 	t_env	*env;
-	char	*line;
 }	t_state;
 
 t_env	*get_env(t_state *state, char **env);
 void	env_addback(t_env **lst, t_env *new);
 void	ft_exec(t_state *state);
 char	**ft_sep_path(t_state *state);
+void	ft_get_line(t_state *state);
 
 #endif

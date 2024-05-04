@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/04 16:22:02 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/04 18:54:06 by mehmyilm         ###   ########.fr       */
+/*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
+/*   Updated: 2024/05/04 19:51:31 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-int	main(int argc, char **argv, char **envp)
+void	ft_get_line(t_state *state)
 {
-	t_state	*state;
-	int		i;
-	i = 0;
-	state = (t_state *)malloc(sizeof(t_state));
-	state->env = get_env(state, envp);
-	(void)argc;
-	(void)argv;
-	state->lexer = malloc(sizeof(t_lexer));
-	state->lexer->command = "pwd";
-	state->sep_path= ft_sep_path(state);
-	while (1)
+	int	i;
+	int	j;
+	char **argv_line;
+	char *line;
+
+	i = 1;
+	j = 0;
+	line = ft_strtrim(state->line," ");
+	argv_line = ft_split(line, ' ');
+	state->lexer->command = argv_line[0];
+	while (argv_line[i])
 	{
-		state->line = readline("minishell>");
-		ft_get_line(state);
+		if (ft_flag_check(argv_line[i][0] == '-'))
+		{
+
+		}
+
 	}
-	ft_exec(state);
-	return (0);
+	// printf("%s\n",line);
 }
