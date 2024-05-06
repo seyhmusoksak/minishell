@@ -6,12 +6,16 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/04 15:51:54 by musozer          ###   ########.fr       */
+/*   Updated: 2024/05/06 14:15:00 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define ARG 0
+# define PIPE 1
+# define REDIRECT 2
 
 # include "libft/libft.h"
 # include <stdio.h>
