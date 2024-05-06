@@ -6,12 +6,16 @@
 /*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/02 17:30:03 by soksak           ###   ########.fr       */
+/*   Updated: 2024/05/06 04:00:00 by soksak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define ARG 0
+# define PIPE 1
+# define REDIRECT 2
 
 # include "libft/libft.h"
 # include <stdio.h>
@@ -43,5 +47,7 @@ typedef struct s_state
 
 t_env	*get_env(t_state *state, char **env);
 void	env_addback(t_env **lst, t_env *new);
+t_lexer	*add_lexer_node(char *line);
+void	free_split(char **split);
 
 #endif
