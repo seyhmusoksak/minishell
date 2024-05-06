@@ -3,12 +3,17 @@ SRCS = exec.c get_env.c minishell.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Werror -Wextra
 LDFLAGS = -lreadline
+
+SRCS = minishell.c get_env.c lexer/my_lexer.c utils.c exec.c \
+
+OBJ = $(SRCS:.c=.o)
+
 all: $(NAME)
 $(NAME): $(OBJS) $(SRCS)
 	@make -C ./libft -s
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
 	@echo "              _       _      __         ____"
 	@echo "   ____ ___  (_)___  (_)____/ /_  ___  / / /"
 	@echo "  / __ \`__ \/ / __ \/ / ___/ __ \/ _ \/ / / "
@@ -18,12 +23,12 @@ $(NAME): $(OBJS) $(SRCS)
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 clean:
-	@make -C ./libft clean -s
-	@rm -rf $(OBJS)
-	@echo "Object files removed!"
+	rm -rf $(OBJ)
+	make -C libft clean
+
 fclean: clean
-	@make -C ./libft fclean -s
-	@rm -rf $(NAME)
-	@echo "Program is removed!"
+	rm -rf $(NAME)
+	make -C libft fclean
+
 re: fclean all
 .PHONY: all clean fclean re
