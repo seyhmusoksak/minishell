@@ -1,25 +1,35 @@
 NAME = minishell
-LIBFT = libft/libft.a
+SRCS = get_env.c minishell.c utils.c lexer/my_lexer.c
+OBJS = $(SRCS:.c=.o)
+LIBFT = ./libft/libft.a
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -g -Wall -Wextra -Werror -lreadline -fsanitize=address
 LDFLAGS = -lreadline
-SRCS = minishell.c get_env.c lexer/my_lexer.c utils.c \
-
-OBJ = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	make -C libft
-	$(CC) $(CFLAGS) -o $(NAME) $(LIBFT) $(OBJ) $(LDFLAGS)
+$(NAME): $(OBJS) $(SRCS)
+	@make -C ./libft -s
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	@echo "              _       _      __         ____"
+	@echo "   ____ ___  (_)___  (_)____/ /_  ___  / / /"
+	@echo "  / __ \`__ \/ / __ \/ / ___/ __ \/ _ \/ / / "
+	@echo " / / / / / / / / / / (__  ) / / /  __/ / /  "
+	@echo "/_/ /_/ /_/_/_/ /_/_/____/_/ /_/\___/_/_/   "
+	@echo "Minishell is ready!"
+
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJ)
-	make -C libft clean
+	@make -C ./libft clean -s
+	@rm -rf $(OBJS)
+	@echo "Object files removed!"
 
 fclean: clean
-	rm -rf $(NAME)
-	make -C libft fclean
+	@make -C ./libft fclean -s
+	@rm -rf $(NAME)
+	@echo "Program is removed!"
 
 re: fclean all
 
