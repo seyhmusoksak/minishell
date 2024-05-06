@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
+/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/06 04:09:18 by soksak           ###   ########.fr       */
+/*   Created: 2024/05/06 14:15:57 by musozer           #+#    #+#             */
+/*   Updated: 2024/05/06 14:16:04 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_state	*state;
+	int		i;
 
+	i = 0;
 	state = (t_state *)malloc(sizeof(t_state));
 	state->env = get_env(state, envp);
 	while (1)
@@ -33,5 +36,4 @@ int	main(int argc, char **argv, char **envp)
 	}
 	(void)argc;
 	(void)argv;
-	return (0);
 }

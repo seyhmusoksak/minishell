@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/06 13:53:31 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:15:00 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef	struct	s_env
+typedef struct s_env
 {
 	char			*key;
 	char			*value;
@@ -40,6 +40,7 @@ typedef struct s_lexer
 
 typedef struct s_state
 {
+	char	**sep_path;
 	t_lexer	*lexer;
 	t_env	*env;
 	char	*line;
@@ -47,7 +48,6 @@ typedef struct s_state
 
 t_env	*get_env(t_state *state, char **env);
 void	env_addback(t_env **lst, t_env *new);
-t_lexer	*add_lexer_node(char *line);
-void	free_split(char **split);
+char	**ft_sep_path(t_state *state);
 
 #endif

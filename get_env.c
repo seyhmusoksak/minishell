@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
+/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:37:07 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/02 17:32:44 by soksak           ###   ########.fr       */
+/*   Updated: 2024/05/04 15:57:46 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,22 @@ t_env	*get_env(t_state *data, char **env)
 		i++;
 	}
 	return (tmp);
+}
+
+char	**ft_sep_path(t_state *state)
+{
+	int	i;
+
+	i = 0;
+	while (state->env)
+	{
+		if (ft_strncmp(state->env->key, "PATH",
+				ft_strlen(state->env->key)) == 0)
+		{
+			state->sep_path = ft_split(state->env->value, ':');
+			break ;
+		}
+		state->env = state->env->next;
+	}
+	return (state->sep_path);
 }
