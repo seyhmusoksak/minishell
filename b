@@ -1,0 +1,14 @@
+Makefile
+a
+b
+cat
+exec.c
+exec.o
+get_env.c
+get_env.o
+libft
+memo
+minishell.c
+minishell.h
+minishell.o
+parser
