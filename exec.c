@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 13:34:49 by ekose             #+#    #+#             */
-/*   Updated: 2024/05/06 18:32:34 by ekose            ###   ########.fr       */
+/*   Updated: 2024/05/08 16:50:11 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_exec(t_state *state)
 	if (cmd_path == NULL)
 		write(2, "Command not found", ft_strlen("Command not found"));
 	printf("%s\n\n",cmd_path);
-	char *arg[]={"echo","/home/ekose/Desktop/minishell/main.c",NULL};
+	char *arg[]={"echo","''","Mustafa", "''",NULL};
 	pid_t pd = fork();
 	if(pd == 0)
 	{

@@ -1,0 +1,16 @@
+-la
+Makefile
+builtin
+exec.c
+exec.o
+get_env.c
+get_env.o
+lexer
+libft
+minishell
+
+minishell.c
+minishell.h
+minishell.o
+utils.c
+utils.o

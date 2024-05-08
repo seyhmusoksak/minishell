@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/06 18:26:09 by ekose            ###   ########.fr       */
+/*   Updated: 2024/05/08 17:04:18 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,15 @@ typedef struct s_env
 {
 	char			*key;
 	char			*value;
-	char			**sep_path;
 	struct s_env	*next;
 }	t_env;
+
+typedef struct s_exp
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_exp;
 
 typedef struct s_lexer
 {
@@ -55,5 +61,8 @@ t_lexer	*add_lexer_node(char *line);
 void	free_split(char **split);
 void	ft_exec(t_state *state);
 char	**ft_sep_path(t_state *state);
+t_env	*new_env(char *key, char *value);
+void	env_addback(t_env **lst, t_env *new);
+void	ft_add_env(t_state *state);
 
 #endif
