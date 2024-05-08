@@ -1,0 +1,11 @@
+.
+..
+exec.c
+get_env.c
+.git
+libft
+Makefile
+memo
+minishell.c
+minishell.h
+parser

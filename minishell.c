@@ -3,15 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-<<<<<<< HEAD
 /*   Created: 2024/05/04 16:22:02 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/04 18:54:06 by mehmyilm         ###   ########.fr       */
-=======
-/*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/04 16:28:04 by mehmyilm         ###   ########.fr       */
->>>>>>> e16cfc873c7d32643a88187962323a259892faef
+/*   Updated: 2024/05/06 17:59:19 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +14,8 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_state	*state;
-	int		i;
-	i = 0;
+	// int		i;
+	// i = 0;
 	state = (t_state *)malloc(sizeof(t_state));
 	state->env = get_env(state, envp);
 	(void)argc;

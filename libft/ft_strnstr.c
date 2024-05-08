@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 20:02:42 by soksak            #+#    #+#             */
-/*   Updated: 2023/10/19 18:48:45 by soksak           ###   ########.fr       */
+/*   Created: 2023/10/14 12:31:49 by mehmyilm          #+#    #+#             */
+/*   Updated: 2023/10/29 13:38:47 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,26 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
 	size_t	i;
 	size_t	j;
+	size_t	k;
 	char	*str;
-	char	*to_find;
+	char	*find;
 
-	str = (char *)haystack;
-	to_find = (char *)needle;
-	if (!to_find[0])
-		return (str);
 	i = 0;
-	while (str[i] != '\0' && i < len)
+	str = (char *)haystack;
+	find = (char *)needle;
+	if (!find[0])
+		return (str);
+	while (i < len && str[i])
 	{
-		if (str[i] == to_find[0])
+		j = 0;
+		k = i;
+		while ((str[k] == find[j]) && str[k] && k < len)
 		{
-			j = 0;
-			while (str[i + j] == to_find[j] && i + j < len)
-			{
-				if (to_find[j + 1] == '\0')
-					return (str + i);
-				j++;
-			}
+			k++;
+			j++;
 		}
+		if (find[j] == '\0')
+			return ((char *)str + i);
 		i++;
 	}
 	return (NULL);
