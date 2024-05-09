@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/08 14:16:51 by ekose            ###   ########.fr       */
+/*   Updated: 2024/05/09 23:40:25 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,18 @@ int	main(int argc, char **argv, char **envp)
 		if (!state->line)
 			break ;
 		state->lexer = add_lexer_node(state->line);
-		ft_exec(state);
-		while (state->lexer)
-		{
-			printf("command: %s\n", state->lexer->command);
-			printf("type: %d\n", state->lexer->type);
-			state->lexer = state->lexer->next;
-		}
+		state->parser = malloc(sizeof(t_parser));
+
+		state->parser->arg = ft_split("ali veli", ' ');
+		state->parser->flag = ft_split("-n -p",' ');
+		ft_echo(state);
+		//ft_exec(state);
+		// while (state->lexer)
+		// {
+		// 	printf("command: %s\n", state->lexer->command);
+		// 	printf("type: %d\n", state->lexer->type);
+		// 	state->lexer = state->lexer->next;
+		// }
 	}
 	(void)argc;
 	(void)argv;

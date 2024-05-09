@@ -7,6 +7,7 @@ CFLAGS = -Wall -Werror -Wextra
 LDFLAGS = -lreadline
 
 SRCS = minishell.c get_env.c lexer/my_lexer.c utils.c exec.c \
+		builtin/builtin.c
 
 OBJ = $(SRCS:.c=.o)
 
