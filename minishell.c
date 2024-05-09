@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 16:22:02 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/08 17:44:28 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/10 01:13:13 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	main(int argc, char **argv, char **envp)
 	// i = 0;
 	state = (t_state *)malloc(sizeof(t_state));
 	state->env = get_env(state, envp);
-	(void)argc;
-	(void)argv;
 	state->lexer = malloc(sizeof(t_lexer));
 	state->pars = malloc(sizeof(t_parser));
-	if (!state->pars || !state->lexer)
-			exit(1); //Free eksik bakılması lazım
+	(void)argc;
+	(void)argv;
+	if (!state->pars || !state->lexer || !state || !state->env)
+			ft_error_0(state,"Error: Malloc problem !")
 	state->lexer->command = "pwd";
 	state->sep_path= ft_sep_path(state);
 	while (1)
