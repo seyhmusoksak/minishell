@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/09 23:16:58 by ekose            ###   ########.fr       */
+/*   Updated: 2024/05/10 17:50:51 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+# include <errno.h>
+
+// # define PERMISSION_DENIED "cd"
 
 typedef struct s_parser
 {
@@ -71,7 +75,9 @@ void	ft_exec(t_state *state);
 char	**ft_sep_path(t_state *state);
 t_env	*new_env(char *key, char *value);
 void	env_addback(t_env **lst, t_env *new);
-void	ft_add_env(t_state *state);
+void	ft_add_env(t_state **state);
 void	ft_echo(t_state *state);
-
+void	ft_del_env(t_state **state);
+void	ft_pwd(void);
+void	ft_cd(t_state **state);
 #endif

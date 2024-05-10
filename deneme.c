@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <readline/readline.h>
+#include <unistd.h>
 
 int main() {
-    char *input = readline("Enter a string: ");
-    rl_redisplay();
-	printf("%s",input);
-    free(input);
-    return 0;
+	char cwd[1024];
+	printf("%s\n",getcwd(cwd,sizeof(cwd)));
 }
