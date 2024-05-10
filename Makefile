@@ -1,5 +1,5 @@
 NAME = minishell
-SRCS = get_env.c minishell.c utils.c lexer/my_lexer.c
+SRCS = get_env.c minishell.c utils.c lexer/my_lexer.c parser/parser.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
 CC = gcc
