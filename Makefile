@@ -1,16 +1,16 @@
 NAME = minishell
-SRCS = get_env.c minishell.c utils.c lexer/my_lexer.c
+SRCS = get_env.c minishell.c utils.c lexer/my_lexer.c parser/parser.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror -lreadline -fsanitize=address
+CFLAGS = -g -Wall -Wextra -Werror -fsanitize=address
 LDFLAGS = -lreadline
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(SRCS)
 	@make -C ./libft -s
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) $(LDFLAGS)
 	@echo "              _       _      __         ____"
 	@echo "   ____ ___  (_)___  (_)____/ /_  ___  / / /"
 	@echo "  / __ \`__ \/ / __ \/ / ___/ __ \/ _ \/ / / "
