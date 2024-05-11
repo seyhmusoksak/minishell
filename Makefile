@@ -3,7 +3,7 @@ SRCS = get_env.c minishell.c utils.c lexer/my_lexer.c parser/parser.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lreadline
 
 all: $(NAME)
