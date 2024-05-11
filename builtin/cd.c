@@ -6,30 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:53:36 by ekose             #+#    #+#             */
-/*   Updated: 2024/05/10 19:14:43 by ekose            ###   ########.fr       */
+/*   Updated: 2024/05/11 18:34:08 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static void	ft_notdefine_dir(char *s)
-{
-	// GELIŞTIRILEBİLİR bunun yerine yeni bir error fonkiyonu
-	//standart çıktı fd ile dğiştirilecek
-
-	write(1, "cd: ", 4);
-	write(1, s, ft_strlen(s));
-	write(1, " ", 1);
-	write(1, "not set\n", ft_strlen("not set\n"));
-}
-
-static void	ft_cd_error(char *dir)
-{
-	//standart çıktı fd ile dğiştirilecek
-
-	write(1, "cd: ", 4);
-	perror(dir);
-}
 
 static void	ft_dir_check(t_state **state, char *dir)
 {
@@ -71,24 +52,51 @@ static void	ft_select_dir(t_state **state, char *type)
 			tmp_env = tmp_env->next;
 	if (tmp_env == NULL)
 	{
-		ft_notdefine_dir(type);
+		ft_notdefine_dir(type); //notdefine fonkiyonunu geliştirilebilir
 		return ;
 	}
 	dir = tmp_env->value;
 	ft_dir_check(state, dir);
 }
 
+static void	ft_up_dir(t_state **state)
+{
+	char		cwd[1024];
+	char		*dir;
+	size_t		len;
+
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+	{
+		perror("getcwd");
+		return ;
+	}
+	len = ft_strlen(ft_strrchr(cwd, '/'));
+	dir = ft_substr(cwd, 0, ft_strlen(cwd) - len);
+	if (ft_strlen(dir) == 0)
+	{
+		free(dir);
+		dir = ft_strdup("/");
+	}
+	ft_dir_check(state, dir);
+	free(dir);
+}
 
 void	ft_cd(t_state **state)
 {
-	// " ~ " için sonra bakılacak
 	t_parser	*tmp;
 
 	tmp = (*state)->parser;
-	if (tmp->arg == NULL)
+	if (tmp->arg == NULL || tmp->arg[0] == NULL)
+		ft_select_dir(state, "HOME");
+	else if (ft_strncmp(tmp->arg[0], "~", ft_strlen(tmp->arg[0])) == 0)
 		ft_select_dir(state, "HOME");
 	else if (ft_strncmp(tmp->arg[0], "-", ft_strlen(tmp->arg[0])) == 0)
 		ft_select_dir(state, "OLDPWD");
-
+	else if (ft_strncmp(tmp->arg[0], ".", ft_strlen(tmp->arg[0])) == 0)
+		return ;
+	else if (ft_strncmp(tmp->arg[0], "..", ft_strlen(tmp->arg[0])) == 0)
+		ft_up_dir(state);
+	else
+		ft_dir_check(state, tmp->arg[0]);
 
 }

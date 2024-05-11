@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/10 19:13:36 by ekose            ###   ########.fr       */
+/*   Updated: 2024/05/11 17:35:14 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		state->lexer = add_lexer_node(state->line);
 		state->parser = malloc(sizeof(t_parser));
-		state->parser->arg = NULL;
+		state->parser->arg = ft_split("/Users/ekose/Desktop/myy/aa", ' ');
+
 		ft_cd(&state);
+		char	dir[1024];
+		printf("%s\n",getcwd(dir,sizeof(dir)));
 		// ft_pwd();
 		// t_env *temp = state->env;
 		// while(temp)

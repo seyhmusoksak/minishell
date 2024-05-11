@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/10 17:50:51 by ekose            ###   ########.fr       */
+/*   Updated: 2024/05/11 15:00:25 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,6 @@ void	ft_echo(t_state *state);
 void	ft_del_env(t_state **state);
 void	ft_pwd(void);
 void	ft_cd(t_state **state);
+void	ft_notdefine_dir(char *s);
+void	ft_cd_error(char *dir);
 #endif

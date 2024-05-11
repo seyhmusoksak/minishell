@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:35:15 by ekose             #+#    #+#             */
-/*   Updated: 2024/05/10 16:27:09 by ekose            ###   ########.fr       */
+/*   Updated: 2024/05/11 18:38:51 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,30 +70,4 @@ void	ft_del_env(t_state **state)
 		return ;
 	while (temp->parser->arg[i])
 		ft_del_node(state, temp->parser->arg[i++]);
-}
-
-void	ft_echo(t_state *state)
-{
-	//Write fonksiyonundaki standart çıktı fd ile değişecek
-
-	char	**arg;
-	int		i;
-
-	arg = state->parser->arg;
-	i = 0;
-	if (arg == NULL)
-	{
-		if (state->parser->flag == NULL)
-			write(1, "\n", 1);
-		return ;
-	}
-	write (1, arg[i], ft_strlen(arg[i]));
-	while (arg[++i] != NULL)
-	{
-		write (1, " ", 1);
-		write (1, arg[i], ft_strlen(arg[i]));
-	}
-	// -n dışındaki flag kontrolü yapılacak
-	if (ft_strncmp(state->parser->flag[0], "-n", 2) != 0)
-		write(1, "\n", 1);
 }
