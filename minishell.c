@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 14:15:57 by musozer           #+#    #+#             */
-/*   Updated: 2024/05/08 16:31:21 by musozer          ###   ########.fr       */
+/*   Updated: 2024/05/11 18:27:48 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_state	*state;
 	int		i;
+	char	**str;
 
 	i = 0;
 	state = (t_state *)malloc(sizeof(t_state));
@@ -27,7 +28,6 @@ int	main(int argc, char **argv, char **envp)
 		if (!state->line)
 			break ;
 		state->lexer = add_lexer_node(state->line);
-		add_parser(state);
 		while (state->lexer)
 		{
 			printf("command: %s\n", state->lexer->command);
