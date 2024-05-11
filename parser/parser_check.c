@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:07:17 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/10 02:34:59 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/11 14:46:06 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 int	ft_arg_check(char *str)
 {
 	int	i;
+	int j;
 
+	j= 0;
 	i = -1;
 	if (ft_qutation_check(str))
 		return (1);
@@ -23,9 +25,13 @@ int	ft_arg_check(char *str)
 	{
 		while (str[i] != '|' && str[i] != ' ')
 			i++;
-			// burayı duşunuyorum sabah bakcam
-		while (str[i] == ' ')
+		if (str[i] == ' ')
+			while (str[i] == ' ')
 				i++;
+		if (str[i] == "")
+		{
+
+		}
 		if (str[i] == '\'')
 	}
 }
@@ -46,11 +52,7 @@ int ft_qutation_check(char *str)
 				return (1);
 		}
 		else if (str[i] == '\"')
-		{
 			dbl++;
-			if (singl % 2 != 0)
-				return (1);
-		}
 		i++;
 	}
 	if (singl % 2 != 0 || dbl % 2 != 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/10 01:14:37 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/11 14:59:15 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,18 @@ void ft_parser(t_state *state)
 	t_parser *tmp_pars;
 	int i;
 	int j;
-	char *argv;
-
-
-	argv = ft_strdup((state->line, ' '));
+	char **argv;
 	i = 0;
 	j = 0;
+	if (ft_arg_check(ft_strtrim(state->line, " ")))
+		exit(1); // freelenecek
+	// argv = ft_mustafa_fonksiyonu()
+	argv = ft_split(ft_strtrim(state->line, ' '), '|');
 	tmp_pars = state->pars;
-	ft_arg_check(str);
-	ft_count(tmp_pars, argv);
 	while (tmp_pars)
 	{
+		ft_count(tmp_pars, argv[i]);
+		i++;
 	}
 }
 
