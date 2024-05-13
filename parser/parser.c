@@ -3,105 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/11 16:39:00 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:07:28 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void ft_parser(t_state *state)
+int ft_parser(t_state *state)
 {
-	t_parser *tmp_pars;
-	int i;
-	int j;
 	char **argv;
-	i = 0;
-	j = 0;
-	if (ft_arg_check(ft_strtrim(state->line, " ")))
-		exit(1); // freelenecek
-	// argv = ft_mustafa_fonksiyonu()
-	argv = ft_split(ft_strtrim(state->line, ' '), '|'); //gecici olarak koydum musti kodu yazdığında eklicem
+	char	*line;
+	line = ft_strtrim(state->line, " ");
+	free(state->line);
+	if (ft_qutation_check(line))
+	{
+		free(line);
+		ft_error_mesage("Error: dquite hatasi");//mesaj duzenlenecek
+		return(1);
+	}
+	argv = ft_pipe_split(line);
 	ft_clean_quatition(argv);
+	return (0);
 }
-void	ft_clean_quatition(char **str)
+
+char	**ft_pipe_split(char *line)
 {
-	
-}
-// int ft_count(t_parser *pars, char *str)
-// {
+	int			i;
+	char		**str;
+	char		**tmp;
 
-// 	int	check;
-// 	int	i;
-
-// 	i = 0;
-// 	check = 1;
-// 	while (str[i])
-// 	{
-// 		if (ft_isalpha(str[i]) && check == 1)
-// 		{
-// 			pars->count_comnd++;
-// 			check = 0;
-// 		}
-// 		else if ((str[i] == '"' || str[i] == '\'') && str[i] == '-')
-// 			pars->flag_count++;
-// 		else
-// 		{
-// 			if (str[i] == '-')
-// 			{
-// 				pars->flag_count++;
-// 				check = 0;
-// 			}
-// 			else if (str[i] == '<' || str[i] == '>' || str[i] )
-// 				pars->op_count++;
-// 			else if (!(str[i] > 8 && str[i] < 12) && str[i] !=  ' ')
-// 				pars->arg_count++;
-// 			if (ft_mini_counter(pars, str, check))
-// 				return (1);
-// 		}
-// 		i++;
-// 	}
-// }
-// void	ft_mini_counter(t_parser *pars,char *str, int check)
-// {
-// 	int	i;
-
-// 	i = 1;
-// 	while (str[++i])
-// 	{
-// 		if (str[i] == '<'  || str[i] == '>')
-// 		{
-// 			pars->flag_count++;
-// 			check = 1;
-// 		}
-// 		else if (check == 1)
-// 			pars->arg_count++;
-// 	}
-// }
-
-void	ft_clean_arg(char **str)
-{
-	int	i;
-	int	j;
-
+	i = 0;
+	str = ft_split(line, '|');
+	if (str[1] == NULL)
+	{
+		ft_free_double_str(str);
+		ft_error_mesage("Error : Enter a value after the | sign");
+	}
 	while (str[i])
 	{
-		while (str[j])
+		if (str[i + 1] && ft_qutation_check(str[i])
+			&& ft_qutation_check(str[i + 1]))
 		{
-
+			tmp = ft_pipe_join(str);
+			str = NULL;
+			str = tmp;
+			free(tmp);
 		}
+		i++;
 	}
+	return (str);
 }
-char	*ft_double_to_one(char **src)
+char	**ft_clean_quatition(char **str)
 {
-	int i;
-	char	*dest;
+	int	i;
+	int	len;
+	char **trim_str;
+	char **clean_str;
 
 	i = -1;
-	while (src[++i])
-		dest = ft_strjoin(dest, src[i]);
-	return(dest);
+	len = ft_double_str_len(str);
+	trim_str = malloc(sizeof(char *) * len + 1);
+	clean_str = malloc(sizeof(char *) * len + 1);
+	if (!trim_str || !clean_str)
+	{
+		ft_error_mesage("Error: Malloc problem !");
+		return(NULL);
+	}
+	while (str[++i])
+		trim_str[i] = ft_strtrim(str[i], " ");
+	trim_str[i + 1] = NULL;
+	i = -1;
+	while (trim_str[++i])
+		ft_check_str(trim_str[i], clean_str[i]);
+	clean_str[i + 1] = NULL;
+	ft_free_double_str(str);
+	ft_free_double_str(trim_str);
+	return (clean_str);
 }
-

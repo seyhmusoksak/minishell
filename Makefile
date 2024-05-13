@@ -1,5 +1,6 @@
 NAME = minishell
-SRCS = exec.c get_env.c minishell.c parser/parser.c
+SRCS = exec.c get_env.c minishell.c parser/parser.c parser/parser_utils.c \
+		parser/parser_check.c error_utils.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
 CC = gcc
@@ -8,7 +9,7 @@ LDFLAGS = -lreadline
 all: $(NAME)
 $(NAME): $(OBJS) $(SRCS)
 	@make -C ./libft -s
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) $(LDFLAGS)
 	@echo "              _       _      __         ____"
 	@echo "   ____ ___  (_)___  (_)____/ /_  ___  / / /"
 	@echo "  / __ \`__ \/ / __ \/ / ___/ __ \/ _ \/ / / "
