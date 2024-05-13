@@ -6,38 +6,57 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:07:17 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/12 18:20:05 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/14 00:38:59 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_check_str(char *str, char *clean_str)
+void	ft_clean_str(char *str, char *clean_str)
 {
-	int	i;
-	int	check_space;
+	ft_check_arg(str, clean_str, 0, 0, -1, 0);
+}
 
-	check_space = 0;
-	i = -1;
-	while (str[i])
+void	ft_check_arg(char *str, char *clean_str, int fspace,int cspace, int i, int j)
+{
+	while (str[++i])
 	{
 		if ((str[i] != '"' && str[i] != '\'')
-			|| (check_space == 1 && (str[i] == '\'' || str[i] == '"')))
+			|| (fspace > 0 && (str[i] == '\'' || str[i] == '"')))
 		{
-			clean_str[i] = str[i];
-			check_space = 0;
+			clean_str[j++] = str[i];
+			fspace = 0;
 		}
 		if (str[i] == ' ' && ft_qutation_len_check(str, i) == 0)
 		{
-			check_space = 1;
+			fspace =  cspace++;
 			while (str[i + 1] && str[i + 1] == ' ')
 				i++;
 		}
-		if (((str[i] == '\'' || str[i] == '"') && ((str[i + 1] == '\0') || (str[i + 1] != '\0' && str[i + 1] == ' ')) && ft_qutation_len_check(str, i)))
-				clean_str[i] = str[i];
-		i++;
+		if (((str[i] == ' ') &&  (str[i + 1] != '\0' && ((str[i + 1] == '"')
+			|| (str[i + 1] == '\''))) && ft_qutation_len_check(str, i + 1) )) //&& ft_last_quatiton_check(str,i)) eklenecek
+				clean_str[j++] = str[++i];
+
+		if ((((str[i] == '\'' || str[i] == '"') && (str[i + 1] == '\0'
+			|| (str[i + 1] != '\0' && str[i + 1] == ' ')))
+			&& ft_qutation_len_check(str, i) == 0) && cspace > 0)
+			clean_str[j++] = str[i];
 	}
+	clean_str[j] = '\0';
 }
+// "e"c"h"o "memo" "n"a"s"im bu girdide yanlış çalışıyor  bunun için bu fonlsiyonu yazcam. daha bitmedi
+// int	ft_last_quatiton_check(char *str , int start)
+// {
+// 	while (str[start] )
+// 	{
+// 		if ( (str[start] == '\'' || str[start] == '"')
+// 			&& ((str[start + 1] != '\0' && str[start + 1] == ' ')
+// 			|| (str[start] == '\0')))
+// 			return(1);
+// 		start++;
+// 	}
+// 	return(0);
+// }
 int ft_qutation_check(char *str)
 {
 	int	i;
@@ -45,6 +64,8 @@ int ft_qutation_check(char *str)
 	int dbl;
 
 	i = 0;
+	singl = 2;
+	dbl = 2;
 	while (str[i])
 	{
 		if (str[i] == '\'')
@@ -69,7 +90,9 @@ int ft_qutation_len_check(char *str, int len)
 	int dbl;
 
 	i = 0;
-	while (i < len)
+	singl = 2;
+	dbl = 2;
+	while (i <= len)
 	{
 		if (str[i] == '\'')
 		{

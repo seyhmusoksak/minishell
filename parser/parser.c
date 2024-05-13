@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/12 18:07:28 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/13 23:04:52 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int ft_parser(t_state *state)
 {
-	char **argv;
 	char	*line;
 	line = ft_strtrim(state->line, " ");
 	free(state->line);
@@ -24,8 +23,10 @@ int ft_parser(t_state *state)
 		ft_error_mesage("Error: dquite hatasi");//mesaj duzenlenecek
 		return(1);
 	}
-	argv = ft_pipe_split(line);
-	ft_clean_quatition(argv);
+	state->clean_argv = ft_clean_quatition(ft_pipe_split(line));
+	int i = -1;
+	while (state->clean_argv[++i])
+		printf("i(%d): %s\n",i,state->clean_argv[i]);
 	return (0);
 }
 
@@ -37,11 +38,12 @@ char	**ft_pipe_split(char *line)
 
 	i = 0;
 	str = ft_split(line, '|');
-	if (str[1] == NULL)
-	{
-		ft_free_double_str(str);
-		ft_error_mesage("Error : Enter a value after the | sign");
-	}
+	// if (str[1] == NULL)
+	// {
+	// 	ft_free_double_str(str);
+	// 	ft_error_mesage("Error : Enter a value after the | sign");
+	// 	return(0);
+	// }
 	while (str[i])
 	{
 		if (str[i + 1] && ft_qutation_check(str[i])
@@ -65,21 +67,21 @@ char	**ft_clean_quatition(char **str)
 
 	i = -1;
 	len = ft_double_str_len(str);
-	trim_str = malloc(sizeof(char *) * len + 1);
-	clean_str = malloc(sizeof(char *) * len + 1);
+	trim_str = malloc(sizeof(char *) * (len + 1));
+	clean_str = malloc(sizeof(char *) * (len + 1));
 	if (!trim_str || !clean_str)
-	{
-		ft_error_mesage("Error: Malloc problem !");
 		return(NULL);
-	}
 	while (str[++i])
+	{
 		trim_str[i] = ft_strtrim(str[i], " ");
-	trim_str[i + 1] = NULL;
+		clean_str[i] = ft_strdup(trim_str[i]);
+	}
+	trim_str[i] = NULL;
 	i = -1;
 	while (trim_str[++i])
-		ft_check_str(trim_str[i], clean_str[i]);
-	clean_str[i + 1] = NULL;
-	ft_free_double_str(str);
-	ft_free_double_str(trim_str);
+		ft_clean_str(trim_str[i], clean_str[i]);
+	clean_str[i] = NULL;
+	free(str);
+	free(trim_str);
 	return (clean_str);
 }

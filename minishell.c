@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 16:22:02 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/12 17:38:16 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:29:02 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	state->env = get_env(state, envp);
 	state->lexer->command = "pwd";
-	state->sep_path= ft_sep_path(state);
+	state->sep_path = ft_sep_path(state);
 	while (1)
 	{
 		state->line = readline("minishell>");
 		ft_parser(state);
 	}
+	printf("sonn\n");
 	ft_exec(state);
 	return (0);
 }
