@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   my_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 02:11:29 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/06 04:03:38 by soksak           ###   ########.fr       */
+/*   Updated: 2024/05/13 12:26:54 by soksak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,38 +46,28 @@ static int	find_lexer_type(char *cmd)
 	if (ft_strncmp(cmd, "|", 1) == 0)
 		return (PIPE);
 	else if (ft_strncmp(cmd, ">", 1) == 0)
-		return (REDIRECT);
+		return (OUTPUT);
 	else if (ft_strncmp(cmd, "<", 1) == 0)
-		return (REDIRECT);
+		return (INPUT);
+	else if (ft_strncmp(cmd, ">>", 2) == 0)
+		return (APPEND);
+	else if (ft_strncmp(cmd, "<<", 2) == 0)
+		return (HEREDOC);
 	else
 		return (ARG);
 }
 
-
-static char	*get_only_cmd(char *splitted_cmd)
+static char	*get_command(char *splitted_cmd)
 {
 	char	*cmd;
 	int		i;
 
+	cmd = (char *)malloc(sizeof(char) * (ft_strlen(splitted_cmd) + 1));
 	i = 0;
-	if (splitted_cmd[i] == '|' || splitted_cmd[i] == '>'
-		|| splitted_cmd[i] == '<')
-		return (NULL);
-	while (splitted_cmd[i] != '\0')
+	while (splitted_cmd[i])
 	{
-		if (splitted_cmd[i] == '|' || splitted_cmd[i] == '>'
-			|| splitted_cmd[i] == '<')
-			return (NULL);
-		i++;
-	}
-	cmd = (char *)malloc(sizeof(char) * (i + 1));
-	i = -1;
-	while (splitted_cmd[++i] != '\0')
-	{
-		if (splitted_cmd[i] == '|' || splitted_cmd[i] == '>'
-			|| splitted_cmd[i] == '<')
-			break ;
 		cmd[i] = splitted_cmd[i];
+		i++;
 	}
 	cmd[i] = '\0';
 	return (cmd);
@@ -94,10 +84,24 @@ t_lexer	*add_lexer_node(char *line)
 	tmp_node = NULL;
 	while (splitted_cmds[i])
 	{
-		lexer_addback(&tmp_node, new_lexer_node(get_only_cmd(splitted_cmds[i]),
+		lexer_addback(&tmp_node, new_lexer_node(get_command(splitted_cmds[i]),
 				find_lexer_type(splitted_cmds[i])));
 		i++;
 	}
-	free_split(splitted_cmds);
+	//free_split(splitted_cmds);
 	return (tmp_node);
+}
+
+void lexer_splitter(char **parsed_cmds, t_state *state)
+{
+	int		i;
+
+	i = 0;
+	while (parsed_cmds[i])
+	{
+		state->lexer[i] = add_lexer_node(parsed_cmds[i]);
+		i++;
+	}
+	state->lexer[i] = NULL;
+	//free_split(parsed_cmds);
 }
