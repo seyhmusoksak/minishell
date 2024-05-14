@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/13 23:04:52 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/14 21:56:01 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	**ft_clean_quatition(char **str)
 	trim_str[i] = NULL;
 	i = -1;
 	while (trim_str[++i])
-		ft_clean_str(trim_str[i], clean_str[i]);
+		ft_clean_str(trim_str[i], clean_str[i],0,-1,0);
 	clean_str[i] = NULL;
 	free(str);
 	free(trim_str);
