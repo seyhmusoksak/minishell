@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/14 21:56:30 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/15 01:22:34 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ char	**ft_pipe_split(char *line);
 char	**ft_pipe_join(char **str);
 char	**ft_clean_quatition(char **str);
 void	ft_clean_str(char *str, char *clean_str,int cspace, int i, int j);
+int		ft_singl_quatition_check(char *str);
+int		ft_singl_str_check(char *singl_str, int check);
 int		ft_qutation_check(char *str);
 int		ft_qutation_len_check(char *str, int len);
 int		ft_first_quatiton_check(char *str);
