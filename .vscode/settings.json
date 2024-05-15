@@ -1,6 +1,11 @@
 {
 	"files.associations": {
 		"minishell.h": "c",
-		"unistd.h": "c"
+		"unistd.h": "c",
+		"__node_handle": "c",
+		"array": "c",
+		"string": "c",
+		"string_view": "c",
+		"vector": "c"
 	}
 }

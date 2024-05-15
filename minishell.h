@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/11 15:00:25 by ekose            ###   ########.fr       */
+/*   Updated: 2024/05/15 19:14:49 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_state
 	t_lexer		*lexer;
 	t_env		*env;
 	t_parser	*parser;
+	t_env		*exp;
 	char		*line;
 }	t_state;
 
@@ -82,4 +83,10 @@ void	ft_pwd(void);
 void	ft_cd(t_state **state);
 void	ft_notdefine_dir(char *s);
 void	ft_cd_error(char *dir);
+int		ft_strcmp(char *s1, char *s2);
+void	bubble_sort(t_env *exp, int (*cmp)(char *, char *));
+void	ft_print_exp(t_state **state);
+void	ft_add_exp(t_state **state);
+void	ft_del_node(t_state **state, char *key);
+void	ft_export_status(t_state **state);
 #endif

@@ -3,11 +3,12 @@ SRCS = exec.c get_env.c minishell.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
 CC = gcc
-CFLAGS = -g -Wall -Werror -Wextra -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 LDFLAGS = -lreadline
 
 SRCS = minishell.c get_env.c lexer/my_lexer.c utils.c exec.c \
-		builtin/export.c builtin/pwd.c builtin/cd.c builtin/error.c
+		builtin/env.c builtin/pwd.c builtin/cd.c builtin/error.c \
+		builtin/export.c
 
 OBJ = $(SRCS:.c=.o)
 
