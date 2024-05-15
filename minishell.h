@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/15 01:22:34 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/15 17:57:57 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,6 @@ char	**ft_pipe_split(char *line);
 char	**ft_pipe_join(char **str);
 char	**ft_clean_quatition(char **str);
 void	ft_clean_str(char *str, char *clean_str,int cspace, int i, int j);
-int		ft_singl_quatition_check(char *str);
-int		ft_singl_str_check(char *singl_str, int check);
-int		ft_qutation_check(char *str);
 int		ft_qutation_len_check(char *str, int len);
 int		ft_first_quatiton_check(char *str);
 int		ft_last_quatiton_check(char *str, int last);
@@ -72,4 +69,11 @@ void	ft_free_double_str(char **str);
 int		ft_double_str_len(char **str);
 void	ft_free_double_str(char **str);
 int		ft_full_free(t_state *state);
+		//
+int	ft_double_quatition(char *str, int len);
+int	ft_double_helper(char *str, int *check);
+int	ft_double_len(char *str, int len);
+int	ft_singl_quatition(char *str, int len);
+int	ft_singl_helper(char *str, int *check);
+int	ft_single_len(char *str, int len);
 #endif

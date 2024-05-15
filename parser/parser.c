@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/14 21:56:01 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/15 18:17:35 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ int ft_parser(t_state *state)
 	char	*line;
 	line = ft_strtrim(state->line, " ");
 	free(state->line);
-	if (ft_qutation_check(line))
+	if (ft_qutation_len_check(line, (int) ft_strlen(line)))
 	{
-		free(line);
 		ft_error_mesage("Error: dquite hatasi");//mesaj duzenlenecek
 		return(1);
 	}
@@ -46,8 +45,8 @@ char	**ft_pipe_split(char *line)
 	// }
 	while (str[i])
 	{
-		if (str[i + 1] && ft_qutation_check(str[i])
-			&& ft_qutation_check(str[i + 1]))
+		if (str[i + 1] && ft_qutation_len_check(str[i], (int) ft_strlen(str[i]))
+			&& ft_qutation_len_check(str[i + 1], (int) ft_strlen(str[i + 1])))
 		{
 			tmp = ft_pipe_join(str);
 			str = NULL;

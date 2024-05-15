@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 16:22:02 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/13 16:29:02 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:41:52 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		state->line = readline("minishell>");
-		ft_parser(state);
+		if (ft_parser(state))
+			break;
 	}
 	printf("sonn\n");
 	ft_exec(state);

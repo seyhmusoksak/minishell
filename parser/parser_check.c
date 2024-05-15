@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:07:17 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/15 01:29:36 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/15 18:07:19 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_clean_str(char *str, char *clean_str,int cspace, int i, int j)
 {
 	while (str[++i])
 	{
-		if ((str[i] != '"' && str[i] != '\'') )
+		if ((str[i] != '"') )
 			clean_str[j++] = str[i];
 		if (str[i] == ' ' && ft_qutation_len_check(str, i) == 0)
 		{
@@ -90,90 +90,5 @@ int		ft_last_quatiton_check(char *str, int last)
 	}
 	return(0);
 }
-int ft_qutation_check(char *str)
-{
-	int	i;
-	int dbl;
 
-	i = 0;
-	dbl = 2;
-	if (ft_singl_quatition_check(str))
-		return (1);
-	while (str[i])
-	{
-		if (str[i] == '\"')
-			dbl++;
-		i++;
-	}
-	if (dbl % 2 != 0)
-		return(1);
-	return (0);
-}
-int	ft_singl_quatition_check(char *str)
-{
-	int	i;
-	int	j;
-	char *tmp;
-	int check;
 
-	check = 0;
-	i = -1;
-	while (str[++i])
-	{
-		if(str[i] == '\'')
-		{
-			j = i;
-			while (str[++j])
-			{
-				if (str[j] == '\'')
-				{
-					tmp = ft_substr(str,i,(size_t) j);
-					check = 1;
-					i = j;
-					break;
-				}
-			}
-		}
-		if(ft_singl_str_check(tmp, check))
-			return(1);
-	}
-	return (0);
-}
-int ft_singl_str_check(char *singl_str, int check)
-{
-	if (check == 1)
-	{
-		if (ft_strchr(singl_str,'"'))
-		{
-			free(singl_str);
-			return(1);
-		}
-		else
-		{
-			free(singl_str);
-			check = 0;
-			return(0);
-		}
-	}
-	else
-		return(0);
-}
-int ft_qutation_len_check(char *str, int len)
-{
-	int	i;
-	int dbl;
-
-	i = 0;
-	dbl = 2;
-	if (ft_singl_quatition_check(str))
-		return (1);
-	while (i <= len)
-	{
-		if (str[i] == '\"')
-			dbl++;
-		i++;
-	}
-	if (dbl % 2 != 0)
-		return(1);
-	return (0);
-}

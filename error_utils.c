@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/12 18:20:27 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:44:44 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 int	ft_error_mesage(char *str)
 {
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		write(2, &str[i], ft_strlen(str));
+	write(2, str, ft_strlen(str));
 	write(2, "\n", 1);
 	return(1);
 }
