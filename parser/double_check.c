@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   double_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:54:48 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/15 19:35:54 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:38:38 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 int	ft_double_quatition(char *str, int len)
 {
 	int	i;
@@ -20,50 +21,58 @@ int	ft_double_quatition(char *str, int len)
 
 	i = -1;
 	check = 0;
+	tmp = NULL;
 	while (str[++i] && i < len)
 	{
-		if (str[i] == '"'  && ft_single_len(str, i) % 2 == 0)
+		if ((str[i] == '"' && str[i + 1] != '\0')  && (ft_single_len(str, i) % 2 == 0
+			|| ((ft_double_len(str,i)) > 0 && ft_double_len(str,i) % 2 == 0
+			&& ft_single_len(str, i) % 2 != 0)))
 		{
-			printf("i: %d\n",i);
 			j = i;
-			while (str[++j] && j < len)
-			{
-				printf("anannın\n");
-				if (str[j] == '"' ||  str[j+1] == '\0')
-				{
-					printf("c(%d)->%c\n",j,str[j]);
-					tmp = ft_substr(str, i, (i - j));
-					printf("tmp_double------>%s\n",tmp);
-					check = 1;
-					i = j;
-				}
-			if (ft_double_helper(tmp, &check) || (str[i] == '"' && str[i+1] == '\0'))
-				return(1);
-			}
+			tmp = ft_cut_double_quat(str,&i, &j,len, &check);
 		}
+		else if ((str[i] == '"' && (str[i + 1] == '\0' || str[i + 1] == ' '))
+			&& ft_double_len(str,i) % 2 != 0)
+			return(1);
+		if(ft_double_quat_check(tmp, &check))
+			return(1);
+
 	}
 	return (0);
 }
 
-int	ft_double_helper(char *str, int *check)
+char *ft_cut_double_quat(char *str, int *i, int *j, int len, int *check)
 {
-	if (*check == 1)
+	char	*tmp;
+
+	tmp = NULL;
+	while (str[++*j] && *j < len)
 	{
-		printf("double_helper\n");
-		printf("str_double: %s\n",str);
-		if (str != NULL && ft_double_len(str , (int) ft_strlen(str)) % 2 != 0)
+		if ((str[*j] == '"' ||  str[*j+1] == '\0') && *check == 0)
 		{
-			printf("if1\n");
+			tmp = ft_substr(str, *i, (*j - *i) + 1);
+			*check = 1;
+			*i = *j;
+			break;
+		}
+	}
+	return(tmp);
+}
+
+int	ft_double_quat_check(char *str, int *check)
+{
+	if (*check == 1 && str != NULL)
+	{
+		if (ft_double_len(str , (int) ft_strlen(str)) % 2 != 0)
+		{
 			free(str);
-			return(1);
+			return (1);
 		}
 		else
 		{
-			printf("if2\n");
-			printf("x::::::::::%d\n",ft_double_len(str , (int) ft_strlen(str)) % 2);
 			free(str);
 			*check = 0;
-			return(0);
+			return (0);
 		}
 	}
 	return (0);

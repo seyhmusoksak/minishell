@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/15 17:57:57 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:41:19 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char	**ft_pipe_split(char *line);
 char	**ft_pipe_join(char **str);
 char	**ft_clean_quatition(char **str);
 void	ft_clean_str(char *str, char *clean_str,int cspace, int i, int j);
-int		ft_qutation_len_check(char *str, int len);
 int		ft_first_quatiton_check(char *str);
 int		ft_last_quatiton_check(char *str, int last);
 int		ft_error_mesage(char *str);
@@ -69,11 +68,15 @@ void	ft_free_double_str(char **str);
 int		ft_double_str_len(char **str);
 void	ft_free_double_str(char **str);
 int		ft_full_free(t_state *state);
-		//
+
+//		dquite kontrolu fonksiyonları
+int		ft_qutation_len_check(char *str, int len);
 int	ft_double_quatition(char *str, int len);
-int	ft_double_helper(char *str, int *check);
+int	ft_double_quat_check(char *str, int *check);
 int	ft_double_len(char *str, int len);
-int	ft_singl_quatition(char *str, int len);
-int	ft_singl_helper(char *str, int *check);
+int	ft_single_quatition(char *str, int len);
+int	ft_singl_quat_check(char *str, int *check);
 int	ft_single_len(char *str, int len);
+char *ft_cut_double_quat(char *str, int *i, int *j, int len, int *check);
+char *ft_cut_singl_quat(char *str, int *i, int *j, int len, int *check);
 #endif

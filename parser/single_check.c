@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:54:48 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/15 19:22:56 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:38:54 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,15 @@
 
 int	ft_qutation_len_check(char *str, int len)
 {
-	if (ft_singl_quatition(str, len))
-		return (1);
 	if (ft_double_quatition(str, len))
 		return(1);
+	if (ft_single_quatition(str, len))
+		return (1);
 	// else if ()
 	return (0);
 }
-// int	ft_one_quatition(char *str, int len)
-// {
-// 	int	i;
-// 	int	j;
-// }
-int	ft_singl_quatition(char *str, int len)
+
+int	ft_single_quatition(char *str, int len)
 {
 	int	i;
 	int	j;
@@ -36,34 +32,47 @@ int	ft_singl_quatition(char *str, int len)
 
 	i = -1;
 	check = 0;
+	tmp = NULL;
 	while (str[++i] && i < len)
 	{
-		if (str[i] == '\'' && ft_double_len(str, i) % 2 == 0)
+		if ((str[i] == '\'' && str[i + 1] != '\0')  && (ft_double_len(str, i) % 2 == 0
+			|| ((ft_single_len(str,i)) > 0 && ft_single_len(str,i) % 2 == 0
+			&& ft_double_len(str, i) % 2 != 0)))
 		{
 			j = i;
-			while (str[++j] && j < len)
-			{
-				if (str[j] == '\'')
-				{
-					tmp = ft_substr(str, i, (i - j));
-					printf("tmp_single->%s\n",str);
-					check = 1;
-					i = j;
-				}
-			if (ft_singl_helper(tmp, &check))
-				return(1);
-			}
+			tmp = ft_cut_singl_quat(str,&i, &j,len, &check);
 		}
+		else if ((str[i] == '\'' && (str[i + 1] == '\0' || str[i + 1] == ' '))
+			&& ft_single_len(str,i) % 2 != 0)
+			return(1);
+		if(ft_singl_quat_check(tmp, &check))
+			return(1);
 	}
 	return (0);
 }
-int	ft_singl_helper(char *str, int *check)
+char *ft_cut_singl_quat(char *str, int *i, int *j, int len, int *check)
 {
+	char	*tmp;
 
-	if (*check == 1)
+	tmp = NULL;
+	while (str[++*j] && *j < len)
 	{
-		printf("single_helper\n");
-		if (ft_single_len(str, (int) ft_strlen(str)) % 2 != 0)
+		if ((str[*j] == '\'' ||  str[*j+1] == '\0') && *check == 0)
+		{
+			tmp = ft_substr(str, *i, (*j - *i) + 1);
+			*check = 1;
+			*i = *j;
+			break;
+		}
+	}
+	return(tmp);
+}
+
+int	ft_singl_quat_check(char *str, int *check)
+{
+	if (*check == 1 && str != NULL)
+	{
+		if (ft_single_len(str , (int) ft_strlen(str)) % 2 != 0)
 		{
 			free(str);
 			return(1);
