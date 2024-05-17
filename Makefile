@@ -4,7 +4,7 @@ SRCS = exec.c get_env.c minishell.c parser/parser.c parser/parser_utils.c \
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror -fsanitize=address
 LDFLAGS = -lreadline
 all: $(NAME)
 $(NAME): $(OBJS) $(SRCS)

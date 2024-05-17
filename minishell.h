@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/16 16:41:19 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/18 00:57:27 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,13 @@ int		ft_parser(t_state *state);
 char	**ft_pipe_split(char *line);
 char	**ft_pipe_join(char **str);
 char	**ft_clean_quatition(char **str);
+
+
+//		string temizleme
 void	ft_clean_str(char *str, char *clean_str,int cspace, int i, int j);
-int		ft_first_quatiton_check(char *str);
-int		ft_last_quatiton_check(char *str, int last);
+int		ft_is_first(char *str, char keycode);
+int		ft_write_in_duble(char *str,char *clean_str, int *j, int *cspace, char keycode);
+int		ft_write_in_single(char *str,char *clean_str, int *j, int *cspace, char keycode);
 int		ft_error_mesage(char *str);
 void	ft_free_double_str(char **str);
 int		ft_double_str_len(char **str);
@@ -70,11 +74,10 @@ void	ft_free_double_str(char **str);
 int		ft_full_free(t_state *state);
 
 //		dquite kontrolu fonksiyonları
-int		ft_qutation_len_check(char *str, int len);
-int	ft_double_quatition(char *str, int len);
+int	ft_qutation_len_check(char *str, int len);
+int	ft_double_single_quatition(char *str, int len, char *tmp, int i, int j, int check);
 int	ft_double_quat_check(char *str, int *check);
 int	ft_double_len(char *str, int len);
-int	ft_single_quatition(char *str, int len);
 int	ft_singl_quat_check(char *str, int *check);
 int	ft_single_len(char *str, int len);
 char *ft_cut_double_quat(char *str, int *i, int *j, int len, int *check);

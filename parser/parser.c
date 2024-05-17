@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/15 18:17:35 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/18 01:34:55 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,13 @@
 int ft_parser(t_state *state)
 {
 	char	*line;
+
+	state->clean_argv = NULL;
 	line = ft_strtrim(state->line, " ");
 	free(state->line);
-	if (ft_qutation_len_check(line, (int) ft_strlen(line)))
+	if (ft_qutation_len_check(line, (int) ft_strlen(line)) > 0)
 	{
+		free(line);
 		ft_error_mesage("Error: dquite hatasi");//mesaj duzenlenecek
 		return(1);
 	}
@@ -26,6 +29,7 @@ int ft_parser(t_state *state)
 	int i = -1;
 	while (state->clean_argv[++i])
 		printf("i(%d): %s\n",i,state->clean_argv[i]);
+	free(line);
 	return (0);
 }
 
@@ -78,9 +82,9 @@ char	**ft_clean_quatition(char **str)
 	trim_str[i] = NULL;
 	i = -1;
 	while (trim_str[++i])
-		ft_clean_str(trim_str[i], clean_str[i],0,-1,0);
+		ft_clean_str(trim_str[i], clean_str[i],0,-1,0);//0,-1,0
 	clean_str[i] = NULL;
-	free(str);
-	free(trim_str);
+	ft_free_double_str(str);
+	ft_free_double_str(trim_str);
 	return (clean_str);
 }
