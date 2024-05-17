@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:48:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/05/15 19:27:14 by ekose            ###   ########.fr       */
+/*   Updated: 2024/05/17 17:36:33 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,36 +66,39 @@ void	ft_print_exp(t_state **state)
 {
 	t_env	*tmp;
 
-	tmp = (*state)->env;
-
+	tmp = (*state)->exp;
 	while (tmp)
 	{
-		printf("declare -x %s=%s\n", tmp->key, tmp->value);
+		if (tmp->value == NULL)
+			printf("declare -x %s\n", tmp->key);
+		else
+			printf("declare -x %s=%s\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
 }
 
-void	ft_add_exp(t_state **state)
+void	ft_add_exp(t_state **state, char *arg)
 {
-	t_parser	*tmp;
 	t_env		*tmp_exp;
 	int			i;
-	int			j;
 
 	tmp_exp = (*state)->exp;
-	tmp = (*state)->parser;
 	i = 0;
-	j = 0;
-	while (tmp->arg[i]) // yeni envleri listenin sonuna eklicek
+	ft_del_node(&tmp_exp, arg); //Aynı keyden varsa silmek için
+	while (arg[i] && arg[i] != '=' )
 	{
-		ft_del_node(state, tmp->arg[i]); //Aynı keyden varsa silmek için
-		while (tmp->arg[i][j] && tmp->arg[i][j] != '=' )
-			j++;
-		env_addback(&tmp_exp, new_env(ft_substr(tmp->arg[i], 0, j),
-				ft_substr(tmp->arg[i], j + 1, ft_strlen(tmp->arg[i]) - j - 1)));
+		if (ft_key_check(arg[i], i) == 0)//key uygun mu isalnum kontorlü
+		{
+			ft_key_error(arg, "export");
+			return ;
+		}
 		i++;
 	}
+	if (ft_strchr(arg, '=') != NULL)
+		env_addback(&tmp_exp, new_env(ft_substr(arg, 0, i),
+				ft_substr(arg, i + 1, ft_strlen(arg) - i - 1)));
+	else
+		env_addback(&tmp_exp, new_env(ft_substr(arg, 0, i), NULL));
 	bubble_sort(tmp_exp, ft_strcmp);
 	(*state)->exp = tmp_exp;
-	ft_print_exp(state);
 }

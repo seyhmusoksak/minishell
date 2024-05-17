@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/15 19:27:29 by ekose            ###   ########.fr       */
+/*   Updated: 2024/05/17 17:40:23 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	main(int argc, char **argv, char **envp)
 	state = (t_state *)malloc(sizeof(t_state));
 	state->env = get_env(state, envp);
 	state->exp = get_env(state,envp);
-	bubble_sort(state->exp,ft_strcmp);
 	state->lexer = malloc(sizeof(t_lexer));
 	// state->lexer->command="ls";
 	state->sep_path = ft_sep_path(state);
@@ -31,15 +30,16 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		state->lexer = add_lexer_node(state->line);
 		state->parser = malloc(sizeof(t_parser));
-		state->parser->arg = ft_split("ayse1 ayse2=12 ayse3 ayse4 ayse5=12", ' ');
-		ft_export_status(&state);
-		// ft_print_exp(&state);
-		// printf("\n---------------------------\n");
-		// while(state->env)
-		// {
-		// 	printf("%s=%s\n",state->env->key,state->env->value);
-		// 	state->env=state->env->next;
-		// }
+		state->parser->arg = ft_split("-ALI1 ALI23=12 ALI3=1 ALI4=0" ,' ');
+		// ft_export_status(&state);
+		ft_del_env(&state);
+		ft_print_exp(&state);
+		printf("\n---------------------------\n");
+		while(state->env)
+		{
+			printf("%s=%s\n",state->env->key,state->env->value);
+			state->env=state->env->next;
+		}
 
 		// ft_cd(&state);
 		// char	dir[1024];

@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 14:57:55 by ekose             #+#    #+#             */
-/*   Updated: 2024/05/11 18:41:18 by ekose            ###   ########.fr       */
+/*   Updated: 2024/05/17 16:51:00 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,15 @@ void	ft_cd_error(char *dir)
 
 	write(1, "cd: ", 4);
 	perror(dir);
+}
+
+void	ft_key_error(char *s, char *cmd)
+{
+	if (ft_strncmp(cmd, "export", ft_strlen(cmd)) == 0)
+		write (2, "export: ", ft_strlen("export: "));
+	else
+		write (2, "unset: ", ft_strlen("unset: "));
+	write (2, s, ft_strlen(s));
+	write (2, ": not a valid identifier\n",
+		ft_strlen(": not a valid identifier\n"));
 }

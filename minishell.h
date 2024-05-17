@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/15 19:14:49 by ekose            ###   ########.fr       */
+/*   Updated: 2024/05/17 14:48:41 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_exec(t_state *state);
 char	**ft_sep_path(t_state *state);
 t_env	*new_env(char *key, char *value);
 void	env_addback(t_env **lst, t_env *new);
-void	ft_add_env(t_state **state);
+void	ft_add_env(t_state **state, char *arg);
 void	ft_echo(t_state *state);
 void	ft_del_env(t_state **state);
 void	ft_pwd(void);
@@ -86,7 +86,9 @@ void	ft_cd_error(char *dir);
 int		ft_strcmp(char *s1, char *s2);
 void	bubble_sort(t_env *exp, int (*cmp)(char *, char *));
 void	ft_print_exp(t_state **state);
-void	ft_add_exp(t_state **state);
-void	ft_del_node(t_state **state, char *key);
+void	ft_add_exp(t_state **state, char *arg);
+void	ft_del_node(t_env **list, char *key);
 void	ft_export_status(t_state **state);
+void	ft_key_error(char *s, char *cmd);
+int		ft_key_check(char arg, int index);
 #endif

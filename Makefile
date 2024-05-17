@@ -8,7 +8,7 @@ LDFLAGS = -lreadline
 
 SRCS = minishell.c get_env.c lexer/my_lexer.c utils.c exec.c \
 		builtin/env.c builtin/pwd.c builtin/cd.c builtin/error.c \
-		builtin/export.c
+		builtin/export.c builtin/unset.c
 
 OBJ = $(SRCS:.c=.o)
 
