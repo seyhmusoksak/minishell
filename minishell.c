@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 14:15:57 by musozer           #+#    #+#             */
-/*   Updated: 2024/05/11 18:27:48 by musozer          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:05:32 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,19 @@ int	main(int argc, char **argv, char **envp)
 		if (!state->line)
 			break ;
 		state->lexer = add_lexer_node(state->line);
-		while (state->lexer)
+		str = pipe_split(state);
+		while (str[i])
 		{
-			printf("command: %s\n", state->lexer->command);
-			printf("type: %d\n", state->lexer->type);
-			state->lexer = state->lexer->next;
+			printf("%s %d\n", str[i], i);
+			i++;
 		}
+
+		// while (state->lexer)
+		// {
+		// 	printf("command: %s\n", state->lexer->command);
+		// 	printf("type: %d\n", state->lexer->type);
+		// 	state->lexer = state->lexer->next;
+		// }
 	}
 	(void)argc;
 	(void)argv;

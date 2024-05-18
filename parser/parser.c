@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:02:28 by musozer           #+#    #+#             */
-/*   Updated: 2024/05/11 18:27:28 by musozer          ###   ########.fr       */
+/*   Updated: 2024/05/18 14:14:42 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,11 @@ char	**pipe_split(t_state *state)
 
 	i = 0;
 	parser = (t_parser *)malloc(sizeof(t_parser));
+	if (!parser)
+		return (NULL);
 	str = ft_split(state->line, '|');
-	if (str[1] == NULL)
-		pipe_error(str);
+	// if (str[1] == NULL)
+	// 	pipe_error(str);
 	while (str[i])
 	{
 		if (str[i + 1] && ft_qutation_check(str[i])
