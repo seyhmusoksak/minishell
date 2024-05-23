@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/18 00:57:27 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:54:45 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ void	ft_free_double_str(char **str);
 int		ft_full_free(t_state *state);
 
 //		dquite kontrolu fonksiyonları
-int	ft_qutation_len_check(char *str, int len);
-int	ft_double_single_quatition(char *str, int len, char *tmp, int i, int j, int check);
-int	ft_double_quat_check(char *str, int *check);
-int	ft_double_len(char *str, int len);
-int	ft_singl_quat_check(char *str, int *check);
-int	ft_single_len(char *str, int len);
-char *ft_cut_double_quat(char *str, int *i, int *j, int len, int *check);
-char *ft_cut_singl_quat(char *str, int *i, int *j, int len, int *check);
+int		ft_qutation_len_check(char *str, int len);
+int		ft_quote_check(char *str, int len, char *tmp, int i, int j, int check, int sq, int dq);
+int		ft_dquote_check(char *str, int *check, int dq);
+int		ft_dquote_len(char *str, int len);
+int		ft_squote_check(char *str, int *check, int sq);
+int		ft_squote_len(char *str, int len);
+char	*ft_cut_dquote(char *str, int *i, int *j, int len, int *check, int *sq);
+char	*ft_cut_squote(char *str, int *i, int *j, int len, int *check, int *dq);
 #endif

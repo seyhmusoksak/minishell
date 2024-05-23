@@ -6,29 +6,29 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:07:17 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/18 01:52:10 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:59:10 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-// "echo" "memo" "na's"im yi"l"maz 'ha"y'da 'nasil' "ol"ac'ak'
+
 void	ft_clean_str(char *str, char *clean_str,int cspace, int i, int j)
 {
 	printf("clean_func--->%s\n",str);
 	while (str[++i])
 	{
 		printf("clean_i -->%d\n",i);
-		if (str[i] == ' ' && cspace == 0 && ft_qutation_len_check(str,i) == 0)
+		if (str[i] == ' ' && cspace == 0 && ft_qutation_len_check(str, i) == 0)
 		{
 			clean_str[j++] = str[i];
  			while (str[i++] && str[i] == ' ')
  				cspace++;
 		}
-		else if (cspace > 0 && (str[i] == '"' && (str[i - 1] == ' ' && ft_qutation_len_check(str, i) == 0))
+		else if (cspace > 0 && (str[i] == '"' && ((str[i - 1] != '\0' && str[i - 1] == ' ') && ft_qutation_len_check(str, i) == 0))
 		 && ft_is_first(str + i, '"') == 2)
 			ft_write_in_duble(str + i, clean_str, &j, &cspace,'F');
 		else if (cspace > 0 && (str[i] == '\'' && (str[i - 1] == ' ' && ft_qutation_len_check(str, i) == 0))
-		&& ft_is_first(str + i, '\''))
+		&& ft_is_first(str + i, '\'') == 1)
 			ft_write_in_single(str + i, clean_str, &j, &cspace,'F');
 		else if (str[i] != '"' && ft_qutation_len_check(str, i) == 2)
 			ft_write_in_duble(str + i + 1, clean_str, &j, &cspace,'"');
@@ -39,17 +39,16 @@ void	ft_clean_str(char *str, char *clean_str,int cspace, int i, int j)
 	}
 	clean_str[++j] = '\0';
 }
-// "na's"im  yi"l"maz  'ha"y'd'a'  patlıyor
 int ft_is_first(char *str, char keycode)
 {
 	int i;
 
-	i = -1;
+	i = 0;
 	if (keycode == '"')
 	{
 		while (str[++i])
 		{
-			if ((str[i] == '"' && ((str[i + 1] != '\0' && str[i + 1] == ' ') || str[i + 1] == '\0')) && ft_qutation_len_check(str, i + 1) == 0)
+			if ((str[i] == '"' && ((str[i + 1] != '\0' && str[i + 1] == ' ') || str[i + 1] == '\0')) && ft_qutation_len_check(str, i) == 0)
 				return (2);
 			if (str[i] == ' ' && ft_qutation_len_check(str, i) == 0)
 				break;
@@ -59,8 +58,8 @@ int ft_is_first(char *str, char keycode)
 	{
 		while (str[++i])
 		{
-			if ((str[i] == '\'' && ((str[i + 1] != '\0' && str[i + 1] == ' ') || str[i + 1] == '\0')) && ft_qutation_len_check(str, i + 1) == 0)
-				return (2);
+			if ((str[i] == '\'' && ((str[i + 1] != '\0' && str[i + 1] == ' ') || str[i + 1] == '\0')) && ft_qutation_len_check(str, i) == 0)
+				return (1);
 			if (str[i] == ' ' && ft_qutation_len_check(str, i) == 0)
 				break;
 		}
