@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/23 17:54:45 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/25 14:21:56 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_free_double_str(char **str);
 int		ft_full_free(t_state *state);
 
 //		dquite kontrolu fonksiyonları
-int		ft_qutation_len_check(char *str, int len);
+int		ft_quote_len_check(char *str, int len);
 int		ft_quote_check(char *str, int len, char *tmp, int i, int j, int check, int sq, int dq);
 int		ft_dquote_check(char *str, int *check, int dq);
 int		ft_dquote_len(char *str, int len);

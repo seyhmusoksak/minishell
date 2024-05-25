@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   double_check.c                                     :+:      :+:    :+:   */
+/*   quote_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:54:48 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/23 18:03:06 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/25 14:23:38 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ char *ft_cut_dquote(char *str, int *i, int *j, int len, int *check, int *sq)
 			while (tmp[++c])
 				if (tmp[c] == '\'')
 					(*sq)++;
-			printf("dbl_cut_tmp:%s\n",tmp);
-			printf("dbl_cut_sq:%d\n",*sq);
+			// printf("dbl_cut_tmp:%s\n",tmp);
+			// printf("dbl_cut_sq:%d\n",*sq);
 			// printf("dbl_i: %d\ndbl_j: %d\n",*i,*j);
 			break;
 		}
@@ -55,8 +55,8 @@ char *ft_cut_squote(char *str, int *i, int *j, int len, int *check, int *dq)
 			while (tmp[++c])
 				if (tmp[c] == '"')
 					(*dq)++;
-			printf("single tmp ->%s\n",tmp);
-			printf("single_cut_dq ->%d\n",*dq);
+			// printf("single tmp ->%s\n",tmp);
+			// printf("single_cut_dq ->%d\n",*dq);
 			break;
 		}
 	}

@@ -3,35 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   quote_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:29:21 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/23 18:02:22 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:17:59 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 // "na's"im yi"l"maz  'ha"y'd'a'  patlıyor
-int	ft_qutation_len_check(char *str, int len)
+int	ft_quote_len_check(char *str, int len)
 {
-	int	i;
 	int	j;
 	int	check;
 	int	dq;
 	int	sq;
-	char *tmp;
+	char	*tmp;
+	char	*new_str;
 
+	new_str = ft_substr(str,0,(size_t)len);
+	printf("new_str_sub->>>%s\n",new_str);
 	dq = 0;
 	sq = 0;
-	i = -1;
 	j = 0;
 	check = 0;
 	tmp = NULL;
-	if (ft_quote_check(str, len,tmp,i,j,check,sq,dq) == 1)
+	if (ft_quote_check(new_str, len,tmp,-1,j,check,sq,dq) == 1)
+	{
+		free(new_str);
 		return(1);
-	else if (ft_quote_check(str, len,tmp,i,j,check,sq,dq) == 2)
+	}
+	else if (ft_quote_check(new_str, len,tmp,-1,j,check,sq,dq) == 2)
+	{
+		free(new_str);
 		return(2);
+	}
+	free(new_str);
 	return (0);
 }
 
@@ -39,12 +47,12 @@ int	ft_quote_check(char *str, int len, char *tmp, int i, int j, int check, int s
 {
 	while (str[++i] && i < len)
 	{
-		printf("i-->%d\n",i);
+		// printf("i-->%d\n",i);
 		if ((str[i] == '"' && str[i + 1] != '\0')  && ((ft_squote_len(str, i) - sq) % 2 == 0
 			|| ((ft_dquote_len(str,i)) > 0 && (ft_dquote_len(str,i) - dq) % 2 == 0
 			&& (ft_squote_len(str, i) - sq)% 2 != 0)) && check == 0)
 		{
-			printf("if1\n");
+			// printf("if1\n");
 			j = i;
 			tmp = ft_cut_dquote(str,&i, &j,len, &check,&sq);
 		}
@@ -90,17 +98,17 @@ int	ft_squote_check(char *str, int *check, int sq)
 	(void) sq;
 	if (*check == 1 && str != NULL)
 	{
-		printf("if-->0\n");
-		printf("if_check_sq: %d\nif_check_total_sq: %d\n",sq,ft_squote_len(str , (int) ft_strlen(str)));
+		// printf("if-->0\n");
+		// printf("if_check_sq: %d\nif_check_total_sq: %d\n",sq,ft_squote_len(str , (int) ft_strlen(str)));
 		if (ft_squote_len(str , (int) ft_strlen(str))% 2 != 0)
 		{
-			printf("if_singl--->1\n");
+			// printf("if_singl--->1\n");
 			free(str);
 			return(1);
 		}
 		else
 		{
-			printf("if_singl--->2\n");
+			// printf("if_singl--->2\n");
 			free(str);
 			str = NULL;
 			*check = 0;
