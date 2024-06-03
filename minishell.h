@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/25 14:21:56 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:14:17 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ char	**ft_clean_quatition(char **str);
 
 //		string temizleme
 void	ft_clean_str(char *str, char *clean_str,int cspace, int i, int j);
-int		ft_is_first(char *str, char keycode);
+int		ft_is_first(char *str, char keycode, int i);
 int		ft_write_in_duble(char *str,char *clean_str, int *j, int *cspace, char keycode);
-int		ft_write_in_single(char *str,char *clean_str, int *j, int *cspace, char keycode);
+int		ft_write_in_single(char *str, char *clean_str, int *j, int *cspace, char keycode);
 int		ft_error_mesage(char *str);
 void	ft_free_double_str(char **str);
 int		ft_double_str_len(char **str);

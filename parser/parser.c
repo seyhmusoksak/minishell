@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/25 14:24:52 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:11:46 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,13 @@ char	**ft_clean_quatition(char **str)
 	while (str[++i])
 	{
 		trim_str[i] = ft_strtrim(str[i], " ");
-		clean_str[i] = ft_strdup(trim_str[i]);
+		clean_str[i] = malloc(sizeof(char) * (ft_strlen(trim_str[i])  +1));
 	}
 	trim_str[i] = NULL;
+	clean_str[i] = NULL;
 	i = -1;
 	while (trim_str[++i])
-		ft_clean_str(trim_str[i], clean_str[i],0,-1,0);//0,-1,0
-	clean_str[i] = NULL;
+		ft_clean_str(trim_str[i], clean_str[i],0,-1,0);
 	ft_free_double_str(str);
 	ft_free_double_str(trim_str);
 	return (clean_str);
