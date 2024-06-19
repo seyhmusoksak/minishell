@@ -6,12 +6,40 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/12 18:08:21 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:03:16 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+char	**ft_pipe_split(char *line)
+{
+	int			i;
+	char		**str;
+	char		**tmp;
+
+	i = 0;
+	str = ft_split(line, '|');
+	// if (str[1] == NULL)
+	// {
+	// 	ft_free_double_str(str);
+	// 	ft_error_mesage("Error : Enter a value after the | sign");
+	// 	return(0);
+	// }
+	while (str[i])
+	{
+		if (str[i + 1] && ft_quote_len_check(str[i], (int) ft_strlen(str[i]))
+			&& ft_quote_len_check(str[i + 1], (int) ft_strlen(str[i + 1])))
+		{
+			tmp = ft_pipe_join(str);
+			str = NULL;
+			str = tmp;
+			free(tmp);
+		}
+		i++;
+	}
+	return (str);
+}
 char	**ft_pipe_join(char **str)
 {
 	int		i;

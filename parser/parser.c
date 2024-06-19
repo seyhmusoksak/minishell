@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/06/03 17:11:46 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/06/19 17:03:35 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,51 +16,36 @@ int ft_parser(t_state *state)
 {
 	char	*line;
 
-	state->clean_argv = NULL;
 	line = ft_strtrim(state->line, " ");
 	free(state->line);
 	if (ft_quote_len_check(line, (int) ft_strlen(line)) > 0)
 	{
 		free(line);
-		ft_error_mesage("Error: dquite hatasi");//mesaj duzenlenecek
+		ft_error_mesage("Error: open quotation mark");
 		return(1);
 	}
 	state->clean_argv = ft_clean_quatition(ft_pipe_split(line));
+	//	bu kısımda ilk tırnak temizliğini gormek için
 	int i = -1;
+	printf("-------cleaned_argv---------\n");
 	while (state->clean_argv[++i])
 		printf("i(%d): %s\n",i,state->clean_argv[i]);
+	state->clean_thrd_argv = ft_parser_to_lexer(state->clean_argv);
+
+	// bu kısım 3d diziye attığım ve tenizlenen değerleri yazdırmak için
+	printf("-------cleaned_thrd_argv---------\n");
+	int	j;
+	i  = -1;
+	while (state->clean_thrd_argv[++i])
+	{
+		j = -1;
+		while(state->clean_thrd_argv[i][++j])
+				printf("i(%d) j(%d): %s\n",i,j,state->clean_thrd_argv[i][j]);
+	}
 	free(line);
 	return (0);
 }
 
-char	**ft_pipe_split(char *line)
-{
-	int			i;
-	char		**str;
-	char		**tmp;
-
-	i = 0;
-	str = ft_split(line, '|');
-	// if (str[1] == NULL)
-	// {
-	// 	ft_free_double_str(str);
-	// 	ft_error_mesage("Error : Enter a value after the | sign");
-	// 	return(0);
-	// }
-	while (str[i])
-	{
-		if (str[i + 1] && ft_quote_len_check(str[i], (int) ft_strlen(str[i]))
-			&& ft_quote_len_check(str[i + 1], (int) ft_strlen(str[i + 1])))
-		{
-			tmp = ft_pipe_join(str);
-			str = NULL;
-			str = tmp;
-			free(tmp);
-		}
-		i++;
-	}
-	return (str);
-}
 char	**ft_clean_quatition(char **str)
 {
 	int	i;
@@ -77,7 +62,7 @@ char	**ft_clean_quatition(char **str)
 	while (str[++i])
 	{
 		trim_str[i] = ft_strtrim(str[i], " ");
-		clean_str[i] = malloc(sizeof(char) * (ft_strlen(trim_str[i])  +1));
+		clean_str[i] = malloc(sizeof(char) * (ft_strlen(trim_str[i])  + 1));
 	}
 	trim_str[i] = NULL;
 	clean_str[i] = NULL;
@@ -88,3 +73,48 @@ char	**ft_clean_quatition(char **str)
 	ft_free_double_str(trim_str);
 	return (clean_str);
 }
+
+char	***ft_parser_to_lexer(char **str)
+{
+	int		i;
+	int		j;
+	char	***dest;
+
+	i  = -1;
+	dest = malloc(sizeof(char **) * (ft_double_str_len(str) + 1));
+	if (!dest)
+		return(NULL);
+	while (str[++i])
+		dest[i] = ft_split(str[i], ' '); // bu split yerine mustafanın yazzdığı split gelecek. tırnak içindeki boşlukarı bolmemesi lazım
+	dest[i] = NULL;
+	i = -1;
+	while (dest[++i])
+	{
+		j = -1;
+		while (dest[i][++j])
+			dest[i][j] = ft_clean_first_last_quote(dest[i][j]);
+	}
+	return(dest);
+}
+
+char	*ft_clean_first_last_quote(char *str)
+{
+	int		i;
+	int		j;
+	char	*dest;
+
+	i = 0;
+	j = -1;
+	if ((str[0] == '"' && str[ft_strlen(str) -1] == '"') || (str[0] == '\'' && str[ft_strlen(str) -1] == '\''))
+	{
+		dest = malloc(sizeof(char) * ft_strlen(str) - 1);
+		if (!dest)
+			return(NULL);
+		while(str[++i] && (i < ((int )ft_strlen(str))))
+			dest[++j] = str[i];
+		dest[j] = '\0';
+		return(dest);
+	}
+	return(str);
+}
+

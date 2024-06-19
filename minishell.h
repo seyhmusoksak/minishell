@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/06/03 17:14:17 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/06/19 19:36:45 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_lexer
 typedef struct s_state
 {
 	char		**clean_argv;
+	char		***clean_thrd_argv;
 	char		**sep_path;
 	char		*line;
 	t_parser	*pars;
@@ -82,4 +83,8 @@ int		ft_squote_check(char *str, int *check, int sq);
 int		ft_squote_len(char *str, int len);
 char	*ft_cut_dquote(char *str, int *i, int *j, int len, int *check, int *sq);
 char	*ft_cut_squote(char *str, int *i, int *j, int len, int *check, int *dq);
+
+// 3D string
+char	***ft_parser_to_lexer(char **str);
+char	*ft_clean_first_last_quote(char *str);
 #endif
