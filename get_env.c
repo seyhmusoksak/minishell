@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:37:07 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/04 15:57:46 by musozer          ###   ########.fr       */
+/*   Updated: 2024/06/28 15:01:07 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ t_env	*get_env(t_state *data, char **env)
 
 char	**ft_sep_path(t_state *state)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	while (state->env)
 	{
 		if (ft_strncmp(state->env->key, "PATH",

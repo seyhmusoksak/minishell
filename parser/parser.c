@@ -5,89 +5,116 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/08 16:02:28 by musozer           #+#    #+#             */
-/*   Updated: 2024/05/18 14:14:42 by musozer          ###   ########.fr       */
+/*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
+/*   Updated: 2024/06/28 15:02:59 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	pipe_error(char **str)
+int ft_parser(t_state *state)
 {
-	free_split(str);
-	printf("Error : Enter a value after the | sign \n");
-}
+	char	*line;
 
-int	ft_qutation_check(char *str)
-{
-	int	i;
-	int	singl;
-	int	dbl;
-
-	i = 0;
-	singl = 0;
-	dbl = 0;
-	while (str[i])
+	line = ft_strtrim(state->line, " ");
+	free(state->line);
+	if (ft_quote_len_check(line, (int) ft_strlen(line)) > 0)
 	{
-		if (str[i] == '\'')
-		{
-			singl++;
-			if (dbl % 2 != 0)
-				return (1);
-		}
-		else if (str[i] == '\"')
-			dbl++;
-		i++;
+		free(line);
+		ft_error_mesage("Error: open quotation mark");
+		return(1);
 	}
-	if (singl % 2 != 0 || dbl % 2 != 0)
-		return (1);
+	state->clean_argv = ft_clean_quatition(ft_pipe_split(line));
+	//	bu kısımda ilk tırnak temizliğini gormek için
+	int i = -1;
+	printf("-------cleaned_argv---------\n");
+	while (state->clean_argv[++i])
+		printf("i(%d): %s\n",i,state->clean_argv[i]);
+	state->clean_thrd_argv = ft_parser_to_lexer(state->clean_argv);
+
+	// bu kısım 3d diziye attığım ve tenizlenen değerleri yazdırmak için
+	printf("-------cleaned_thrd_argv---------\n");
+	int	j;
+	i  = -1;
+	while (state->clean_thrd_argv[++i])
+	{
+		j = -1;
+		while(state->clean_thrd_argv[i][++j])
+				printf("i(%d) j(%d): %s\n",i,j,state->clean_thrd_argv[i][j]);
+	}
+	free(line);
 	return (0);
 }
 
-char	**pipe_join(char **str)
+char	**ft_clean_quatition(char **str)
 {
-	int		i;
-	char	*tmp;
+	int	i;
+	int	len;
+	char **trim_str;
+	char **clean_str;
 
-	i = 0;
-	tmp = ft_strjoin(str[i], "|");
-	free(str[i]);
-	str[i] = tmp;
-	tmp = NULL;
-	tmp = ft_strjoin(str[i], str[i + 1]);
-	free(str[i]);
-	free(str[i + 1]);
-	str[i + 1] = NULL;
-	str[i] = tmp;
-	return (str);
+	i = -1;
+	len = ft_double_str_len(str);
+	trim_str = malloc(sizeof(char *) * (len + 1));
+	clean_str = malloc(sizeof(char *) * (len + 1));
+	if (!trim_str || !clean_str)
+		return(NULL);
+	while (str[++i])
+	{
+		trim_str[i] = ft_strtrim(str[i], " ");
+		clean_str[i] = malloc(sizeof(char) * (ft_strlen(trim_str[i])  + 1));
+	}
+	trim_str[i] = NULL;
+	clean_str[i] = NULL;
+	i = -1;
+	while (trim_str[++i])
+		ft_clean_str(trim_str[i], clean_str[i],0,-1,0);
+	ft_free_double_str(str);
+	ft_free_double_str(trim_str);
+	return (clean_str);
 }
 
-char	**pipe_split(t_state *state)
+char	***ft_parser_to_lexer(char **str)
 {
-	t_parser	*parser;
-	int			i;
-	char		**str;
-	char		**tmp;
+	int		i;
+	int		j;
+	char	***dest;
+
+	i  = -1;
+	dest = malloc(sizeof(char **) * (ft_double_str_len(str) + 1));
+	if (!dest)
+		return(NULL);
+	while (str[++i])
+		dest[i] = ft_split(str[i], ' '); // bu split yerine mustafanın yazzdığı split gelecek. tırnak içindeki boşlukarı bolmemesi lazım
+	dest[i] = NULL;
+	i = -1;
+	while (dest[++i])
+	{
+		j = -1;
+		while (dest[i][++j])
+			dest[i][j] = ft_clean_first_last_quote(dest[i][j]);
+	}
+	return(dest);
+}
+
+char	*ft_clean_first_last_quote(char *str)
+{
+	int		i;
+	int		j;
+	char	*dest;
 
 	i = 0;
-	parser = (t_parser *)malloc(sizeof(t_parser));
-	if (!parser)
-		return (NULL);
-	str = ft_split(state->line, '|');
-	// if (str[1] == NULL)
-	// 	pipe_error(str);
-	while (str[i])
+	j = -1;
+	if ((str[0] == '"' && str[ft_strlen(str) -1] == '"') || (str[0] == '\'' && str[ft_strlen(str) -1] == '\''))
 	{
-		if (str[i + 1] && ft_qutation_check(str[i])
-			&& ft_qutation_check(str[i + 1]))
-		{
-			tmp = pipe_join(str);
-			str = NULL;
-			str = tmp;
-			free(tmp);
-		}
-		i++;
+		dest = malloc(sizeof(char) * ft_strlen(str) - 1);
+		if (!dest)
+			return(NULL);
+		while(str[++i] && (i < ((int )ft_strlen(str))))
+			dest[++j] = str[i];
+		dest[j] = '\0';
+		return(dest);
 	}
-	return (str);
+	return(str);
 }
 

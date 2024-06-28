@@ -5,43 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 14:15:57 by musozer           #+#    #+#             */
-/*   Updated: 2024/05/18 14:05:32 by musozer          ###   ########.fr       */
+/*   Created: 2024/05/04 16:22:02 by mehmyilm          #+#    #+#             */
+/*   Updated: 2024/06/28 15:00:32 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_state	*state;
-	int		i;
-	char	**str;
-
-	i = 0;
+	// int		i;
+	// i = 0;
 	state = (t_state *)malloc(sizeof(t_state));
+	state->lexer = malloc(sizeof(t_lexer));
+	state->pars = malloc(sizeof(t_parser));
+	if (!state->pars || !state->lexer || !state)
+			ft_error_mesage("Error: Malloc problem !");
+	(void)argc;
+	(void)argv;
 	state->env = get_env(state, envp);
 	while (1)
 	{
-		state->line = readline("minishell$ ");
-		if (!state->line)
-			break ;
-		state->lexer = add_lexer_node(state->line);
-		str = pipe_split(state);
-		while (str[i])
-		{
-			printf("%s %d\n", str[i], i);
-			i++;
-		}
-
-		// while (state->lexer)
-		// {
-		// 	printf("command: %s\n", state->lexer->command);
-		// 	printf("type: %d\n", state->lexer->type);
-		// 	state->lexer = state->lexer->next;
-		// }
+		state->line = readline("minishell>");
+		if (ft_parser(state))
+			break;
 	}
-	(void)argc;
-	(void)argv;
+	ft_full_free(state);
+	return (0);
 }
