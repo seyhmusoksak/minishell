@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/06/28 15:02:59 by musozer          ###   ########.fr       */
+/*   Updated: 2024/06/30 20:14:45 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ int ft_parser(t_state *state)
 		ft_error_mesage("Error: open quotation mark");
 		return(1);
 	}
-	state->clean_argv = ft_clean_quatition(ft_pipe_split(line));
+	// state->clean_argv = ft_clean_quatition(ft_pipe_split(line));
+	state->clean_argv = ft_pipe_split(line);
+
+
 	//	bu kısımda ilk tırnak temizliğini gormek için
 	int i = -1;
 	printf("-------cleaned_argv---------\n");

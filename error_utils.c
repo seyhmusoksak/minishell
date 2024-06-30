@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/06/28 15:02:34 by musozer          ###   ########.fr       */
+/*   Updated: 2024/06/30 19:44:37 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	ft_free_double_str(char **str)
 {
 	int	i;
 
+	if (!str)
+		return ;
 	i = -1;
 	while (str[++i])
 		free(str[i]);

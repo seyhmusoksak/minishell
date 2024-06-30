@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/06/28 14:59:45 by musozer          ###   ########.fr       */
+/*   Updated: 2024/06/30 18:36:29 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft/libft.h"
 # include <stdio.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <readline/readline.h>
@@ -59,7 +60,9 @@ char	**ft_sep_path(t_state *state);
 //				parser function
 int		ft_parser(t_state *state);
 char	**ft_pipe_split(char *line);
-char	**ft_pipe_join(char **str);
+char	**ft_quote_control(char **src, char **tmp, int i, int j);
+int		pipe_c(char *line, size_t i, int count);
+char	*ft_strjoin_and_free(char *s1, char *s2);
 char	**ft_clean_quatition(char **str);
 
 

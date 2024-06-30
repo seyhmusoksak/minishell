@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:54:48 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/06/28 15:05:17 by musozer          ###   ########.fr       */
+/*   Updated: 2024/06/30 18:09:24 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,15 @@ int	ft_squote_len(char *str, int len)
 			singl++;
 		i++;
 	}
-	return(singl);
+	return (singl);
+}
+
+int	ft_double_str_len(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
