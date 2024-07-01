@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/06/19 19:36:45 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/01 15:38:26 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,8 @@ int		ft_full_free(t_state *state);
 int		ft_quote_len_check(char *str, int len);
 int		ft_quote_check(char *str, int len, char *tmp, int i, int j, int check, int sq, int dq);
 int		ft_dquote_check(char *str, int *check, int dq);
-int		ft_dquote_len(char *str, int len);
+int		ft_count_quote(char *str, int len, char c);
 int		ft_squote_check(char *str, int *check, int sq);
-int		ft_squote_len(char *str, int len);
 char	*ft_cut_dquote(char *str, int *i, int *j, int len, int *check, int *sq);
 char	*ft_cut_squote(char *str, int *i, int *j, int len, int *check, int *dq);
 

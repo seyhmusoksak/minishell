@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:54:48 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/06/03 17:12:10 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/01 14:13:14 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char *ft_cut_dquote(char *str, int *i, int *j, int len, int *check, int *sq)
 	}
 	return (tmp);
 }
-char *ft_cut_squote(char *str, int *i, int *j, int len, int *check, int *dq)
+char	*ft_cut_squote(char *str, int *i, int *j, int len, int *check, int *dq)
 {
 	char	*tmp;
 	int		c;
@@ -44,7 +44,7 @@ char *ft_cut_squote(char *str, int *i, int *j, int len, int *check, int *dq)
 	c = -1;
 	while (str[++(*j)] && *j < len)
 	{
-		if ((str[*j] == '\'' ||  str[(*j)+1] == '\0') && *check == 0)
+		if ((str[*j] == '\'' || str[(*j)+1] == '\0') && *check == 0)
 		{
 			tmp = ft_substr(str, *i, (*j - *i) + 1);
 			*check = 1;
@@ -52,39 +52,24 @@ char *ft_cut_squote(char *str, int *i, int *j, int len, int *check, int *dq)
 			while (tmp[++c])
 				if (tmp[c] == '"')
 					(*dq)++;
-			break;
+			break ;
 		}
 	}
-	return(tmp);
+	return (tmp);
 }
 
-int ft_dquote_len(char *str, int len)
-{
-	int i;
-	int dbl;
-
-	dbl = 0;
-	i = 0;
-	while (i < len)
-	{
-		if (str[i] == '"')
-			dbl++;
-		i++;
-	}
-	return (dbl);
-}
-int	ft_squote_len(char *str, int len)
+int	ft_count_quote(char *str, int len, char c)
 {
 	int	i;
-	int	singl;
+	int	quete_len;
 
-	singl = 0;
+	quete_len = 0;
 	i = 0;
 	while (i < len)
 	{
-		if (str[i] == '\'')
-			singl++;
+		if (str[i] == c)
+			quete_len++;
 		i++;
 	}
-	return(singl);
+	return (quete_len);
 }
