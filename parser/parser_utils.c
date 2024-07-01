@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/06/30 20:26:18 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/01 21:50:23 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,61 +16,66 @@ char	**ft_pipe_split(char *line)
 {
 	char	**src;
 	char	**tmp;
-	int i = 0;
+	int		i;
+	int		pc;
 
+	pc = (pipe_c(line) + 1);
+	i = 0;
 	if (line[0] == '|' || line[ft_strlen(line) - 1] == '|')
 		return (NULL);
 	src = ft_split(line, '|');
-	printf("%d\n",pipe_c(line, -1, 0) + 1);
-	tmp = (char **)malloc(sizeof(char *) * (pipe_c(line, -1, 0) + 1));
+	tmp = (char **)malloc(sizeof(char *) * (pc + 1));
 	if (!tmp)
 	{
 		ft_free_double_str(src);
 		return (NULL);
 	}
-	while (i < pipe_c(line, -1, 1))
-	{
-		tmp[i] = ft_strdup("");
-		i++;
-	}
-	tmp = ft_quote_control(src, tmp, -1, 0);
+	tmp[pc] = NULL;
+	ft_quote_control(src, tmp, 0);
 	ft_free_double_str(src);
 	return (tmp);
 }
 
-char	**ft_quote_control(char **src, char **tmp, int i, int j)
+void	ft_quote_control(char **src, char **tmp, int j)
 {
 	char	*dst;
 	bool	check;
+	int		i;
 
+	i = 0;
 	check = false;
-	dst = ft_strdup("");
-	while (src[++i] != NULL)
+	while (src[i] != NULL)
 	{
-		if (!src[i])
-			break ;
-		if (!check && src[i] != NULL )
+		if (!check)
 		{
-			dst = ft_strjoin(tmp[j], src[i]);
+			dst = ft_strdup(src[i]);
 			check = true;
 		}
-		if (ft_quote_len_check(dst, ft_strlen(dst)) != 0)
-			dst = ft_strjoin_and_free(dst, src[i + 1]);
-		else if (ft_quote_len_check(dst, ft_strlen(dst)) == 0)
+		if (ft_quote_len_check(dst, ft_strlen(dst)) != 0 )
 		{
-			tmp[j] = ft_strjoin(tmp[j], dst);
-			free(dst);
+			ft_strjoin_and_free(&dst, src[++i]);
+			printf("haciiiii: %s\n", dst);
+
+		}
+		if (ft_quote_len_check(dst, ft_strlen(dst)) == 0 && dst != NULL)
+		{
+			tmp[j] = ft_strdup(dst);
 			check = false;
 			j++;
 		}
+		++i;
 	}
-	return (tmp);
+	tmp[j] = NULL;
 }
 
-//echo "musta|fa"na'b|'er | bebe
-int	pipe_c(char *line, size_t i, int count)
+int	pipe_c(char *line)
 {
-	while (i < ft_strlen(line) && line[++i] != '\0')
+	int	i;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while (i < (int)ft_strlen(line) && line[i] != '\0')
 	{
 		if (line[i] == '|' && ft_quote_len_check(line, i) == 0)
 			count++;
@@ -78,29 +83,35 @@ int	pipe_c(char *line, size_t i, int count)
 		{
 			while (line[++i])
 			{
-				if ((line[i] == '|' || line[i + 1] == '\0') && ft_quote_len_check(line, i) == 0)
+				if ((line[i] == '|' || line[i + 1] == '\0')
+					&& ft_quote_len_check(line, i) == 0)
 				{
 					count++;
 					break ;
 				}
 			}
 		}
-		//printf ("%d\n",count);
+		i++;
 	}
 	return (count);
 }
 
-char	*ft_strjoin_and_free(char *s1, char *s2)
+void	ft_strjoin_and_free(char **dst, char *s2)
 {
 	char	*result;
 	char	*tmp;
 
-	if (!s1 || !s2)
-		return (NULL);
-	tmp = ft_strjoin(s1,"|");
-	free(s1);
+	if (!*dst || !s2)
+		return ;
+	tmp = ft_strjoin(*dst, "|");
 	result = ft_strjoin(tmp, s2);
-	return (result);
+	free(tmp);
+	free(*dst);
+	*dst = NULL;
+	*dst = ft_strdup(result);
+	printf("func içi: %s\n", *dst);
+	free(result);
+	return ;
 }
 
 
