@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/01 15:38:26 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/01 20:09:22 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 
 typedef struct s_parser
 {
+	int	i;
+	int	j;
+	int	cspace;
+	char	*clean_str;
 	struct s_pars		*next;
 }	t_parser;
 
@@ -66,8 +70,7 @@ char	**ft_clean_quatition(char **str);
 //		string temizleme
 void	ft_clean_str(char *str, char *clean_str,int cspace, int i, int j);
 int		ft_is_first(char *str, char keycode, int i);
-int		ft_write_in_duble(char *str,char *clean_str, int *j, int *cspace, char keycode);
-int		ft_write_in_single(char *str, char *clean_str, int *j, int *cspace, char keycode);
+int	ft_write_in_quote(char *str, char *clean_str, int *j, int *cspace, char keycode, char q);
 int		ft_error_mesage(char *str);
 void	ft_free_double_str(char **str);
 int		ft_double_str_len(char **str);

@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/01 15:38:43 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/01 20:12:30 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_parser(t_state *state)
 		ft_error_mesage("Error: open quotation mark");
 		return (1);
 	}
-	state->clean_argv = ft_clean_quatition(ft_pipe_split(line));
+	state->clean_argv = ft_clean_quatition(ft_pipe_split(line), state->pars);
 	//	bu kısımda ilk tırnak temizliğini gormek için
 	int i = -1;
 	printf("-------cleaned_argv---------\n");
@@ -45,7 +45,7 @@ int	ft_parser(t_state *state)
 	return (0);
 }
 
-char	**ft_clean_quatition(char **str)
+char	**ft_clean_quatition(char **str, t_parser *parser)
 {
 	int		i;
 	int		len;
@@ -67,7 +67,7 @@ char	**ft_clean_quatition(char **str)
 	clean_str[i] = NULL;
 	i = -1;
 	while (trim_str[++i])
-		ft_clean_str(trim_str[i], clean_str[i], 0, -1, 0);
+		ft_cleaner(trim_str[i], clean_str[i], parser);
 	ft_free_double_str(str);
 	ft_free_double_str(trim_str);
 	return (clean_str);
