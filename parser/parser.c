@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/01 21:48:21 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/03 14:23:11 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int ft_parser(t_state *state)
 		ft_error_mesage("Error: open quotation mark");
 		return(1);
 	}
-	// state->clean_argv = ft_clean_quatition(ft_pipe_split(line));
-	state->clean_argv = ft_pipe_split(line);
+	state->clean_argv = ft_clean_quatition(ft_pipe_split(line, '|'));
+	// state->clean_argv = ft_pipe_split(line);
 
 
 	//	bu kısımda ilk tırnak temizliğini gormek için
@@ -33,18 +33,18 @@ int ft_parser(t_state *state)
 	printf("-------cleaned_argv---------\n");
 	while (state->clean_argv[++i])
 		printf("i(%d): %s\n",i,state->clean_argv[i]);
-	// state->clean_thrd_argv = ft_parser_to_lexer(state->clean_argv);
+	state->clean_thrd_argv = ft_parser_to_lexer(state->clean_argv);
 
-	// // bu kısım 3d diziye attığım ve tenizlenen değerleri yazdırmak için
-	// printf("-------cleaned_thrd_argv---------\n");
-	// int	j;
-	// i  = -1;
-	// while (state->clean_thrd_argv[++i])
-	// {
-	// 	j = -1;
-	// 	while(state->clean_thrd_argv[i][++j])
-	// 			printf("i(%d) j(%d): %s\n",i,j,state->clean_thrd_argv[i][j]);
-	// }
+	// bu kısım 3d diziye attığım ve tenizlenen değerleri yazdırmak için
+	printf("-------cleaned_thrd_argv---------\n");
+	int	j;
+	i  = -1;
+	while (state->clean_thrd_argv[++i])
+	{
+		j = -1;
+		while(state->clean_thrd_argv[i][++j])
+				printf("i(%d) j(%d): %s\n",i,j,state->clean_thrd_argv[i][j]);
+	}
 	free(line);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/01 21:46:39 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/03 14:32:18 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,11 @@ char	**ft_sep_path(t_state *state);
 
 //				parser function
 int		ft_parser(t_state *state);
-char	**ft_pipe_split(char *line);
+char	**ft_pipe_split(char *line, char c);
 void	ft_quote_control(char **src, char **tmp, int j);
-int		pipe_c(char *line);
+int		pipe_c(char *line, char c);
 void	ft_strjoin_and_free(char **dst, char *s2);
 char	**ft_clean_quatition(char **str);
-
 
 //		string temizleme
 void	ft_clean_str(char *str, char *clean_str,int cspace, int i, int j);
