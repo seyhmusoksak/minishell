@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/18 01:27:44 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:04:27 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ int	ft_error_mesage(char *str)
 {
 	write(2, str, ft_strlen(str));
 	write(2, "\n", 1);
-	return(1);
+	return (1);
 }
+
 int	ft_full_free(t_state *state)
 {
 	if (state->clean_argv != NULL)

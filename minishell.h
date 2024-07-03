@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/01 20:09:22 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:02:00 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@
 
 typedef struct s_parser
 {
-	int	i;
-	int	j;
-	int	cspace;
-	char	*clean_str;
+	int		i;
+	int		j;
+	int		cspace;
+	char	**cleaned;
+	char	**src;
 	struct s_pars		*next;
 }	t_parser;
 
@@ -64,13 +65,15 @@ char	**ft_sep_path(t_state *state);
 int		ft_parser(t_state *state);
 char	**ft_pipe_split(char *line);
 char	**ft_pipe_join(char **str);
-char	**ft_clean_quatition(char **str);
+char	**ft_init_quote_str(char **str, t_parser *pars);
 
 
 //		string temizleme
-void	ft_clean_str(char *str, char *clean_str,int cspace, int i, int j);
+void	ft_cleaner(t_parser *pars, int i);
+void	ft_cleaner_helper(t_parser *prs, int *i);
+void	ft_send_cleaner(t_parser *parser);
 int		ft_is_first(char *str, char keycode, int i);
-int	ft_write_in_quote(char *str, char *clean_str, int *j, int *cspace, char keycode, char q);
+int		ft_write_in_quote(char *str, char cod, char q, t_parser *prs);
 int		ft_error_mesage(char *str);
 void	ft_free_double_str(char **str);
 int		ft_double_str_len(char **str);
@@ -78,14 +81,13 @@ void	ft_free_double_str(char **str);
 int		ft_full_free(t_state *state);
 
 //		dquite kontrolu fonksiyonları
-int		ft_quote_len_check(char *str, int len);
-int		ft_quote_check(char *str, int len, char *tmp, int i, int j, int check, int sq, int dq);
-int		ft_dquote_check(char *str, int *check, int dq);
-int		ft_count_quote(char *str, int len, char c);
-int		ft_squote_check(char *str, int *check, int sq);
+int		ft_quote_check(char *str, int len);
+int		ft_quote_handler(char *str, int len, char *tmp, int i, int j, int check, int sq, int dq);
+int		ft_quote_count_check(char *str, int *check, int dq, char quote_type);
+int		ft_count_quote(char *str, int len, char quote_type);
+
 char	*ft_cut_dquote(char *str, int *i, int *j, int len, int *check, int *sq);
 char	*ft_cut_squote(char *str, int *i, int *j, int len, int *check, int *dq);
-
 // 3D string
 char	***ft_parser_to_lexer(char **str);
 char	*ft_clean_first_last_quote(char *str);

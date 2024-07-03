@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/06/19 17:03:16 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:57:28 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ char	**ft_pipe_split(char *line)
 	// }
 	while (str[i])
 	{
-		if (str[i + 1] && ft_quote_len_check(str[i], (int) ft_strlen(str[i]))
-			&& ft_quote_len_check(str[i + 1], (int) ft_strlen(str[i + 1])))
+		if (str[i + 1] && ft_quote_check(str[i], (int) ft_strlen(str[i]))
+			&& ft_quote_check(str[i + 1], (int) ft_strlen(str[i + 1])))
 		{
 			tmp = ft_pipe_join(str);
 			str = NULL;
@@ -40,6 +40,7 @@ char	**ft_pipe_split(char *line)
 	}
 	return (str);
 }
+
 char	**ft_pipe_join(char **str)
 {
 	int		i;
@@ -57,6 +58,7 @@ char	**ft_pipe_join(char **str)
 	str[i] = tmp;
 	return (str);
 }
+
 int	ft_double_str_len(char **str)
 {
 	int	i;
@@ -64,7 +66,7 @@ int	ft_double_str_len(char **str)
 	i = 0;
 	while (str[i])
 		i++;
-	return(i);
+	return (i);
 }
 
 
