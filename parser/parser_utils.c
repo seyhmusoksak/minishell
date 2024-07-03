@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/03 14:32:10 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/03 17:52:15 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**ft_pipe_split(char *line, char c)
 
 	pc = (pipe_c(line, c) + 1);
 	i = 0;
-	if (line[0] == c || line[ft_strlen(line) - 1] == c)
+	if (!line || (line[0] == c || line[ft_strlen(line) - 1] == c))
 		return (NULL);
 	src = ft_split(line, c);
 	tmp = (char **)malloc(sizeof(char *) * (pc + 1));
@@ -51,15 +51,15 @@ void	ft_quote_control(char **src, char **tmp, int j)
 			dst = ft_strdup(src[i]);
 			check = true;
 		}
-		if (ft_quote_len_check(dst, ft_strlen(dst)) != 0 )
+		if (ft_quote_len_check(dst, ft_strlen(dst)) != 0)
 			ft_strjoin_and_free(&dst, src[++i]);
 		if (ft_quote_len_check(dst, ft_strlen(dst)) == 0 && dst != NULL)
 		{
 			tmp[j] = ft_strdup(dst);
 			check = false;
 			j++;
+			i++;
 		}
-		++i;
 	}
 	tmp[j] = NULL;
 }
