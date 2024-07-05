@@ -6,67 +6,95 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:29:21 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/03 16:20:53 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:56:03 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_quote_check(char *str, int len)
+// echo "iyi" "ozam'an" 'hal"a' c"al"isiyor
+int	ft_quote_check(char *str, int len, t_parser *pars)
 {
-
 	char	*tmp;
 	char	*new_str;
 
-	new_str = ft_substr(str,0,(size_t)len);
+	new_str = ft_substr(str, 0, (size_t)len);
 	tmp = NULL;
-	if (ft_quote_handler(new_str, len,tmp,-1,0,0,0,0) == 1)
+	ft_init_paremeter(pars);
+	if (ft_quote_handler(new_str, tmp, len, pars) == 1)
 	{
 		free(new_str);
-		return(1);
+		return (1);
 	}
-	else if (ft_quote_handler(new_str, len,tmp,-1,0,0,0,0) == 2)
+	ft_init_paremeter(pars);
+	if (ft_quote_handler(new_str, tmp, len, pars) == 2)
 	{
 		free(new_str);
-		return(2);
+		return (2);
 	}
 	free(new_str);
 	return (0);
 }
 
-int	ft_quote_handler(char *str, int len, char *tmp, int i, int j, int check, int sq, int dq)
+void	ft_init_paremeter(t_parser *pars)
 {
-	while (str[++i] && i < len)
+	pars->k = -1;
+	pars->check = 0;
+	pars->m = 0;
+	pars->count_dq = 0;
+	pars->count_sq = 0;
+	pars->check_if = 1;
+}
+
+int	ft_quote_handler(char *str, char *tmp, int len, t_parser *prs)
+{
+	while (str[++prs->k] && prs->k < len)
 	{
-		if ((str[i] == '"' && str[i + 1] != '\0')  && ((ft_count_quote(str, i, '\'') - sq) % 2 == 0
-			|| ((ft_count_quote(str,i, '"')) > 0 && (ft_count_quote(str, i, '"') - dq) % 2 == 0
-			&& (ft_count_quote(str, i, '\'') - sq)% 2 != 0)) && check == 0)
-		{
-			j = i;
-			tmp = ft_cut_dquote(str,&i, &j,len, &check,&sq);
-		}
-		else if ((str[i] == '\'' && str[i + 1] != '\0')  && ((ft_count_quote(str, i, '"') - dq) % 2 == 0
-			|| ((ft_count_quote(str, i, '\'')) > 0 && (ft_count_quote(str, i, '\'') - sq) % 2 == 0
-			&& (ft_count_quote(str, i, '"') - dq) % 2 != 0)) && check == 0)
-			tmp = ft_cut_squote(str,&i, &j,len, &check, &dq);
-		else if ((str[i] == '"' && (str[i + 1] == '\0' ||  (str[i + 1] != '\0' && str[i + 1] == ' ' )))
-			&& (ft_count_quote(str,i + 1, '"') - dq)% 2 != 0)
-			return(2);
-		else if ((str[i] == '\'' && (str[i + 1] == '\0' ||  (str[i + 1] != '\0' && str[i + 1] == ' ' )))
-			&& (ft_count_quote(str, i + 1, '\'') - sq) % 2 != 0)
-			return(1);
-		if(check == 2 && ft_quote_count_check(tmp, &check,dq, '"'))
-			return(2);
-		if (check == 1 && ft_quote_count_check(tmp, &check,sq, '\''))
-			return(1);
+		ft_quote_handler_helper(str, &tmp, len, prs);
+		if (prs->check_if && str[prs->k] == '"'
+			&& (!str[prs->k + 1] || (str[prs->k +1] && str[prs->k +1] == ' ' ))
+			&& (ft_count_quote(str, prs->k +1, '"') - prs->count_dq) % 2 != 0)
+			return (2);
+		else if (prs->check_if && str[prs->k] == '\''
+			&& (!str[prs->k +1] || (str[prs->k + 1] && str[prs->k +1] == ' ' ))
+			&& (ft_count_quote(str, prs->k + 1, '\'') - prs->count_sq) % 2 != 0)
+			return (1);
+		if (prs->check == 2 && ft_quote_count_check(tmp, &prs->check, '"', 2))
+			return (2);
+		if (prs->check == 1 && ft_quote_count_check(tmp, &prs->check, '\'', 1))
+			return (1);
+		prs->check_if = 1;
 	}
 	return (0);
 }
 
-int ft_quote_count_check(char *str, int *check, int dq, char quote_type)
+void	ft_quote_handler_helper(char *str, char **tmp, int len, t_parser *prs)
 {
-	(void) dq;
-	if (*check == 2 && str != NULL)
+	int	dq;
+	int	sq;
+
+	dq = (ft_count_quote(str, prs->k, '"') - prs->count_dq) % 2;
+	sq = (ft_count_quote(str, prs->k, '\'') - prs->count_sq) % 2;
+	if ((str[prs->k] == '"' && str[prs->k +1]) && prs->check == 0
+		&& (!sq || (ft_count_quote(str, prs->k, '"') > 0 && !dq && sq)))
+	{
+		prs->m = prs->k;
+		*tmp = ft_cut_dquote(str, len, prs);
+		prs->check_if = 0;
+	}
+	else if ((str[prs->k] == '\'' && str[prs->k +1]) && prs->check == 0
+		&& (!dq || (ft_count_quote(str, prs->k, '\'') > 0 && !sq && dq)))
+	{
+		*tmp = ft_cut_squote(str, len, prs);
+		prs->check_if = 0;
+	}
+	else
+		(void)tmp;
+}
+
+int	ft_quote_count_check(char *str, int *check, char quote_type, int num)
+{
+	if (*check == num && str != NULL)
 	{
 		if (ft_count_quote(str, (int)ft_strlen(str), quote_type) % 2 != 0)
 		{

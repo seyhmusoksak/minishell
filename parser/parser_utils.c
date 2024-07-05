@@ -6,13 +6,13 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/03 16:57:28 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/03 18:22:19 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**ft_pipe_split(char *line)
+char	**ft_pipe_split(char *line, t_parser *pars)
 {
 	int			i;
 	char		**str;
@@ -28,8 +28,8 @@ char	**ft_pipe_split(char *line)
 	// }
 	while (str[i])
 	{
-		if (str[i + 1] && ft_quote_check(str[i], (int) ft_strlen(str[i]))
-			&& ft_quote_check(str[i + 1], (int) ft_strlen(str[i + 1])))
+		if (str[i + 1] && ft_quote_check(str[i], (int) ft_strlen(str[i]), pars)
+			&& ft_quote_check(str[i + 1], (int) ft_strlen(str[i + 1]), pars))
 		{
 			tmp = ft_pipe_join(str);
 			str = NULL;

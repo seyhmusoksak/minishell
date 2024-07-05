@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/03 17:02:00 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/05 16:59:08 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,20 @@
 
 typedef struct s_parser
 {
+	// clean func parameter
 	int		i;
 	int		j;
-	int		cspace;
+	int		space;
 	char	**cleaned;
 	char	**src;
+	//quote check func parameter
+	int	k;
+	int	m;
+	int	check;
+	int	count_sq;
+	int	count_dq;
+	int	check_if;
+
 	struct s_pars		*next;
 }	t_parser;
 
@@ -61,18 +70,18 @@ void	env_addback(t_env **lst, t_env *new);
 void	ft_exec(t_state *state);
 char	**ft_sep_path(t_state *state);
 
-//				parser function
+//			parser function
 int		ft_parser(t_state *state);
-char	**ft_pipe_split(char *line);
+char	**ft_pipe_split(char *line, t_parser *pars);
 char	**ft_pipe_join(char **str);
 char	**ft_init_quote_str(char **str, t_parser *pars);
 
 
 //		string temizleme
+void	ft_send_cleaner(t_parser *parser);
 void	ft_cleaner(t_parser *pars, int i);
 void	ft_cleaner_helper(t_parser *prs, int *i);
-void	ft_send_cleaner(t_parser *parser);
-int		ft_is_first(char *str, char keycode, int i);
+int		ft_is_first(char *str, char keycode, int i, t_parser *pars);
 int		ft_write_in_quote(char *str, char cod, char q, t_parser *prs);
 int		ft_error_mesage(char *str);
 void	ft_free_double_str(char **str);
@@ -81,14 +90,16 @@ void	ft_free_double_str(char **str);
 int		ft_full_free(t_state *state);
 
 //		dquite kontrolu fonksiyonları
-int		ft_quote_check(char *str, int len);
-int		ft_quote_handler(char *str, int len, char *tmp, int i, int j, int check, int sq, int dq);
-int		ft_quote_count_check(char *str, int *check, int dq, char quote_type);
+int		ft_quote_check(char *str, int len, t_parser *pars);
+void	ft_init_paremeter(t_parser *pars);
+int		ft_quote_handler(char *str, char *tmp, int len, t_parser *pars);
+void	ft_quote_handler_helper(char *str, char **tmp, int len, t_parser *prs);
+int		ft_quote_count_check(char *str, int *check, char quote_type, int num);
 int		ft_count_quote(char *str, int len, char quote_type);
+char	*ft_cut_dquote(char *str, int len, t_parser *pars);
+char	*ft_cut_squote(char *str, int len, t_parser *pars);
 
-char	*ft_cut_dquote(char *str, int *i, int *j, int len, int *check, int *sq);
-char	*ft_cut_squote(char *str, int *i, int *j, int len, int *check, int *dq);
-// 3D string
+//		3D string
 char	***ft_parser_to_lexer(char **str);
 char	*ft_clean_first_last_quote(char *str);
 #endif
