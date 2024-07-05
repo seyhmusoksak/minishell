@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/05 16:59:08 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:18:37 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,15 @@ typedef struct s_parser
 	char	**cleaned;
 	char	**src;
 	//quote check func parameter
-	int	k;
-	int	m;
-	int	check;
-	int	count_sq;
-	int	count_dq;
-	int	check_if;
+	int		k;
+	int		m;
+	int		check;
+	int		count_sq;
+	int		count_dq;
+	int		check_if;
+
+	// exit check
+	int		exit_check;
 
 	struct s_pars		*next;
 }	t_parser;

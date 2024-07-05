@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:29:21 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/05 16:56:03 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:10:54 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,6 @@ int	ft_quote_check(char *str, int len, t_parser *pars)
 	return (0);
 }
 
-void	ft_init_paremeter(t_parser *pars)
-{
-	pars->k = -1;
-	pars->check = 0;
-	pars->m = 0;
-	pars->count_dq = 0;
-	pars->count_sq = 0;
-	pars->check_if = 1;
-}
 
 int	ft_quote_handler(char *str, char *tmp, int len, t_parser *prs)
 {
@@ -110,3 +101,4 @@ int	ft_quote_count_check(char *str, int *check, char quote_type, int num)
 	}
 	return (0);
 }
+

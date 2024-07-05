@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 16:22:02 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/05/18 00:54:03 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:18:59 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_error_mesage("Error: Malloc problem !");
 	(void)argc;
 	(void)argv;
+	state->pars->exit_check = 0;
 	state->env = get_env(state, envp);
 	while (1)
 	{

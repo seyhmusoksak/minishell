@@ -6,23 +6,24 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/05 16:57:42 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:23:12 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_parser(t_state *state)
+int	ft_parser(t_state *state)
 {
 	char	*line;
 
 	line = ft_strtrim(state->line, " ");
 	free(state->line);
-	if (ft_quote_check(line, (int) ft_strlen(line), state->pars) > 0)
+	if (ft_quote_check(line, (int) ft_strlen(line), state->pars))
 	{
 		free(line);
 		ft_error_mesage("Error: open quotation mark");
-		return(1);
+		state->pars->exit_check = 1;
+		return (1);
 	}
 	state->clean_argv = ft_init_quote_str(ft_pipe_split(line, state->pars), state->pars);
 	//	bu kısımda ilk tırnak temizliğini gormek için
@@ -55,7 +56,7 @@ char	**ft_init_quote_str(char **str, t_parser *pars)
 	len = ft_double_str_len(str);
 	pars->src = malloc(sizeof(char *) * (len + 1));
 	pars->cleaned = malloc(sizeof(char *) * (len + 1));
-	if (!pars->src || !pars->cleaned)
+	if (!pars->src || !pars->cleaned || !str)
 		return (NULL);
 	while (str[++i])
 	{
@@ -69,11 +70,13 @@ char	**ft_init_quote_str(char **str, t_parser *pars)
 	ft_free_double_str(pars->src);
 	return (pars->cleaned);
 }
+
 char	***ft_parser_to_lexer(char **str)
 {
 	int		i;
 	int		j;
 	char	***dest;
+
 	i = -1;
 	dest = malloc(sizeof(char **) * (ft_double_str_len(str) + 1));
 	if (!dest)

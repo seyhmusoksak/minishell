@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:54:48 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/03 22:31:18 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:10:58 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_cut_dquote(char *str, int len, t_parser *pars)
 	return (tmp);
 }
 
-char *ft_cut_squote(char *str, int len, t_parser *pars)
+char	*ft_cut_squote(char *str, int len, t_parser *pars)
 {
 	char	*tmp;
 	int		c;
@@ -75,4 +75,14 @@ int	ft_count_quote(char *str, int len, char quote_type)
 		i++;
 	}
 	return (quote_len);
+}
+
+void	ft_init_paremeter(t_parser *pars)
+{
+	pars->k = -1;
+	pars->check = 0;
+	pars->m = 0;
+	pars->count_dq = 0;
+	pars->count_sq = 0;
+	pars->check_if = 1;
 }

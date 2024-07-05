@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:07:17 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/04 23:31:29 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:08:55 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,17 @@
 // 01234567890123456789012345678
 // "ec"h"o" "me'm'o" 'na"s"im' yi"l"m'a'z "h"a"c"i 't'a'm'am""dir
 //echo 'nasim ' > bunu yazınca abort yiyor yarın bak
+
+void	ft_send_cleaner(t_parser *parser)
+{
+	parser->i = -1;
+	parser->space = 0;
+	while (parser->src[++parser->i])
+	{
+		parser->j = 0;
+		ft_cleaner(parser, -1);
+	}
+}
 
 void	ft_cleaner(t_parser *pars, int i)
 {
@@ -57,17 +68,6 @@ void	ft_cleaner_helper(t_parser *prs, int *i)
 	else
 		prs->cleaned[prs->i][prs->j++] = prs->src[prs->i][*i];
 	return ;
-}
-
-void	ft_send_cleaner(t_parser *parser)
-{
-	parser->i = -1;
-	parser->space = 0;
-	while (parser->src[++parser->i])
-	{
-		parser->j = 0;
-		ft_cleaner(parser, -1);
-	}
 }
 
 int	ft_is_first(char *str, char keycode, int i, t_parser *pars)

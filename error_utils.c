@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/03 17:04:27 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:22:42 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,21 @@ int	ft_error_mesage(char *str)
 
 int	ft_full_free(t_state *state)
 {
-	if (state->clean_argv != NULL)
+	if (!state->pars->exit_check)
 		ft_free_double_str(state->clean_argv);
 	free(state->pars);
 	free(state->lexer);
 	free(state->env);
 	free(state);
-	return(1);
+	return (1);
 }
 
 void	ft_free_double_str(char **str)
 {
 	int	i;
 
+	if (!str)
+		return ;
 	i = -1;
 	while (str[++i])
 		free(str[i]);
