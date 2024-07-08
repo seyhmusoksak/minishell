@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/03 17:50:35 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/08 16:30:57 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ int ft_parser(t_state *state)
 		return(1);
 
 	}
+	if (line[0] == '|' || line[ft_strlen(line) - 1] == '|')
+	{
+		free(line);
+		ft_error_mesage("Error:Pipe error");
+		return(1);
+	}
+	
 	state->clean_argv = ft_clean_quatition(ft_pipe_split(line, '|'));
 	// state->clean_argv = ft_pipe_split(line);
 
