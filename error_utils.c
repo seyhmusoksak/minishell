@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/05 17:22:42 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:26:46 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,13 @@ void	ft_free_double_str(char **str)
 	while (str[++i])
 		free(str[i]);
 	free(str);
+}
+
+
+int	ft_exit(char *line, char *msg, t_parser *parser)
+{
+	free(line);
+	ft_error_mesage(msg);
+	parser->exit_check = 1;
+	return (1);
 }

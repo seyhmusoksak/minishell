@@ -3,62 +3,112 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/05 17:09:20 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:53:30 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**ft_pipe_split(char *line, t_parser *pars)
+char	**ft_pipe_split(char *line, char c, t_parser *parser)
 {
+	char	**src;
+	char	**tmp;
+	int		pc;
+
+	parser->char_check = 1;
+	pc = (pipe_c(line, c, parser) + 1);
+	src = ft_split(line, c);
+	tmp = (char **)malloc(sizeof(char *) * (pc + 1));
+	if (!tmp)
+	{
+		ft_free_double_str(src);
+		return (NULL);
+	}
+	tmp[pc] = NULL;
+	ft_quote_control(src, tmp, c, parser);
+	ft_free_double_str(src);
+	return (tmp);
+}
+
+void	ft_quote_control(char **src, char **tmp, char c, t_parser *parser)
+{
+	char		*dst;
+	int			j;
 	int			i;
-	char		**str;
-	char		**tmp;
 
 	i = 0;
-	str = ft_split(line, '|');
-	// if (str[1] == NULL)
-	// {
-	// 	ft_free_double_str(str);
-	// 	ft_error_mesage("Error : Enter a value after the | sign");
-	// 	return(0);
-	// }
-	while (str[i])
+	j = 0;
+	while (src[i] != NULL)
 	{
-		if (str[i + 1] && ft_quote_check(str[i], (int) ft_strlen(str[i]), pars)
-			&& ft_quote_check(str[i + 1], (int) ft_strlen(str[i + 1]), pars))
+		if (parser->char_check)
 		{
-			tmp = ft_pipe_join(str);
-			str = NULL;
-			str = tmp;
-			free(tmp);
+			dst = ft_strdup(src[i]);
+			parser->char_check = 0;
+		}
+		if (ft_quote_check(dst, ft_strlen(dst), parser) != 0)
+			ft_strjoin_and_free(&dst, src[++i], c);
+		if (ft_quote_check(dst, ft_strlen(dst), parser) == 0 && dst != NULL)
+		{
+			tmp[j] = ft_strdup(dst);
+			parser->char_check = 1;
+			j++;
+			i++;
+		}
+	}
+	tmp[j] = NULL;
+}
+
+int	pipe_c(char *line, char c, t_parser *parser)
+{
+	int	i;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while (i < (int)ft_strlen(line) && line[i] != '\0')
+	{
+		if (line[i] == c && ft_quote_check(line, i, parser) == 0)
+			count++;
+		else if (line[i] == c && ft_quote_check(line, i, parser) != 0)
+		{
+			while (line[++i])
+			{
+				if ((line[i] == c || line[i + 1] == '\0')
+					&& ft_quote_check(line, i, parser) == 0)
+				{
+					count++;
+					break ;
+				}
+			}
 		}
 		i++;
 	}
-	return (str);
+	return (count);
 }
 
-char	**ft_pipe_join(char **str)
+void	ft_strjoin_and_free(char **dst, char *s2, char c)
 {
-	int		i;
+	char	*result;
 	char	*tmp;
+	char	c_str[2];
 
-	i = 0;
-	tmp = ft_strjoin(str[i], "|");
-	free(str[i]);
-	str[i] = tmp;
-	tmp = NULL;
-	tmp = ft_strjoin(str[i], str[i + 1]);
-	free(str[i]);
-	free(str[i + 1]);
-	str[i + 1] = NULL;
-	str[i] = tmp;
-	return (str);
+	c_str[0] = c;
+	c_str[1] = '\0';
+
+	if (!*dst || !s2)
+		return ;
+	tmp = ft_strjoin(*dst, c_str);
+	result = ft_strjoin(tmp, s2);
+	free(tmp);
+	free(*dst);
+	*dst = NULL;
+	*dst = ft_strdup(result);
+	free(result);
+	return ;
 }
-
 int	ft_double_str_len(char **str)
 {
 	int	i;
@@ -68,6 +118,3 @@ int	ft_double_str_len(char **str)
 		i++;
 	return (i);
 }
-
-
-

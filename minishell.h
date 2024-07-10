@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/05 17:18:37 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:27:33 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_parser
 	int		space;
 	char	**cleaned;
 	char	**src;
+
 	//quote check func parameter
 	int		k;
 	int		m;
@@ -36,10 +37,8 @@ typedef struct s_parser
 	int		count_dq;
 	int		check_if;
 
-	// exit check
 	int		exit_check;
-
-	struct s_pars		*next;
+	int		char_check;
 }	t_parser;
 
 typedef struct s_env
@@ -75,12 +74,14 @@ char	**ft_sep_path(t_state *state);
 
 //			parser function
 int		ft_parser(t_state *state);
-char	**ft_pipe_split(char *line, t_parser *pars);
-char	**ft_pipe_join(char **str);
-char	**ft_init_quote_str(char **str, t_parser *pars);
-
+char	**ft_pipe_split(char *line, char c, t_parser *parser);
+void	ft_quote_control(char **src, char **tmp, char c, t_parser *parser);
+int		pipe_c(char *line, char c, t_parser *parser);
+void	ft_strjoin_and_free(char **dst, char *s2, char c);
+int		ft_exit(char *line, char *msg, t_parser *parser);
 
 //		string temizleme
+char	**ft_init_quote_str(char **str, t_parser *pars);
 void	ft_send_cleaner(t_parser *parser);
 void	ft_cleaner(t_parser *pars, int i);
 void	ft_cleaner_helper(t_parser *prs, int *i);
@@ -103,6 +104,6 @@ char	*ft_cut_dquote(char *str, int len, t_parser *pars);
 char	*ft_cut_squote(char *str, int len, t_parser *pars);
 
 //		3D string
-char	***ft_parser_to_lexer(char **str);
+char	***ft_parser_to_lexer(char **str, t_parser *parser);
 char	*ft_clean_first_last_quote(char *str);
 #endif

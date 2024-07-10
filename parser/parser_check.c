@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:07:17 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/05 17:08:55 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/10 16:55:49 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-// "ec"ho"" "me'"m"o" 'nas"i''m'
-// 01234567890123456789012345678
-// "ec"h"o" "me'm'o" 'na"s"im' yi"l"m'a'z "h"a"c"i 't'a'm'am""dir
-//echo 'nasim ' > bunu yazınca abort yiyor yarın bak
 
+// "ec"h"o" "me'm'o" 'na"s"im' yi"l"m'a'z "h"a"c"i 't'a'm'am""dir
 void	ft_send_cleaner(t_parser *parser)
 {
 	parser->i = -1;
