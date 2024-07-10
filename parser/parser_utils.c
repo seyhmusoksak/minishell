@@ -6,21 +6,20 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/08 16:00:55 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/10 03:39:44 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**ft_pipe_split(char *line, char c)
+char	**ft_pipe_split(char *line, char c, t_parser *parser)
 {
 	char	**src;
 	char	**tmp;
 	int		pc;
+	parser->exit_check = 1;
 
 	pc = (pipe_c(line, c) + 1);
-	if (!line || (line[0] == c || line[ft_strlen(line) - 1] == c))
-		return (NULL);
 	src = ft_split(line, c);
 	tmp = (char **)malloc(sizeof(char *) * (pc + 1));
 	if (!tmp)
@@ -29,32 +28,32 @@ char	**ft_pipe_split(char *line, char c)
 		return (NULL);
 	}
 	tmp[pc] = NULL;
-	ft_quote_control(src, tmp, 0);
+	ft_quote_control(src, tmp, parser, c);
 	ft_free_double_str(src);
 	return (tmp);
 }
 
-void	ft_quote_control(char **src, char **tmp, int j)
+void	ft_quote_control(char **src, char **tmp, t_parser *parser, char c)
 {
 	char	*dst;
-	int 	check;
+	int 		j;
 	int			i;
 
 	i = 0;
-	check = 1;
+	j = 0;
 	while (src[i] != NULL)
 	{
-		if (check)
+		if (parser->exit_check)
 		{
 			dst = ft_strdup(src[i]);
-			check = 0;
+			parser->exit_check = 0;
 		}
 		if (ft_quote_len_check(dst, ft_strlen(dst)) != 0)
-			ft_strjoin_and_free(&dst, src[++i]);
+			ft_strjoin_and_free(&dst, src[++i], c);
 		if (ft_quote_len_check(dst, ft_strlen(dst)) == 0 && dst != NULL)
 		{
 			tmp[j] = ft_strdup(dst);
-			check = 1;
+			parser->exit_check = 1;
 			j++;
 			i++;
 		}
@@ -90,14 +89,18 @@ int	pipe_c(char *line, char c)
 	return (count);
 }
 
-void	ft_strjoin_and_free(char **dst, char *s2)
+void	ft_strjoin_and_free(char **dst, char *s2, char c)
 {
 	char	*result;
 	char	*tmp;
-
+	char	c_str[2];
+	
+	c_str[0] = c;
+	c_str[1] = '\0';
+	
 	if (!*dst || !s2)
 		return ;
-	tmp = ft_strjoin(*dst, "|");
+	tmp = ft_strjoin(*dst, c_str);
 	result = ft_strjoin(tmp, s2);
 	free(tmp);
 	free(*dst);

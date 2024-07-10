@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/08 16:30:57 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/09 16:37:56 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int ft_parser(t_state *state)
 		return(1);
 	}
 	
-	state->clean_argv = ft_clean_quatition(ft_pipe_split(line, '|'));
+	state->clean_argv = ft_clean_quatition(ft_pipe_split(line, '|', state->pars));
 	// state->clean_argv = ft_pipe_split(line);
 
 	//	bu kısımda ilk tırnak temizliğini gormek için

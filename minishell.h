@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/08 16:30:52 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/10 03:39:16 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 typedef struct s_parser
 {
 	struct s_pars		*next;
+	int						exit_check;
 }	t_parser;
 
 typedef struct s_env
@@ -59,10 +60,10 @@ char	**ft_sep_path(t_state *state);
 
 //				parser function
 int		ft_parser(t_state *state);
-char	**ft_pipe_split(char *line, char c);
-void	ft_quote_control(char **src, char **tmp, int j);
+char	**ft_pipe_split(char *line, char c, t_parser *parser);
+void	ft_quote_control(char **src, char **tmp, t_parser *parser, char c);
 int		pipe_c(char *line, char c);
-void	ft_strjoin_and_free(char **dst, char *s2);
+void	ft_strjoin_and_free(char **dst, char *s2, char c);
 char	**ft_clean_quatition(char **str);
 
 //		string temizleme
