@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/10 16:26:46 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:29:37 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_error_mesage(char *str)
 int	ft_full_free(t_state *state)
 {
 	if (!state->pars->exit_check)
-		ft_free_double_str(state->clean_argv);
+		ft_free_double_str(state->pars->clean_argv);
 	free(state->pars);
 	free(state->lexer);
 	free(state->env);

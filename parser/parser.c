@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/10 16:59:31 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/10 20:39:22 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 int	ft_parser(t_state *state)
 {
 	char	*line;
+	char	**tmp_cleaned;
 	int		i;
-	int		j;
+	// int		j;
 
 	line = ft_strtrim(state->line, " ");
 	free(state->line);
@@ -26,22 +27,30 @@ int	ft_parser(t_state *state)
 	if (line[0] == '|' || line[ft_strlen(line) - 1] == '|')
 		return (ft_exit(line, "Error: Failure to use pipe ", state->pars));
 
-	state->clean_argv = ft_init_quote_str
+	tmp_cleaned = ft_init_quote_str
 		(ft_pipe_split(line, '|', state->pars), state->pars);
+
 	printf("-------cleaned_argv---------\n");
 	i = -1;
-	while (state->clean_argv[++i])
-		printf("i(%d): %s\n", i, state->clean_argv[i]);
-	state->clean_thrd_argv = ft_parser_to_lexer(state->clean_argv, state->pars);
+	while (tmp_cleaned[++i])
+		printf("i(%d): %s\n", i, tmp_cleaned[i]);
+	state->pars->clean_argv = ft_get_env(tmp_cleaned, state);
 
-	printf("-------cleaned_thrd_argv---------\n");
+	printf("------------------Put_Env---------------------\n");
 	i = -1;
-	while (state->clean_thrd_argv[++i])
-	{
-		j = -1;
-		while (state->clean_thrd_argv[i][++j])
-			printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
-	}
+	while (state->pars->clean_argv[++i])
+		printf("i(%d): %s\n", i, state->pars->clean_argv[i]);
+
+	// state->clean_thrd_argv = ft_parser_to_lexer(tmp_cleaned, state->pars);
+
+	// printf("-------cleaned_thrd_argv---------\n");
+	// i = -1;
+	// while (state->clean_thrd_argv[++i])
+	// {
+	// 	j = -1;
+	// 	while (state->clean_thrd_argv[i][++j])
+	// 		printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
+	// }
 	free(line);
 	return (0);
 }
@@ -115,4 +124,5 @@ char	*ft_clean_first_last_quote(char *str)
 	}
 	return (str);
 }
+
 

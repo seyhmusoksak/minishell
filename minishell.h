@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/10 16:27:33 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/10 20:26:15 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_parser
 	int		space;
 	char	**cleaned;
 	char	**src;
-
+	char	**clean_argv;
 	//quote check func parameter
 	int		k;
 	int		m;
@@ -58,7 +58,6 @@ typedef struct s_lexer
 
 typedef struct s_state
 {
-	char		**clean_argv;
 	char		***clean_thrd_argv;
 	char		**sep_path;
 	char		*line;
@@ -102,6 +101,12 @@ int		ft_quote_count_check(char *str, int *check, char quote_type, int num);
 int		ft_count_quote(char *str, int len, char quote_type);
 char	*ft_cut_dquote(char *str, int len, t_parser *pars);
 char	*ft_cut_squote(char *str, int len, t_parser *pars);
+
+//		Put_env
+char	**ft_get_env(char **str, t_state *state);
+int	ft_is_dolar(char *str);
+char	*ft_dolar_handler(char *str, t_env *env);
+char	*ft_find_env(char *str, int n, t_env *env);
 
 //		3D string
 char	***ft_parser_to_lexer(char **str, t_parser *parser);
