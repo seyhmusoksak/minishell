@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/10 20:26:15 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/14 01:12:39 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	char			**sep_path;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_parser
 {
@@ -39,15 +47,13 @@ typedef struct s_parser
 
 	int		exit_check;
 	int		char_check;
-}	t_parser;
 
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	char			**sep_path;
-	struct s_env	*next;
-}	t_env;
+	int		len_str[2];
+	int		len_dolar[2];
+	int		d;
+	int		first;
+	t_env	*env;
+}	t_parser;
 
 typedef struct s_lexer
 {
@@ -104,9 +110,19 @@ char	*ft_cut_squote(char *str, int len, t_parser *pars);
 
 //		Put_env
 char	**ft_get_env(char **str, t_state *state);
-int	ft_is_dolar(char *str);
-char	*ft_dolar_handler(char *str, t_env *env);
+char	*ft_dolar_handler(char *str,int count_dolar, t_parser *parser, t_env *env);
+void	ft_pars_str(char *str, t_parser *parser);
+char	*ft_join_env(char *str, t_env *env, t_parser *parser);
+int		ft_count_check_dolar(char *str, t_parser *parser);
+int		ft_dolar_check(char *str, int index, t_parser *parser);
 char	*ft_find_env(char *str, int n, t_env *env);
+char	*ft_resizer(char **str);
+int		ft_check_null(char *str, int *value, int index);
+int		ft_check_loc_dolar(char *str, t_parser *parser);
+char	*ft_join_key(char *key, int index, t_env *env);
+char	*ft_dup_key(char *key, int n, t_env *env);
+int	ft_check_after_key(char *key);
+
 
 //		3D string
 char	***ft_parser_to_lexer(char **str, t_parser *parser);

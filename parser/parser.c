@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/10 20:39:22 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/11 01:21:59 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	ft_parser(t_state *state)
 	while (tmp_cleaned[++i])
 		printf("i(%d): %s\n", i, tmp_cleaned[i]);
 	state->pars->clean_argv = ft_get_env(tmp_cleaned, state);
-
 	printf("------------------Put_Env---------------------\n");
 	i = -1;
 	while (state->pars->clean_argv[++i])
