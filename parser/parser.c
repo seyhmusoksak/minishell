@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/11 01:21:59 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/14 19:49:20 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_parser(t_state *state)
 	char	*line;
 	char	**tmp_cleaned;
 	int		i;
-	// int		j;
+	int		j;
 
 	line = ft_strtrim(state->line, " ");
 	free(state->line);
@@ -34,22 +34,23 @@ int	ft_parser(t_state *state)
 	i = -1;
 	while (tmp_cleaned[++i])
 		printf("i(%d): %s\n", i, tmp_cleaned[i]);
-	state->pars->clean_argv = ft_get_env(tmp_cleaned, state);
+	state->pars->clean_argv = ft_put_env(tmp_cleaned, state);
 	printf("------------------Put_Env---------------------\n");
 	i = -1;
 	while (state->pars->clean_argv[++i])
 		printf("i(%d): %s\n", i, state->pars->clean_argv[i]);
 
-	// state->clean_thrd_argv = ft_parser_to_lexer(tmp_cleaned, state->pars);
+	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
 
-	// printf("-------cleaned_thrd_argv---------\n");
-	// i = -1;
-	// while (state->clean_thrd_argv[++i])
-	// {
-	// 	j = -1;
-	// 	while (state->clean_thrd_argv[i][++j])
-	// 		printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
-	// }
+	printf("-------cleaned_thrd_argv---------\n");
+	i = -1;
+	while (state->clean_thrd_argv[++i])
+	{
+		j = -1;
+		while (state->clean_thrd_argv[i][++j])
+			printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
+	}
+	ft_free_double_str(tmp_cleaned);
 	free(line);
 	return (0);
 }
