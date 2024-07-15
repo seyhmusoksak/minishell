@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:54:53 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/15 01:22:32 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/15 21:51:43 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,21 @@ void	ft_pars_str(char *s, t_parser *prs)
 		while (s[prs->d] != '\0' && s[prs->d] != ' ')
 			prs->d++;
 		prs->len_dolar[1] = prs->d -1;
-		if (prs->d >= (int)(ft_strlen(s) -1))
+		if (prs->d >= (int)(ft_strlen(s) - 1))
 		{
 			prs->len_str[0] = -1;
 			return ;
 		}
 		prs->len_str[0] = prs->d;
-		while ((s[prs->d] && s[prs->d] != '$')
-			|| (s[prs->d] && s[prs->d] == '$' && !ft_is_dolar(s, prs->d, prs)))
+		while ((s[prs->d] && s[prs->d] != '$'))
 			prs->d++;
+		if (s[prs->d] == '$' && !ft_isdolr(s, prs->d, prs))
+		{
+			prs->d++;
+			while ((s[prs->d] && s[prs->d] == '$' && !ft_isdolr(s, prs->d, prs))
+				|| (s[prs->d] && s[prs->d] != '$'))
+				prs->d++;
+		}
 		prs->len_str[1] = prs->d -1;
 	}
 	else
@@ -38,9 +44,15 @@ void	ft_pars_str(char *s, t_parser *prs)
 void	ft_pars_str_helper(char *s, t_parser *prs)
 {
 	prs->len_str[0] = prs->d;
-	while ((s[prs->d] && s[prs->d] != '$')
-		|| (s[prs->d] && s[prs->d] == '$' && !ft_is_dolar(s, prs->d, prs)))
+	while ((s[prs->d] && s[prs->d] != '$'))
 		prs->d++;
+	if (s[prs->d] == '$' && !ft_isdolr(s, prs->d, prs))
+	{
+		prs->d++;
+		while ((s[prs->d] && s[prs->d] != '$')
+			|| (s[prs->d] && s[prs->d] == '$' && !ft_isdolr(s, prs->d, prs)))
+			prs->d++;
+	}
 	prs->len_str[1] = prs->d -1;
 	if (prs->d >= (int)(ft_strlen(s) -1))
 	{
@@ -53,28 +65,15 @@ void	ft_pars_str_helper(char *s, t_parser *prs)
 	prs->len_dolar[1] = prs->d -1;
 }
 
-char	*ft_dup_key(char *key, int n, t_env *env)
-{
-	while (env != NULL)
-	{
-		if (ft_strncmp(key, env->key, n) == 0)
-			return (ft_strdup(env->value));
-		env = env->next;
-	}
-	return (ft_strdup(""));
-}
-
 char	*ft_resizer(char **str)
 {
 	char	*line;
 	int		i;
 
-	// printf("resizer: %s\n", str[0]);
 	line = ft_strdup("");
 	i = -1;
 	while (str[++i])
 		line = ft_strjoin(line, str[i]);
-	// printf("line: %s\n", line);
 	ft_free_double_str(str);
 	return (line);
 }
@@ -98,5 +97,25 @@ int	ft_check_after_key(char *key)
 	}
 	if (check_isalnum)
 		return (i);
+	return (0);
+}
+
+int	ft_check_space(char *str, int len, int i)
+{
+	char	*tmp;
+
+	if (str[len] == '"' && len - 1 >= 0 && str[len -1] == ' ')
+	{
+		i--;
+		while (i >= 0 && str[i] == ' ')
+			i--;
+	}
+	tmp = ft_substr(str, i, len - i);
+	if (ft_strchr(tmp, '$'))
+	{
+		free(tmp);
+		return (1);
+	}
+	free(tmp);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/15 01:23:28 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/15 22:00:49 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,14 @@ typedef struct s_state
 	t_env		*env;
 }	t_state;
 
+
+//			get env functions (4)
 t_env	*get_env(t_state *state, char **env);
 void	env_addback(t_env **lst, t_env *new);
 void	ft_exec(t_state *state);
 char	**ft_sep_path(t_state *state);
 
-//			parser function
+//			parser function (6)
 int		ft_parser(t_state *state);
 char	**ft_pipe_split(char *line, char c, t_parser *parser);
 void	ft_quote_control(char **src, char **tmp, char c, t_parser *parser);
@@ -85,7 +87,7 @@ int		pipe_c(char *line, char c, t_parser *parser);
 void	ft_strjoin_and_free(char **dst, char *s2, char c);
 int		ft_exit(char *line, char *msg, t_parser *parser);
 
-//		string temizleme
+//			string clean functions (11)
 char	**ft_init_quote_str(char **str, t_parser *pars);
 void	ft_send_cleaner(t_parser *parser);
 void	ft_cleaner(t_parser *pars, int i);
@@ -98,7 +100,7 @@ int		ft_double_str_len(char **str);
 void	ft_free_double_str(char **str);
 int		ft_full_free(t_state *state);
 
-//		dquite kontrolu fonksiyonları
+//			quote functions (8)
 int		ft_quote_check(char *str, int len, t_parser *pars);
 void	ft_init_paremeter(t_parser *pars);
 int		ft_quote_handler(char *str, char *tmp, int len, t_parser *pars);
@@ -108,24 +110,25 @@ int		ft_count_quote(char *str, int len, char quote_type);
 char	*ft_cut_dquote(char *str, int len, t_parser *pars);
 char	*ft_cut_squote(char *str, int len, t_parser *pars);
 
-//		Put_env
+//						Put_env functions (16)
 char	**ft_put_env(char **str, t_state *state);
-char	*ft_dolar_handler(char *str,int count_dolar, t_parser *parser, t_env *env);
+char	*ft_dolar_handler(char *str, int cnt_dolr, t_parser *pars, t_env *env);
 void	ft_pars_str(char *str, t_parser *parser);
+void	ft_pars_str_helper(char *s, t_parser *prs);
 char	*ft_env_handler(char *str, t_env *env, t_parser *parser);
-int		ft_count_dolar(char *str, t_parser *parser);
-int		ft_is_dolar(char *str, int index, t_parser *parser);
 char	*ft_find_env(char *str, int n, t_env *env);
-char	*ft_resizer(char **str);
-int		ft_last_is_dolar(char *str,int len, int i, t_parser *parser);
+int		ft_check_after_key(char *key);
 char	*ft_join_key(char *key, int index, t_env *env);
 char	*ft_dup_key(char *key, int n, t_env *env);
-int		ft_check_after_key(char *key);
+char	*ft_resizer(char **str);
+int		ft_check_last(char *tmp);
+int		ft_count_dolar(char *str, t_parser *parser);
+int		ft_isdolr(char *str, int index, t_parser *parser);
 int		ft_check_space(char *str, int len, int i);
-void	ft_pars_str_helper(char *s, t_parser *prs);
+int		ft_last_is_dolar(char *str, int len, int i, t_parser *parser);
 int		ft_first_is_dolar(char *str);
 
-//		3D string
+//			3D string functions (2)
 char	***ft_parser_to_lexer(char **str, t_parser *parser);
 char	*ft_clean_first_last_quote(char *str);
 #endif

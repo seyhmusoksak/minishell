@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/14 19:49:20 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/15 22:09:14 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,8 @@ int	ft_parser(t_state *state)
 		return (ft_exit(line, "Error: open quotation mark", state->pars));
 	if (line[0] == '|' || line[ft_strlen(line) - 1] == '|')
 		return (ft_exit(line, "Error: Failure to use pipe ", state->pars));
-
 	tmp_cleaned = ft_init_quote_str
 		(ft_pipe_split(line, '|', state->pars), state->pars);
-
 	printf("-------cleaned_argv---------\n");
 	i = -1;
 	while (tmp_cleaned[++i])
@@ -39,9 +37,7 @@ int	ft_parser(t_state *state)
 	i = -1;
 	while (state->pars->clean_argv[++i])
 		printf("i(%d): %s\n", i, state->pars->clean_argv[i]);
-
 	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
-
 	printf("-------cleaned_thrd_argv---------\n");
 	i = -1;
 	while (state->clean_thrd_argv[++i])
@@ -125,4 +121,28 @@ char	*ft_clean_first_last_quote(char *str)
 	return (str);
 }
 
+char	**ft_put_env(char **str, t_state *state)
+{
+	t_env		*env;
+	char		**dest;
+	int			i;
+	int			count_dolr;
+
+	env = state->env;
+	dest = malloc(sizeof(char *) * (ft_double_str_len(str) +1));
+	if (!dest)
+		return (NULL);
+	dest[ft_double_str_len(str)] = NULL;
+	i = -1;
+	while (str[++i])
+	{
+		count_dolr = ft_count_dolar(str[i], state->pars);
+		env = state->env;
+		if (count_dolr)
+			dest[i] = ft_dolar_handler(str[i], count_dolr, state->pars, env);
+		else
+			dest[i] = ft_strdup(str[i]);
+	}
+	return (dest);
+}
 
