@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/10 17:29:37 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:07:49 by soksak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,31 @@ int	ft_error_mesage(char *str)
 	return (1);
 }
 
+void ft_clean_env(t_env **env)
+{
+	t_env	*tmp;
+	t_env	*tmp2;
+
+	tmp = *env;
+	while (tmp)
+	{
+		tmp2 = tmp;
+		free(tmp2->key);
+		free(tmp2->value);
+		//free(tmp2->sep_path);
+		tmp = tmp->next;
+		free(tmp2);
+	}
+
+}
+
 int	ft_full_free(t_state *state)
 {
 	if (!state->pars->exit_check)
 		ft_free_double_str(state->pars->clean_argv);
+	ft_clean_env(&state->env);
 	free(state->pars);
 	free(state->lexer);
-	free(state->env);
 	free(state);
 	return (1);
 }
