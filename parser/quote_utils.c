@@ -6,87 +6,85 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:54:48 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/06/30 18:09:24 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/17 19:55:37 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *ft_cut_dquote(char *str, int *i, int *j, int len, int *check, int *sq)
-{
-	char *tmp;
-	int	c;
-
-	tmp = NULL;
-	c = -1;
-	while (str[++(*j)] && *j < len)
-	{
-		if ((str[*j] == '"' || str[(*j) + 1] == '\0') && *check == 0)
-		{
-			tmp = ft_substr(str, *i, (*j - *i) + 1);
-			*check = 2;
-			*i = *j;
-			while (tmp[++c])
-				if (tmp[c] == '\'')
-					(*sq)++;
-			break;
-		}
-	}
-	return (tmp);
-}
-char *ft_cut_squote(char *str, int *i, int *j, int len, int *check, int *dq)
+char	*ft_cut_dquote(char *str, int len, t_parser *pars)
 {
 	char	*tmp;
 	int		c;
 
 	tmp = NULL;
-	*j = *i;
 	c = -1;
-	while (str[++(*j)] && *j < len)
+	while (str[++pars->m] && pars->m < len)
 	{
-		if ((str[*j] == '\'' ||  str[(*j)+1] == '\0') && *check == 0)
+		if ((str[pars->m] == '"' || str[(pars->m) + 1] == '\0')
+			&& pars->check == 0)
 		{
-			tmp = ft_substr(str, *i, (*j - *i) + 1);
-			*check = 1;
-			*i = *j;
+			tmp = ft_substr(str, pars->k, (pars->m - pars->k) + 1);
+			pars->check = 2;
+			pars->k = pars->m;
 			while (tmp[++c])
-				if (tmp[c] == '"')
-					(*dq)++;
-			break;
+				if (tmp[c] == '\'')
+					(pars->count_sq)++;
+			break ;
 		}
 	}
-	return(tmp);
+	return (tmp);
 }
 
-int ft_dquote_len(char *str, int len)
+char	*ft_cut_squote(char *str, int len, t_parser *pars)
 {
-	int i;
-	int dbl;
+	char	*tmp;
+	int		c;
 
-	dbl = 0;
-	i = 0;
-	while (i < len)
+	tmp = NULL;
+	pars->m = pars->k;
+	c = -1;
+	while (str[++(pars->m)] && pars->m < len)
 	{
-		if (str[i] == '"')
-			dbl++;
-		i++;
+		if ((str[pars->m] == '\'' || str[(pars->m) +1] == '\0')
+			&& pars->check == 0)
+		{
+			tmp = ft_substr(str, pars->k, (pars->m - pars->k) + 1);
+			pars->check = 1;
+			pars->k = pars->m;
+			while (tmp[++c])
+				if (tmp[c] == '"')
+					(pars->count_dq)++;
+			break ;
+		}
 	}
-	return (dbl);
+	return (tmp);
 }
-int	ft_squote_len(char *str, int len)
+
+int	ft_count_quote(char *str, int len, char quote_type)
 {
 	int	i;
-	int	singl;
+	int	quote_len;
 
-	singl = 0;
+	quote_len = 0;
 	i = 0;
 	while (i < len)
 	{
-		if (str[i] == '\'')
-			singl++;
+		if (str[i] == quote_type)
+			quote_len++;
 		i++;
 	}
-	return (singl);
+	return (quote_len);
+}
+
+void	ft_init_paremeter(t_parser *pars)
+{
+	pars->k = -1;
+	pars->check = 0;
+	pars->m = 0;
+	pars->count_dq = 0;
+	pars->count_sq = 0;
+	pars->check_if = 1;
 }
 
 int	ft_double_str_len(char **str)

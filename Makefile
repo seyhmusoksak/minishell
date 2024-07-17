@@ -1,7 +1,8 @@
 NAME = minishell
 SRCS = exec.c get_env.c minishell.c parser/parser.c parser/parser_utils.c \
 		parser/parser_check.c error_utils.c parser/quote_utils.c \
-		parser/quote_check.c 
+		parser/quote_check.c parser/put_env.c parser/put_env_utils.c \
+		parser/dolar_check_utils.c 
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
 CC = gcc

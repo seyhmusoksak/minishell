@@ -6,120 +6,119 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:07:17 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/06/28 15:03:24 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/17 19:58:47 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-// "ec"ho"" "me'"m"o" 'nas"i''m'
-// 01234567890123456789012345678
+
 // "ec"h"o" "me'm'o" 'na"s"im' yi"l"m'a'z "h"a"c"i 't'a'm'am""dir
-void	ft_clean_str(char *str, char *clean_str,int cspace, int i, int j)
+void	ft_send_cleaner(t_parser *parser)
 {
-	while (str[++i])
+	parser->i = -1;
+	parser->space = 0;
+	while (parser->src[++parser->i])
 	{
-		if (str[i] == ' ' && cspace == 0 && ft_quote_len_check(str, i) == 0)
+		parser->j = 0;
+		ft_cleaner(parser, -1);
+	}
+}
+
+void	ft_cleaner(t_parser *pars, int i)
+{
+	while (pars->src[pars->i][++i])
+	{
+		if (pars->src[pars->i][i] == ' ' && pars->space == 0
+			&& ft_quote_check(pars->src[pars->i], i, pars) == 0)
 		{
-			clean_str[j++] = str[i];
- 			while (str[i] == ' ')
- 				cspace = i++;
+			pars->cleaned[pars->i][pars->j++] = pars->src[pars->i][i];
+			while (pars->src[pars->i][i] == ' ')
+				pars->space = i++;
 			i--;
 		}
-		else if (cspace > 0 && (str[i] == '"' && ((str[i - 1] != '\0' && str[i - 1] == ' ')
-			&& ft_quote_len_check(str, i) == 0))
-		 && ft_is_first(str + i, '"', i) == 2)
-			i+= ft_write_in_duble(str + i, clean_str, &j, &cspace,'F');
-		else if (cspace > 0 && (str[i] == '\'' && (str[i - 1] == ' ' && ft_quote_len_check(str, i) == 0))
-		&& ft_is_first(str + i, '\'', i) == 1)
-			i+= ft_write_in_single(str + i, clean_str, &j, &cspace,'F');
-		else if (str[i] == '"' && ft_quote_len_check(str, i + 1) == 2)
-			i+= ft_write_in_duble(str + i, clean_str, &j, &cspace,'"');
-		else if (str[i] == '\'' && ft_quote_len_check(str, i + 1) == 1)
-			i+= ft_write_in_single(str + i, clean_str, &j, &cspace,'\'');
 		else
-			clean_str[j++] = str[i];
+			ft_cleaner_helper(pars, &i);
 	}
-	clean_str[j] = '\0';
+	pars->cleaned[pars->i][pars->j] = '\0';
 }
-int ft_is_first(char *str, char keycode, int i)
+
+void	ft_cleaner_helper(t_parser *prs, int *i)
+{
+	if (prs->space > 0
+		&& (prs->src[prs->i][*i] == '"'
+		&& ((prs->src[prs->i][*i -1] != '\0' && prs->src[prs->i][*i -1] == ' ')
+		&& ft_quote_check(prs->src[prs->i], *i, prs) == 0))
+		&& ft_is_first(prs->src[prs->i] + *i, '"', *i, prs) == 2)
+		*i += ft_write_in_quote(prs->src[prs->i] + *i, 'F', '"', prs);
+	else if (prs->space > 0
+		&& (prs->src[prs->i][*i] == '\''
+		&& ((prs->src[prs->i][*i -1] != '\0' && prs->src[prs->i][*i -1] == ' ')
+		&& ft_quote_check(prs->src[prs->i], *i, prs) == 0))
+		&& ft_is_first(prs->src[prs->i] + *i, '\'', *i, prs) == 1)
+		*i += ft_write_in_quote(prs->src[prs->i] + *i, 'F', '\'', prs);
+	else if (prs->src[prs->i][*i] == '"'
+		&& ft_quote_check(prs->src[prs->i], *i +1, prs) == 2)
+		*i += ft_write_in_quote(prs->src[prs->i] + *i, 'N', '"', prs);
+	else if (prs->src[prs->i][*i] == '\''
+		&& ft_quote_check(prs->src[prs->i], *i +1, prs) == 1)
+		*i += ft_write_in_quote(prs->src[prs->i] + *i, 'N', '\'', prs);
+	else
+		prs->cleaned[prs->i][prs->j++] = prs->src[prs->i][*i];
+	return ;
+}
+
+int	ft_is_first(char *str, char keycode, int i, t_parser *pars)
 {
 	i = 0;
 	if (keycode == '"')
 	{
 		while (str[++i])
 		{
-			if ((str[i] == '"' && ((str[i + 1] != '\0' && str[i + 1] == ' ')
-				|| str[i + 1] == '\0')) && ft_quote_len_check(str, i + 1) == 0)
+			if (((str[i +1] != '\0' && str[i +1] == ' ') || str[i +1] == '\0')
+				&& ft_quote_check(str, i +1, pars) == 0 && str[i] == '"')
 				return (2);
-			else if (str[i] == ' ' && ft_quote_len_check(str, i) == 0)
-				break;
+			else if (str[i] == ' ' && ft_quote_check(str, i, pars) == 0)
+				break ;
 		}
 	}
 	else if (keycode == '\'')
 	{
 		while (str[++i])
 		{
-			if ((str[i] == '\'' && ((str[i + 1] != '\0' && str[i + 1] == ' ')
-				|| str[i + 1] == '\0')) && ft_quote_len_check(str, i + 1) == 0)
+			if (((str[i + 1] != '\0' && str[i +1] == ' ') || str[i +1] == '\0')
+				&& ft_quote_check(str, i + 1, pars) == 0 && str[i] == '\'')
 				return (1);
-			else if (str[i] == ' ' && ft_quote_len_check(str, i) == 0)
-				break;
+			else if (str[i] == ' ' && ft_quote_check(str, i, pars) == 0)
+				break ;
 		}
 	}
 	return (0);
 }
-int ft_write_in_duble(char *str, char *clean_str, int *j, int *cspace, char keycode)
-{
-	int writed_char;
 
-	writed_char = 0;
-	if (keycode == 'F')
-		clean_str[(*j)++] = str[writed_char];
-	while (str[++writed_char])
+int	ft_write_in_quote(char *str, char cod, char q, t_parser *prs)
+{
+	int	c;
+
+	c = 0;
+	if (cod == 'F')
+		prs->cleaned[prs->i][prs->j++] = str[c];
+	while (str[++c])
 	{
-		// printf("in_double_j--> %d -->%c-->%d\n",*j,str[writed_char],writed_char);
-		if ((str[writed_char] == ' ' && ft_quote_len_check(str, writed_char) == 0))
-			return(--writed_char);
-		if (str[writed_char] == '"' && ft_quote_len_check(str, writed_char + 1) == 0 && keycode != 'F')
+		if (str[c] == ' ' && ft_quote_check(str, c, prs) == 0)
+			return (--c);
+		if (str[c] == q && ft_quote_check(str, c +1, prs) == 0
+			&& cod != 'F')
 			break ;
-		if (str[writed_char] != '"')
-			clean_str[(*j)++] = str[writed_char];
-		else if (((str[writed_char] == '"' && ((str[writed_char + 1] != '\0'
-			&& str[writed_char + 1] == ' ') || str[writed_char + 1] == '\0'))
-			&& ft_quote_len_check(str, writed_char + 1) == 0) && keycode == 'F' && *cspace > 0)
+		if (str[c] != q)
+			prs->cleaned[prs->i][prs->j++] = str[c];
+		else if ((str[c] == q && ((str[c +1] && str[c +1] == ' ') || !str[c +1])
+				&& !ft_quote_check(str, c +1, prs)) && cod == 'F' && prs->space)
 		{
-			clean_str[(*j)++] = str[writed_char];
-			*cspace = 0;
+			prs->cleaned[prs->i][prs->j++] = str[c];
+			prs->space = 0;
 			break ;
 		}
 	}
-	return(writed_char);
-}
-int ft_write_in_single(char *str, char *clean_str, int *j, int *cspace, char keycode)
-{
-	int writed_char;
-
-	writed_char = 0;
-	if (keycode == 'F')
-		clean_str[(*j)++] = str[writed_char];
-	while (str[++writed_char])
-	{
-		// printf("in_single_j--> %d -->%c-->%d\n",*j,str[writed_char],writed_char);
-		if (str[writed_char] == ' ' && ft_quote_len_check(str, writed_char) == 0)
-			return(--writed_char);
-		if (str[writed_char] == '\'' && ft_quote_len_check(str, writed_char + 1) == 0 && keycode != 'F')
-			break ;
-		if (str[writed_char] != '\'')
-			clean_str[(*j)++] = str[writed_char];
-		else if (((str[writed_char] == '\'' && ((str[writed_char + 1] != '\0'
-			&& str[writed_char + 1] == ' ') || str[writed_char + 1] == '\0'))
-			&& ft_quote_len_check(str, writed_char + 1) == 0) && keycode == 'F' && *cspace > 0)
-		{
-			clean_str[(*j)++] = str[writed_char];
-			*cspace = 0;
-			break;
-		}
-	}
-	return (writed_char);
+	return (c);
 }
 

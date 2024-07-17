@@ -6,96 +6,89 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/09 16:37:56 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/17 19:57:40 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int ft_parser(t_state *state)
+int	ft_parser(t_state *state)
 {
 	char	*line;
+	char	**tmp_cleaned;
+	int		i;
+	int		j;
 
+	if (ft_wait_for_input(state) == 0)
+		return (0);
 	line = ft_strtrim(state->line, " ");
 	free(state->line);
-	if (ft_quote_len_check(line, (int) ft_strlen(line)) > 0)
-	{
-		free(line);
-		ft_error_mesage("Error: open quotation mark");
-		return(1);
-
-	}
+	//line dadece boşluk ya da enter attığında mac de patlıyır lınux da sıkıntı yok
+	if (ft_quote_check(line, (int) ft_strlen(line), state->pars))
+		return (ft_exit(line, "Error: open quotation mark", state->pars));
 	if (line[0] == '|' || line[ft_strlen(line) - 1] == '|')
-	{
-		free(line);
-		ft_error_mesage("Error:Pipe error");
-		return(1);
-	}
-	
-	state->clean_argv = ft_clean_quatition(ft_pipe_split(line, '|', state->pars));
-	// state->clean_argv = ft_pipe_split(line);
-
-	//	bu kısımda ilk tırnak temizliğini gormek için
-	int i = -1;
+		return (ft_exit(line, "Error: Failure to use pipe ", state->pars));
+	tmp_cleaned = ft_init_quote_str
+		(ft_pipe_split(line, '|', state->pars), state->pars);
 	printf("-------cleaned_argv---------\n");
-	while (state->clean_argv[++i])
-		printf("i(%d): %s\n",i,state->clean_argv[i]);
-	state->clean_thrd_argv = ft_parser_to_lexer(state->clean_argv);
-
-	// bu kısım 3d diziye attığım ve tenizlenen değerleri yazdırmak için
+	i = -1;
+	while (tmp_cleaned[++i])
+		printf("i(%d): %s\n", i, tmp_cleaned[i]);
+	state->pars->clean_argv = ft_put_env(tmp_cleaned, state);
+	printf("------------------Put_Env---------------------\n");
+	i = -1;
+	while (state->pars->clean_argv[++i])
+		printf("i(%d): %s\n", i, state->pars->clean_argv[i]);
+	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
 	printf("-------cleaned_thrd_argv---------\n");
-	int	j;
-	i  = -1;
+	i = -1;
 	while (state->clean_thrd_argv[++i])
 	{
 		j = -1;
-		while(state->clean_thrd_argv[i][++j])
-				printf("i(%d) j(%d): %s\n",i,j,state->clean_thrd_argv[i][j]);
+		while (state->clean_thrd_argv[i][++j])
+			printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
 	}
+	ft_free_double_str(tmp_cleaned);
 	free(line);
 	return (0);
 }
 
-char	**ft_clean_quatition(char **str)
+char	**ft_init_quote_str(char **str, t_parser *pars)
 {
-	int	i;
-	int	len;
-	char **trim_str;
-	char **clean_str;
+	int		i;
+	int		len;
 
 	i = -1;
 	len = ft_double_str_len(str);
-	trim_str = malloc(sizeof(char *) * (len + 1));
-	clean_str = malloc(sizeof(char *) * (len + 1));
-	if (!trim_str || !clean_str)
-		return(NULL);
+	pars->src = malloc(sizeof(char *) * (len + 1));
+	pars->cleaned = malloc(sizeof(char *) * (len + 1));
+	if (!pars->src || !pars->cleaned || !str)
+		return (NULL);
 	while (str[++i])
 	{
-		trim_str[i] = ft_strtrim(str[i], " ");
-		clean_str[i] = malloc(sizeof(char) * (ft_strlen(trim_str[i])  + 1));
+		pars->src[i] = ft_strtrim(str[i], " ");
+		pars->cleaned[i] = malloc(sizeof(char) * ft_strlen(pars->src[i]) + 1);
 	}
-	trim_str[i] = NULL;
-	clean_str[i] = NULL;
-	i = -1;
-	while (trim_str[++i])
-		ft_clean_str(trim_str[i], clean_str[i],0,-1,0);
+	pars->src[i] = NULL;
+	pars->cleaned[i] = NULL;
+	ft_send_cleaner(pars);
 	ft_free_double_str(str);
-	ft_free_double_str(trim_str);
-	return (clean_str);
+	ft_free_double_str(pars->src);
+	return (pars->cleaned);
 }
 
-char	***ft_parser_to_lexer(char **str)
+char	***ft_parser_to_lexer(char **str, t_parser *parser)
 {
 	int		i;
 	int		j;
 	char	***dest;
 
-	i  = -1;
+	i = -1;
 	dest = malloc(sizeof(char **) * (ft_double_str_len(str) + 1));
 	if (!dest)
-		return(NULL);
+		return (NULL);
 	while (str[++i])
-		dest[i] = ft_split(str[i], ' '); // bu split yerine mustafanın yazzdığı split gelecek. tırnak içindeki boşlukarı bolmemesi lazım
+		dest[i] = ft_pipe_split(str[i], ' ', parser);
 	dest[i] = NULL;
 	i = -1;
 	while (dest[++i])
@@ -104,7 +97,7 @@ char	***ft_parser_to_lexer(char **str)
 		while (dest[i][++j])
 			dest[i][j] = ft_clean_first_last_quote(dest[i][j]);
 	}
-	return(dest);
+	return (dest);
 }
 
 char	*ft_clean_first_last_quote(char *str)
@@ -115,16 +108,43 @@ char	*ft_clean_first_last_quote(char *str)
 
 	i = 0;
 	j = -1;
-	if ((str[0] == '"' && str[ft_strlen(str) -1] == '"') || (str[0] == '\'' && str[ft_strlen(str) -1] == '\''))
+
+	if ((str[0] == '"' && str[ft_strlen(str) -1] == '"')
+		|| (str[0] == '\'' && str[ft_strlen(str) -1] == '\''))
 	{
 		dest = malloc(sizeof(char) * ft_strlen(str) - 1);
 		if (!dest)
-			return(NULL);
-		while(str[++i] && (i < ((int )ft_strlen(str))))
+			return (NULL);
+		while (str[++i] && (i < ((int )ft_strlen(str))))
 			dest[++j] = str[i];
 		dest[j] = '\0';
-		return(dest);
+		return (dest);
 	}
-	return(str);
+	return (str);
+}
+
+char	**ft_put_env(char **str, t_state *state)
+{
+	t_env		*env;
+	char		**dest;
+	int			i;
+	int			count_dolr;
+
+	env = state->env;
+	dest = malloc(sizeof(char *) * (ft_double_str_len(str) +1));
+	if (!dest)
+		return (NULL);
+	dest[ft_double_str_len(str)] = NULL;
+	i = -1;
+	while (str[++i])
+	{
+		count_dolr = ft_count_dolar(str[i], state->pars);
+		env = state->env;
+		if (count_dolr)
+			dest[i] = ft_dolar_handler(str[i], count_dolr, state->pars, env);
+		else
+			dest[i] = ft_strdup(str[i]);
+	}
+	return (dest);
 }
 
