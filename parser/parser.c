@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/15 22:09:14 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:22:59 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,24 @@
 int	ft_parser(t_state *state)
 {
 	char	*line;
-	char	**tmp_cleaned;
+	char	**split_str;
 	int		i;
 	int		j;
 
+	if (!ft_wait_for_input(state))
+		return (0);
 	line = ft_strtrim(state->line, " ");
 	free(state->line);
-	//line dadece boşluk ya da enter attığında mac de patlıyır lınux da sıkıntı yok
 	if (ft_quote_check(line, (int) ft_strlen(line), state->pars))
 		return (ft_exit(line, "Error: open quotation mark", state->pars));
 	if (line[0] == '|' || line[ft_strlen(line) - 1] == '|')
 		return (ft_exit(line, "Error: Failure to use pipe ", state->pars));
-	tmp_cleaned = ft_init_quote_str
-		(ft_pipe_split(line, '|', state->pars), state->pars);
-	printf("-------cleaned_argv---------\n");
-	i = -1;
-	while (tmp_cleaned[++i])
-		printf("i(%d): %s\n", i, tmp_cleaned[i]);
-	state->pars->clean_argv = ft_put_env(tmp_cleaned, state);
-	printf("------------------Put_Env---------------------\n");
-	i = -1;
-	while (state->pars->clean_argv[++i])
-		printf("i(%d): %s\n", i, state->pars->clean_argv[i]);
+	split_str = ft_pipe_split(line, '|', state->pars);
+	ft_init_quote_str(split_str, state->pars);
+	state->pars->clean_argv = ft_put_env(state->pars->cleaned, state);
+	ft_free_double_str(state->pars->cleaned);
 	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
-	printf("-------cleaned_thrd_argv---------\n");
+	ft_free_double_str(state->pars->clean_argv);
 	i = -1;
 	while (state->clean_thrd_argv[++i])
 	{
@@ -46,12 +40,12 @@ int	ft_parser(t_state *state)
 		while (state->clean_thrd_argv[i][++j])
 			printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
 	}
-	ft_free_double_str(tmp_cleaned);
 	free(line);
+	ft_free_thrd_str(state->clean_thrd_argv);
 	return (0);
 }
 
-char	**ft_init_quote_str(char **str, t_parser *pars)
+int	ft_init_quote_str(char **str, t_parser *pars)
 {
 	int		i;
 	int		len;
@@ -61,18 +55,20 @@ char	**ft_init_quote_str(char **str, t_parser *pars)
 	pars->src = malloc(sizeof(char *) * (len + 1));
 	pars->cleaned = malloc(sizeof(char *) * (len + 1));
 	if (!pars->src || !pars->cleaned || !str)
-		return (NULL);
+		return (0);
 	while (str[++i])
 	{
 		pars->src[i] = ft_strtrim(str[i], " ");
 		pars->cleaned[i] = malloc(sizeof(char) * ft_strlen(pars->src[i]) + 1);
+		if (!pars->cleaned[i])
+			return (0);
 	}
 	pars->src[i] = NULL;
 	pars->cleaned[i] = NULL;
 	ft_send_cleaner(pars);
 	ft_free_double_str(str);
 	ft_free_double_str(pars->src);
-	return (pars->cleaned);
+	return (1);
 }
 
 char	***ft_parser_to_lexer(char **str, t_parser *parser)
@@ -106,7 +102,6 @@ char	*ft_clean_first_last_quote(char *str)
 
 	i = 0;
 	j = -1;
-
 	if ((str[0] == '"' && str[ft_strlen(str) -1] == '"')
 		|| (str[0] == '\'' && str[ft_strlen(str) -1] == '\''))
 	{

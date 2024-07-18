@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/15 22:00:49 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:21:42 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,19 @@ t_env	*get_env(t_state *state, char **env);
 void	env_addback(t_env **lst, t_env *new);
 void	ft_exec(t_state *state);
 char	**ft_sep_path(t_state *state);
+void	ft_clean_env(t_env **env);
 
 //			parser function (6)
 int		ft_parser(t_state *state);
 char	**ft_pipe_split(char *line, char c, t_parser *parser);
 void	ft_quote_control(char **src, char **tmp, char c, t_parser *parser);
 int		pipe_c(char *line, char c, t_parser *parser);
+int		ft_wait_for_input(t_state *state);
 void	ft_strjoin_and_free(char **dst, char *s2, char c);
 int		ft_exit(char *line, char *msg, t_parser *parser);
 
 //			string clean functions (11)
-char	**ft_init_quote_str(char **str, t_parser *pars);
+int		ft_init_quote_str(char **str, t_parser *pars);
 void	ft_send_cleaner(t_parser *parser);
 void	ft_cleaner(t_parser *pars, int i);
 void	ft_cleaner_helper(t_parser *prs, int *i);
@@ -131,4 +133,5 @@ int		ft_first_is_dolar(char *str);
 //			3D string functions (2)
 char	***ft_parser_to_lexer(char **str, t_parser *parser);
 char	*ft_clean_first_last_quote(char *str);
+void	ft_free_thrd_str(char ***str);
 #endif

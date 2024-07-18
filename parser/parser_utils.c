@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/10 16:53:30 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:29:49 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ char	**ft_pipe_split(char *line, char c, t_parser *parser)
 	src = ft_split(line, c);
 	tmp = (char **)malloc(sizeof(char *) * (pc + 1));
 	if (!tmp)
-	{
-		ft_free_double_str(src);
 		return (NULL);
-	}
 	tmp[pc] = NULL;
 	ft_quote_control(src, tmp, c, parser);
 	ft_free_double_str(src);
@@ -117,4 +114,17 @@ int	ft_double_str_len(char **str)
 	while (str[i])
 		i++;
 	return (i);
+}
+int	ft_wait_for_input(t_state *state)
+{
+	int	i;
+
+	i = 0;
+	while (state->line[i])
+	{
+		if ((state->line[i] != 10) && (state->line[i] != 32))
+			return (1);
+		i++;
+	}
+	return (0);
 }
