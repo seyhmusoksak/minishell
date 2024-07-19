@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/17 15:39:12 by soksak           ###   ########.fr       */
+/*   Updated: 2024/07/18 16:41:44 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_error_mesage(char *str)
 	return (1);
 }
 
-void ft_clean_env(t_env **env)
+void	ft_clean_env(t_env **env)
 {
 	t_env	*tmp;
 	t_env	*tmp2;
@@ -67,4 +67,22 @@ int	ft_exit(char *line, char *msg, t_parser *parser)
 	ft_error_mesage(msg);
 	parser->exit_check = 1;
 	return (1);
+}
+
+void	ft_free_thrd_str(char ***str)
+{
+	int	i;
+	int	j;
+
+	if (!str)
+		return ;
+	i = -1;
+	while (str[++i])
+	{
+		j = -1;
+		while (str[i][++j])
+			free(str[i][j]);
+		free(str[i]);
+	}
+	free(str);
 }
