@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/18 16:41:44 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/19 16:48:44 by soksak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	ft_full_free(t_state *state)
 		ft_free_double_str(state->pars->clean_argv);
 	ft_clean_env(&state->env);
 	free(state->pars);
-	free(state->lexer);
 	free(state);
 	return (1);
 }

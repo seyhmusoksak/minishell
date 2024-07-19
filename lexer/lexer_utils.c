@@ -6,7 +6,7 @@
 /*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/19 03:19:30 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/19 05:03:55 by soksak           ###   ########.fr       */
+/*   Updated: 2024/07/19 16:48:03 by soksak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,18 @@ t_lexer **my_lexer_nulloc(int count)
 
 void my_lexer_free(t_lexer **lexer)
 {
-	int	i;
+	int		i;
+	t_lexer	*tmp;
 
 	i = 0;
 	while (lexer[i])
 	{
 		while (lexer[i])
 		{
+			tmp = lexer[i]->next;
 			free(lexer[i]->command);
 			free(lexer[i]);
-			lexer[i] = lexer[i]->next;
+			lexer[i] = tmp;
 		}
 		i++;
 	}
