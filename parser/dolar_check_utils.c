@@ -6,13 +6,13 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:58:11 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/15 21:48:57 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/21 16:29:43 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_count_dolar(char *str, t_parser *parser)
+int	ft_count_dolar(char *str)
 {
 	int	i;
 	int	count_dolar;
@@ -25,35 +25,34 @@ int	ft_count_dolar(char *str, t_parser *parser)
 		{
 			while (str[i] && str[i] != '$')
 				i++;
-			if (str[i] == '$' && str[i +1] && str[i +1] != ' '
-				&& str[i +1] != '\'' && str[i +1] != '"'
-				&& ft_quote_check(str + i, ft_strlen(str), parser) != 1)
+			if (str[i] == '$' && ft_isdolr(str, i))
 				count_dolar++;
 			while (str[i] && str[i] != ' ')
 				i++;
 		}
-		if (ft_last_is_dolar(str, ft_strlen(str) - 1, 0, parser)
-			|| ft_first_is_dolar(str) || count_dolar == 0)
-			return (count_dolar);
-		else
-			return (count_dolar +1);
+		return (count_dolar);
 	}
 	return (0);
 }
 
-int	ft_isdolr(char *str, int index, t_parser *parser)
+int	ft_isdolr(char *str, int index)
 {
 	char	*check_str;
 	int		start;
+	int		dval;
+	int		sval;
 
-	if (str[index +1] != '\0' && str[index +1] != ' ' && str[index +1] != '"'
-		&& str[index +1] != '\'' && ft_quote_check(str, index + 2, parser) != 1)
+	if (str[index] == '$' && str[index +1] != '\0' && str[index +1] != ' '
+		&& str[index +1] != '"' && str[index +1] != '\''
+		&& str[ft_strlen(str)- 1] != '\'')
 	{
 		start = index;
 		while (str[index] != ' ' && str[index])
 			index++;
-		check_str = ft_substr(str, start, index);
-		if (ft_quote_check(check_str, index, parser) != 1)
+		check_str = ft_substr(str, start, (index - start));
+		dval = ft_count_quote(check_str, index - start, '"') % 2;
+		sval = ft_count_quote(check_str, index - start, '\'') % 2;
+		if ((dval && sval) || (!dval && !sval) || (dval && !sval))
 		{
 			free(check_str);
 			check_str = NULL;
@@ -65,58 +64,57 @@ int	ft_isdolr(char *str, int index, t_parser *parser)
 	return (0);
 }
 
-int	ft_last_is_dolar(char *str, int len, int i, t_parser *parser)
-{
-	char	*tmp;
 
-	(void)parser;
-	i = len;
-	if (ft_check_space(str, len, i) && str[len] == '"')
-		return (1);
-	if (str[i] == '"' && i -1 >= 0 && str[i -1] == ' ')
-	{
-		i--;
-		while (i >= 0 && str[i] == ' ')
-			i--;
-	}
+t_dolar	*ft_dolar_new(char *content)
+{
+	t_dolar	*new_node;
+
+	new_node = (t_dolar *)malloc(sizeof(t_dolar));
+	if (!new_node)
+		return (NULL);
+	new_node->str = content;
+	new_node->next = NULL;
+	return (new_node);
+}
+
+void	ft_dolar_add_back(t_dolar **lst, t_dolar *new_node)
+{
+	t_dolar	*temp;
+
+	if (!lst || !new_node)
+		return ;
+	if (*lst == NULL)
+		*lst = new_node;
 	else
-		while (i >= 0 && str[i] != ' ')
-			i--;
-	tmp = ft_substr(str, i +1, len - i);
-	if (ft_check_last(tmp))
 	{
-		free(tmp);
-		return (1);
+		temp = *lst;
+		while (temp->next)
+			temp = temp->next;
+		temp->next = new_node;
 	}
-	free(tmp);
-	return (0);
 }
 
-int	ft_check_last(char *tmp)
+char	*ft_node_resizer(t_dolar *dolar)
 {
-	if (tmp == NULL || !ft_strchr(tmp, '$') || ft_strchr(tmp, '\'')
-		|| (tmp[0] == '$' && tmp[1] == '\0'))
-		return (0);
-	else if (tmp[0] == '$' && tmp[1]
-		&& (tmp[1] == '"' || tmp[1] == ' ' || tmp[1] == '\''))
-		return (0);
-	return (1);
-}
+	char	*dest;
+	t_dolar	*tmp;
+	t_dolar	*tmp2;
 
-int	ft_first_is_dolar(char *str)
-{
-	int		i;
-	char	*tmp;
-
-	i = 0;
-	while (str[i] && str[i] != ' ')
-		i++;
-	tmp = ft_substr(str, 0, i);
-	if (ft_strchr(tmp, '$'))
+	tmp = dolar;
+	dest = ft_strdup("");
+	while (tmp)
 	{
-		free(tmp);
-		return (1);
+		dest = ft_strjoin(dest, tmp->str);
+		tmp = tmp->next;
 	}
-	free(tmp);
-	return (0);
+	tmp = dolar;
+	while (tmp)
+	{
+		tmp2 = tmp;
+		free(tmp2->str);
+		tmp = tmp->next;
+		free(tmp2);
+	}
+	return (dest);
 }
+

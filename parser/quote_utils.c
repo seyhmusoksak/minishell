@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:54:48 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/05 17:10:58 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/20 19:56:43 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_count_quote(char *str, int len, char quote_type)
 
 	quote_len = 0;
 	i = 0;
-	while (i < len)
+	while (i < len && str[i])
 	{
 		if (str[i] == quote_type)
 			quote_len++;

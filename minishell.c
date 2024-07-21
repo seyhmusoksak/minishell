@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 16:22:02 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/12 23:24:05 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:34:02 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,6 @@ int	main(int argc, char **argv, char **envp)
 	state->pars->exit_check = 0;
 	state->env = get_env(state, envp);
 	state->pars->env = state->env;
-
-	// tmp = state->env;
-	// while (tmp != NULL)
-	// {
-	// 	printf("Key: %s\n", tmp->key);
-	// 	printf("Value: %s\n", tmp->value);
-	// 	tmp = tmp->next;
-	// }
-	// printf("pid : %d\n", getpid());
 	while (1)
 	{
 		state->line = readline("minishell>");

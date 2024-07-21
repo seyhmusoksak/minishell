@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/18 16:22:59 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:22:45 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,19 @@ int	ft_parser(t_state *state)
 		return (ft_exit(line, "Error: Failure to use pipe ", state->pars));
 	split_str = ft_pipe_split(line, '|', state->pars);
 	ft_init_quote_str(split_str, state->pars);
+	printf("-------cleaned_argv---------\n");
+	i = -1;
+	while (state->pars->cleaned[++i])
+		printf("i(%d): %s\n", i, state->pars->cleaned[i]);
 	state->pars->clean_argv = ft_put_env(state->pars->cleaned, state);
+	printf("------------------Put_Env---------------------\n");
+	i = -1;
+	while (state->pars->clean_argv[++i])
+		printf("i(%d): %s\n", i, state->pars->clean_argv[i]);
 	ft_free_double_str(state->pars->cleaned);
 	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
 	ft_free_double_str(state->pars->clean_argv);
+	printf("------------------3d_Str---------------------\n");
 	i = -1;
 	while (state->clean_thrd_argv[++i])
 	{
@@ -131,10 +140,10 @@ char	**ft_put_env(char **str, t_state *state)
 	i = -1;
 	while (str[++i])
 	{
-		count_dolr = ft_count_dolar(str[i], state->pars);
+		count_dolr = ft_count_dolar(str[i]);
 		env = state->env;
 		if (count_dolr)
-			dest[i] = ft_dolar_handler(str[i], count_dolr, state->pars, env);
+			dest[i] = ft_dolar_handler(str[i], state->dolar, state->pars, env);
 		else
 			dest[i] = ft_strdup(str[i]);
 	}
