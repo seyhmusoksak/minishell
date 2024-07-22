@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 16:22:02 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/21 17:34:02 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/22 17:26:47 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		state->line = readline("minishell>");
+		if (state->line)
+			add_history(state->line);
 		if (ft_parser(state))
 			break ;
 	}
