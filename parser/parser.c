@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/21 17:22:45 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/24 16:24:53 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ char	**ft_put_env(char **str, t_state *state)
 	i = -1;
 	while (str[++i])
 	{
-		count_dolr = ft_count_dolar(str[i]);
+		count_dolr = ft_count_dolar(str[i], state->pars);
 		env = state->env;
 		if (count_dolr)
 			dest[i] = ft_dolar_handler(str[i], state->dolar, state->pars, env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/21 17:21:10 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:47:12 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct s_parser
 	char	**united_key;
 	char	**united_env;
 	char	*key;
-	t_env	*env;
 }	t_parser;
 
 typedef struct s_lexer
@@ -123,10 +122,11 @@ int		ft_count_quote(char *str, int len, char quote_type);
 char	*ft_cut_dquote(char *str, int len, t_parser *pars);
 char	*ft_cut_squote(char *str, int len, t_parser *pars);
 
-//						Put_env functions (19)
+//						Put_env functions (20)
 char	**ft_put_env(char **str, t_state *state);
-int		ft_count_dolar(char *str);
-int		ft_isdolr(char *str, int index);
+int		ft_count_dolar(char *str ,t_parser *parser);
+int		ft_isdolr(char *str, int index, t_parser *pars);
+int		ft_check_is_in(char *str, int index, t_parser *parser);
 char	*ft_dolar_handler(char *str, t_dolar *dolar, t_parser *prs, t_env *env);
 void	ft_pars_str(char *s, t_parser *prs);
 void	ft_pars_str_helper(char *s, t_parser *prs);
@@ -146,7 +146,7 @@ char	*ft_join_key(char *key, int index, t_env *env);
 char	*ft_resizer(char **str);
 
 
-//			3D string functions (2)
+//			3D string functions (3)
 char	***ft_parser_to_lexer(char **str, t_parser *parser);
 char	*ft_clean_first_last_quote(char *str);
 void	ft_free_thrd_str(char ***str);

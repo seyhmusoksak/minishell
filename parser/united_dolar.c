@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   united_dolar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:33:05 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/21 17:30:57 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:10:20 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_united_dolar(t_parser *parser, t_env *env)
 	int		chck_dolr;
 	int		chck_dq;
 
-	if (ft_strchr(parser->key, '\'') && ft_strchr(parser->key, '"'))
+	if (ft_strchr(parser->key, '\''))
 		ft_clear_for_dolr('\'', parser);
 	ft_united_handler(&chck_dq, &chck_dolr, parser, env);
 	dest = ft_resizer(parser->united_env);
@@ -46,6 +46,7 @@ int	ft_clear_for_dolr(char quote_type, t_parser *parser)
 	tmp[j] = '\0';
 	free(parser->key);
 	parser->key = ft_strdup(tmp);
+	free (tmp);
 	return (1);
 }
 

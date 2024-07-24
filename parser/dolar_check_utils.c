@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   dolar_check_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:58:11 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/21 16:29:43 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:21:26 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_count_dolar(char *str)
+int	ft_count_dolar(char *str ,t_parser *parser)
 {
 	int	i;
 	int	count_dolar;
@@ -25,17 +25,16 @@ int	ft_count_dolar(char *str)
 		{
 			while (str[i] && str[i] != '$')
 				i++;
-			if (str[i] == '$' && ft_isdolr(str, i))
+			if (str[i] == '$' && ft_isdolr(str, i, parser))
 				count_dolar++;
 			while (str[i] && str[i] != ' ')
 				i++;
 		}
-		return (count_dolar);
 	}
-	return (0);
+	return (count_dolar);
 }
 
-int	ft_isdolr(char *str, int index)
+int	ft_isdolr(char *str, int index ,t_parser *parser)
 {
 	char	*check_str;
 	int		start;
@@ -52,18 +51,17 @@ int	ft_isdolr(char *str, int index)
 		check_str = ft_substr(str, start, (index - start));
 		dval = ft_count_quote(check_str, index - start, '"') % 2;
 		sval = ft_count_quote(check_str, index - start, '\'') % 2;
-		if ((dval && sval) || (!dval && !sval) || (dval && !sval))
+		if ((dval && sval) || (!dval && !sval) || (dval && !sval)
+			|| (sval && ft_check_is_in(str, index, parser)))
 		{
 			free(check_str);
 			check_str = NULL;
 			return (1);
 		}
 		free(check_str);
-		check_str = NULL;
 	}
 	return (0);
 }
-
 
 t_dolar	*ft_dolar_new(char *content)
 {
@@ -117,4 +115,5 @@ char	*ft_node_resizer(t_dolar *dolar)
 	}
 	return (dest);
 }
+
 

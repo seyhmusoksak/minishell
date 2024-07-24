@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_env_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:54:53 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/21 16:13:29 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:21:53 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void	ft_pars_str(char *s, t_parser *prs)
 		prs->len_str[0] = prs->d;
 		while ((s[prs->d] && s[prs->d] != '$'))
 			prs->d++;
-		if (s[prs->d] == '$' && !ft_isdolr(s, prs->d))
+		if (s[prs->d] == '$' && !ft_isdolr(s, prs->d, prs))
 		{
 			prs->d++;
-			while ((s[prs->d] && s[prs->d] == '$' && !ft_isdolr(s, prs->d))
+			while ((s[prs->d] && s[prs->d] == '$' && !ft_isdolr(s, prs->d, prs))
 				|| (s[prs->d] && s[prs->d] != '$'))
 				prs->d++;
 		}
@@ -46,11 +46,11 @@ void	ft_pars_str_helper(char *s, t_parser *prs)
 	prs->len_str[0] = prs->d;
 	while ((s[prs->d] && s[prs->d] != '$'))
 		prs->d++;
-	if (s[prs->d] == '$' && !ft_isdolr(s, prs->d))
+	if (s[prs->d] == '$' && !ft_isdolr(s, prs->d, prs))
 	{
 		prs->d++;
 		while ((s[prs->d] && s[prs->d] != '$')
-			|| (s[prs->d] && s[prs->d] == '$' && !ft_isdolr(s, prs->d)))
+			|| (s[prs->d] && s[prs->d] == '$' && !ft_isdolr(s, prs->d, prs)))
 			prs->d++;
 	}
 	prs->len_str[1] = prs->d -1;
@@ -97,5 +97,20 @@ int	ft_check_after_key(char *key)
 	}
 	if (check_isalnum)
 		return (i);
+	return (0);
+}
+int	ft_check_is_in(char *str, int index, t_parser *parser)
+{
+	char	*sub;
+
+	sub = ft_substr(str, 0, index);
+	if (ft_quote_check(sub, index, parser) == 2)
+	{
+		free(sub);
+		sub = NULL;
+		return (1);
+	}
+	free(sub);
+	sub = NULL;
 	return (0);
 }
