@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:58:11 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/24 21:52:07 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/25 20:28:17 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,14 @@ char	*ft_node_resizer(t_dolar *dolar)
 		dest = ft_strjoin(dest, tmp->str);
 		tmp = tmp->next;
 	}
-	tmp = dolar;
-	while (tmp)
-	{
-		tmp2 = tmp;
-		free(tmp2->str);
-		tmp = tmp->next;
-		free(tmp2);
-	}
+		tmp = dolar;
+		while (tmp)
+		{
+			tmp2 = tmp;
+			free(tmp2->str);
+			tmp = tmp->next;
+			free(tmp2);
+		}
 	return (dest);
 }
 

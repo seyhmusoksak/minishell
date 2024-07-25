@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/24 16:24:53 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/25 21:17:26 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_parser(t_state *state)
 {
 	char	*line;
 	char	**split_str;
+	char	**pars_redirect;
 	int		i;
 	int		j;
 
@@ -33,12 +34,19 @@ int	ft_parser(t_state *state)
 	i = -1;
 	while (state->pars->cleaned[++i])
 		printf("i(%d): %s\n", i, state->pars->cleaned[i]);
-	state->pars->clean_argv = ft_put_env(state->pars->cleaned, state);
+
+	pars_redirect = ft_redirect_parser(state->pars, state->dolar);
+	ft_free_double_str(state->pars->cleaned);
+	printf("------------------Pars_Redirect---------------------\n");
+	i = -1;
+	while (pars_redirect[++i])
+		printf("i(%d): %s\n", i, pars_redirect[i]);
+
+	state->pars->clean_argv = ft_put_env(pars_redirect, state);
 	printf("------------------Put_Env---------------------\n");
 	i = -1;
 	while (state->pars->clean_argv[++i])
 		printf("i(%d): %s\n", i, state->pars->clean_argv[i]);
-	ft_free_double_str(state->pars->cleaned);
 	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
 	ft_free_double_str(state->pars->clean_argv);
 	printf("------------------3d_Str---------------------\n");

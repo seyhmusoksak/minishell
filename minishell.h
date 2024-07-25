@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/24 19:47:12 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/25 19:47:42 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_dolar
+{
+	char				*str;
+	struct s_dolar		*next;
+
+}	t_dolar;
 typedef struct s_parser
 {
 	// clean func parameter
@@ -56,6 +62,8 @@ typedef struct s_parser
 	char	**united_key;
 	char	**united_env;
 	char	*key;
+
+	t_dolar *sublist;
 }	t_parser;
 
 typedef struct s_lexer
@@ -64,13 +72,6 @@ typedef struct s_lexer
 	int					type;
 	struct s_lexer		*next;
 }	t_lexer;
-
-typedef struct s_dolar
-{
-	char				*str;
-	struct s_dolar		*next;
-
-}	t_dolar;
 
 typedef struct s_state
 {
@@ -145,7 +146,13 @@ char	*ft_dup_key(char *key, int n, t_env *env);
 char	*ft_join_key(char *key, int index, t_env *env);
 char	*ft_resizer(char **str);
 
-
+t_dolar	*ft_redirect_handler(char *str ,int i, int j, t_parser *pars);
+char	**ft_redirect_parser(t_parser *pars, t_dolar *list);
+t_dolar	*ft_redirect_handler(char *str ,int i, int j, t_parser *pars);
+int		ft_split_redirect(char *str, int len, int *j, t_parser *pars);
+t_dolar	*ft_finish_redirect(char *str, int i, int *j, t_parser *pars);
+int		ft_listlen(t_dolar *lst);
+char	**ft_node_to_double(t_dolar **list, int i, int list_size);
 //			3D string functions (3)
 char	***ft_parser_to_lexer(char **str, t_parser *parser);
 char	*ft_clean_first_last_quote(char *str);
