@@ -1,21 +1,19 @@
 NAME = minishell
-SRCS = exec.c get_env.c minishell.c
+SRCS = get_env.c minishell.c parser/parser.c parser/parser_utils.c \
+		parser/parser_check.c error_utils.c parser/quote_utils.c \
+		parser/quote_check.c parser/put_env.c parser/put_env_utils.c \
+		parser/dolar_check_utils.c lexer/lexer.c lexer/lexer_utils.c lexer/add_cluster.c \
+		error/file_error.c
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -g -Wall -Wextra -Werror -fsanitize=address
 LDFLAGS = -lreadline
-
-SRCS = minishell.c get_env.c lexer/my_lexer.c utils.c exec.c \
-		builtin/env.c builtin/pwd.c builtin/cd.c builtin/error.c \
-		builtin/export.c builtin/unset.c
-
-OBJ = $(SRCS:.c=.o)
 
 all: $(NAME)
 $(NAME): $(OBJS) $(SRCS)
 	@make -C ./libft -s
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LDFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) $(LDFLAGS)
 	@echo "              _       _      __         ____"
 	@echo "   ____ ___  (_)___  (_)____/ /_  ___  / / /"
 	@echo "  / __ \`__ \/ / __ \/ / ___/ __ \/ _ \/ / / "
@@ -25,12 +23,12 @@ $(NAME): $(OBJS) $(SRCS)
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 clean:
-	rm -rf $(OBJ)
-	make -C libft clean
-
+	@make -C ./libft clean -s
+	@rm -rf $(OBJS)
+	@echo "Object files removed!"
 fclean: clean
-	rm -rf $(NAME)
-	make -C libft fclean
-
+	@make -C ./libft fclean -s
+	@rm -rf $(NAME)
+	@echo "Program is removed!"
 re: fclean all
 .PHONY: all clean fclean re

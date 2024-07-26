@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:37:07 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/17 12:36:21 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/24 16:06:29 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ t_env	*get_env(t_state *data, char **env)
 
 char	**ft_sep_path(t_state *state)
 {
-
 	while (state->env)
 	{
 		if (ft_strncmp(state->env->key, "PATH",
