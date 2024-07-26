@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 20:23:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/25 16:15:45 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/26 17:25:21 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 // TEST METNİ:
 //echo "$PWD" $PWD "'$PWD'" "basta '$PWD' sonda" "sadece basta '$PWD'" "'PWD' sadece son" "$USER '$PWD' ikisi birden" | echo '$PWD' '"$PWD" bosluklu' '"$PWD"' 'valla "$PWD" dayi $' | noktalama $PWD.a1231 "$PWD,a12a131" | sayi $1234 $1PWD | birlesik "$PWD$USER'$PWD'" |  karisik "$PWD '$PWD'$bos.123 $  '$PWD' bu da son"
 
-char	*ft_dolar_handler(char *str, t_dolar *dolar, t_parser *prs, t_env *env)
+char	*ft_dolar_handler(char *str, t_node *dolar, t_parser *prs, t_env *env)
 {
-	t_dolar	*new_node;
+	t_node	*new_node;
 
 	dolar = NULL;
 	prs->d = 0;

@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/25 21:17:26 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/26 17:33:11 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,32 +24,30 @@ int	ft_parser(t_state *state)
 		return (0);
 	line = ft_strtrim(state->line, " ");
 	free(state->line);
-	if (ft_quote_check(line, (int) ft_strlen(line), state->pars))
+	if (ft_quote_check(line, (int)ft_strlen(line), state->pars))
 		return (ft_exit(line, "Error: open quotation mark", state->pars));
 	if (line[0] == '|' || line[ft_strlen(line) - 1] == '|')
 		return (ft_exit(line, "Error: Failure to use pipe ", state->pars));
 	split_str = ft_pipe_split(line, '|', state->pars);
 	ft_init_quote_str(split_str, state->pars);
-	printf("-------cleaned_argv---------\n");
+	printf("--------------------cleaned_argv--------------------\n");
 	i = -1;
 	while (state->pars->cleaned[++i])
 		printf("i(%d): %s\n", i, state->pars->cleaned[i]);
-
 	pars_redirect = ft_redirect_parser(state->pars, state->dolar);
-	ft_free_double_str(state->pars->cleaned);
 	printf("------------------Pars_Redirect---------------------\n");
 	i = -1;
 	while (pars_redirect[++i])
 		printf("i(%d): %s\n", i, pars_redirect[i]);
-
+	ft_free_double_str(state->pars->cleaned);
 	state->pars->clean_argv = ft_put_env(pars_redirect, state);
-	printf("------------------Put_Env---------------------\n");
+	printf("--------------------Put_Env-------------------------\n");
 	i = -1;
 	while (state->pars->clean_argv[++i])
 		printf("i(%d): %s\n", i, state->pars->clean_argv[i]);
+	ft_free_double_str(pars_redirect);
 	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
-	ft_free_double_str(state->pars->clean_argv);
-	printf("------------------3d_Str---------------------\n");
+	printf("----------------------3d_Str------------------------\n");
 	i = -1;
 	while (state->clean_thrd_argv[++i])
 	{
@@ -57,6 +55,7 @@ int	ft_parser(t_state *state)
 		while (state->clean_thrd_argv[i][++j])
 			printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
 	}
+	ft_free_double_str(state->pars->clean_argv);
 	free(line);
 	ft_free_thrd_str(state->clean_thrd_argv);
 	return (0);
@@ -64,8 +63,8 @@ int	ft_parser(t_state *state)
 
 int	ft_init_quote_str(char **str, t_parser *pars)
 {
-	int		i;
-	int		len;
+	int	i;
+	int	len;
 
 	i = -1;
 	len = ft_double_str_len(str);
@@ -119,13 +118,13 @@ char	*ft_clean_first_last_quote(char *str)
 
 	i = 0;
 	j = -1;
-	if ((str[0] == '"' && str[ft_strlen(str) -1] == '"')
-		|| (str[0] == '\'' && str[ft_strlen(str) -1] == '\''))
+	if ((str[0] == '"' && str[ft_strlen(str) - 1] == '"')
+		|| (str[0] == '\'' && str[ft_strlen(str) - 1] == '\''))
 	{
 		dest = malloc(sizeof(char) * ft_strlen(str) - 1);
 		if (!dest)
 			return (NULL);
-		while (str[++i] && (i < ((int )ft_strlen(str))))
+		while (str[++i] && (i < ((int)ft_strlen(str))))
 			dest[++j] = str[i];
 		dest[j] = '\0';
 		return (dest);
@@ -135,13 +134,13 @@ char	*ft_clean_first_last_quote(char *str)
 
 char	**ft_put_env(char **str, t_state *state)
 {
-	t_env		*env;
-	char		**dest;
-	int			i;
-	int			count_dolr;
+	t_env	*env;
+	char	**dest;
+	int		i;
+	int		count_dolr;
 
 	env = state->env;
-	dest = malloc(sizeof(char *) * (ft_double_str_len(str) +1));
+	dest = malloc(sizeof(char *) * (ft_double_str_len(str) + 1));
 	if (!dest)
 		return (NULL);
 	dest[ft_double_str_len(str)] = NULL;
@@ -157,4 +156,3 @@ char	**ft_put_env(char **str, t_state *state)
 	}
 	return (dest);
 }
-
