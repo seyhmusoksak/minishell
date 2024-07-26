@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/17 19:55:10 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/26 18:46:57 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ char	**ft_pipe_split(char *line, char c, t_parser *parser)
 	src = ft_split(line, c);
 	tmp = (char **)malloc(sizeof(char *) * (pc + 1));
 	if (!tmp)
-	{
-		ft_free_double_str(src);
 		return (NULL);
-	}
 	tmp[pc] = NULL;
 	ft_quote_control(src, tmp, c, parser);
 	ft_free_double_str(src);
@@ -53,10 +50,10 @@ void	ft_quote_control(char **src, char **tmp, char c, t_parser *parser)
 		if (ft_quote_check(dst, ft_strlen(dst), parser) == 0 && dst != NULL)
 		{
 			tmp[j] = ft_strdup(dst);
-			parser->char_check = 1;
+			parser->char_check = ++i;
 			j++;
-			i++;
 		}
+		free(dst);
 	}
 	tmp[j] = NULL;
 }
@@ -97,7 +94,6 @@ void	ft_strjoin_and_free(char **dst, char *s2, char c)
 
 	c_str[0] = c;
 	c_str[1] = '\0';
-
 	if (!*dst || !s2)
 		return ;
 	tmp = ft_strjoin(*dst, c_str);

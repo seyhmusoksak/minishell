@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:54:48 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/17 19:55:37 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/26 18:51:32 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ft_count_quote(char *str, int len, char quote_type)
 
 	quote_len = 0;
 	i = 0;
-	while (i < len)
+	while (i < len && str[i])
 	{
 		if (str[i] == quote_type)
 			quote_len++;
@@ -87,12 +87,4 @@ void	ft_init_paremeter(t_parser *pars)
 	pars->check_if = 1;
 }
 
-int	ft_double_str_len(char **str)
-{
-	int	i;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}

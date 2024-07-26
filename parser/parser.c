@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/17 19:57:40 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/26 18:17:07 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,39 @@
 int	ft_parser(t_state *state)
 {
 	char	*line;
-	char	**tmp_cleaned;
+	char	**split_str;
+	char	**pars_redirect;
 	int		i;
 	int		j;
 
-	if (ft_wait_for_input(state) == 0)
+	if (!ft_wait_for_input(state))
 		return (0);
 	line = ft_strtrim(state->line, " ");
 	free(state->line);
-	//line dadece boşluk ya da enter attığında mac de patlıyır lınux da sıkıntı yok
-	if (ft_quote_check(line, (int) ft_strlen(line), state->pars))
+	if (ft_quote_check(line, (int)ft_strlen(line), state->pars))
 		return (ft_exit(line, "Error: open quotation mark", state->pars));
 	if (line[0] == '|' || line[ft_strlen(line) - 1] == '|')
 		return (ft_exit(line, "Error: Failure to use pipe ", state->pars));
-	tmp_cleaned = ft_init_quote_str
-		(ft_pipe_split(line, '|', state->pars), state->pars);
-	printf("-------cleaned_argv---------\n");
+	split_str = ft_pipe_split(line, '|', state->pars);
+	ft_init_quote_str(split_str, state->pars);
+	printf("--------------------cleaned_argv--------------------\n");
 	i = -1;
-	while (tmp_cleaned[++i])
-		printf("i(%d): %s\n", i, tmp_cleaned[i]);
-	state->pars->clean_argv = ft_put_env(tmp_cleaned, state);
-	printf("------------------Put_Env---------------------\n");
+	while (state->pars->cleaned[++i])
+		printf("i(%d): %s\n", i, state->pars->cleaned[i]);
+	pars_redirect = ft_redirect_parser(state->pars, state->dolar);
+	printf("------------------Pars_Redirect---------------------\n");
+	i = -1;
+	while (pars_redirect[++i])
+		printf("i(%d): %s\n", i, pars_redirect[i]);
+	ft_free_double_str(state->pars->cleaned);
+	state->pars->clean_argv = ft_put_env(pars_redirect, state);
+	printf("--------------------Put_Env-------------------------\n");
 	i = -1;
 	while (state->pars->clean_argv[++i])
 		printf("i(%d): %s\n", i, state->pars->clean_argv[i]);
+	ft_free_double_str(pars_redirect);
 	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
-	printf("-------cleaned_thrd_argv---------\n");
+	printf("----------------------3d_Str------------------------\n");
 	i = -1;
 	while (state->clean_thrd_argv[++i])
 	{
@@ -48,33 +55,36 @@ int	ft_parser(t_state *state)
 		while (state->clean_thrd_argv[i][++j])
 			printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
 	}
-	ft_free_double_str(tmp_cleaned);
+	ft_free_double_str(state->pars->clean_argv);
 	free(line);
+	ft_free_thrd_str(state->clean_thrd_argv);
 	return (0);
 }
 
-char	**ft_init_quote_str(char **str, t_parser *pars)
+int	ft_init_quote_str(char **str, t_parser *pars)
 {
-	int		i;
-	int		len;
+	int	i;
+	int	len;
 
 	i = -1;
 	len = ft_double_str_len(str);
 	pars->src = malloc(sizeof(char *) * (len + 1));
 	pars->cleaned = malloc(sizeof(char *) * (len + 1));
 	if (!pars->src || !pars->cleaned || !str)
-		return (NULL);
+		return (0);
 	while (str[++i])
 	{
 		pars->src[i] = ft_strtrim(str[i], " ");
 		pars->cleaned[i] = malloc(sizeof(char) * ft_strlen(pars->src[i]) + 1);
+		if (!pars->cleaned[i])
+			return (0);
 	}
 	pars->src[i] = NULL;
 	pars->cleaned[i] = NULL;
 	ft_send_cleaner(pars);
 	ft_free_double_str(str);
 	ft_free_double_str(pars->src);
-	return (pars->cleaned);
+	return (1);
 }
 
 char	***ft_parser_to_lexer(char **str, t_parser *parser)
@@ -108,14 +118,13 @@ char	*ft_clean_first_last_quote(char *str)
 
 	i = 0;
 	j = -1;
-
-	if ((str[0] == '"' && str[ft_strlen(str) -1] == '"')
-		|| (str[0] == '\'' && str[ft_strlen(str) -1] == '\''))
+	if ((str[0] == '"' && str[ft_strlen(str) - 1] == '"')
+		|| (str[0] == '\'' && str[ft_strlen(str) - 1] == '\''))
 	{
 		dest = malloc(sizeof(char) * ft_strlen(str) - 1);
 		if (!dest)
 			return (NULL);
-		while (str[++i] && (i < ((int )ft_strlen(str))))
+		while (str[++i] && (i < ((int)ft_strlen(str))))
 			dest[++j] = str[i];
 		dest[j] = '\0';
 		return (dest);
@@ -125,13 +134,13 @@ char	*ft_clean_first_last_quote(char *str)
 
 char	**ft_put_env(char **str, t_state *state)
 {
-	t_env		*env;
-	char		**dest;
-	int			i;
-	int			count_dolr;
+	t_env	*env;
+	char	**dest;
+	int		i;
+	int		count_dolr;
 
 	env = state->env;
-	dest = malloc(sizeof(char *) * (ft_double_str_len(str) +1));
+	dest = malloc(sizeof(char *) * (ft_double_str_len(str) + 1));
 	if (!dest)
 		return (NULL);
 	dest[ft_double_str_len(str)] = NULL;
@@ -141,10 +150,9 @@ char	**ft_put_env(char **str, t_state *state)
 		count_dolr = ft_count_dolar(str[i], state->pars);
 		env = state->env;
 		if (count_dolr)
-			dest[i] = ft_dolar_handler(str[i], count_dolr, state->pars, env);
+			dest[i] = ft_dolar_handler(str[i], state->dolar, state->pars, env);
 		else
 			dest[i] = ft_strdup(str[i]);
 	}
 	return (dest);
 }
-

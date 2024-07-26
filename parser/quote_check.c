@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:29:21 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/17 18:33:25 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/26 18:49:18 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	ft_quote_check(char *str, int len, t_parser *pars)
 		return (2);
 	}
 	free(new_str);
+	if (tmp != NULL)
+		free(tmp);
 	return (0);
 }
 
@@ -101,3 +103,4 @@ int	ft_quote_count_check(char *str, int *check, char quote_type, int num)
 	}
 	return (0);
 }
+
