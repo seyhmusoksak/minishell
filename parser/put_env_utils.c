@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:54:53 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/24 20:21:53 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/26 18:53:10 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,19 +65,6 @@ void	ft_pars_str_helper(char *s, t_parser *prs)
 	prs->len_dolar[1] = prs->d -1;
 }
 
-char	*ft_resizer(char **str)
-{
-	char	*line;
-	int		i;
-
-	line = ft_strdup("");
-	i = -1;
-	while (str[++i])
-		line = ft_strjoin(line, str[i]);
-	ft_free_double_str(str);
-	return (line);
-}
-
 int	ft_check_after_key(char *key)
 {
 	int		i;
@@ -99,6 +86,7 @@ int	ft_check_after_key(char *key)
 		return (i);
 	return (0);
 }
+
 int	ft_check_is_in(char *str, int index, t_parser *parser)
 {
 	char	*sub;

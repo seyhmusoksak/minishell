@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/18 16:29:49 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/26 18:46:57 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	ft_quote_control(char **src, char **tmp, char c, t_parser *parser)
 		if (ft_quote_check(dst, ft_strlen(dst), parser) == 0 && dst != NULL)
 		{
 			tmp[j] = ft_strdup(dst);
-			parser->char_check = 1;
+			parser->char_check = ++i;
 			j++;
-			i++;
 		}
+		free(dst);
 	}
 	tmp[j] = NULL;
 }
@@ -94,7 +94,6 @@ void	ft_strjoin_and_free(char **dst, char *s2, char c)
 
 	c_str[0] = c;
 	c_str[1] = '\0';
-
 	if (!*dst || !s2)
 		return ;
 	tmp = ft_strjoin(*dst, c_str);
@@ -106,15 +105,7 @@ void	ft_strjoin_and_free(char **dst, char *s2, char c)
 	free(result);
 	return ;
 }
-int	ft_double_str_len(char **str)
-{
-	int	i;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
 int	ft_wait_for_input(t_state *state)
 {
 	int	i;

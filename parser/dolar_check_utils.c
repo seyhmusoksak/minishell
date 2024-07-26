@@ -6,13 +6,13 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:58:11 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/26 17:28:00 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/26 18:53:44 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_count_dolar(char *str ,t_parser *parser)
+int	ft_count_dolar(char *str, t_parser *parser)
 {
 	int	i;
 	int	count_dolar;

@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/26 17:28:18 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/26 19:08:53 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_parser
 	char	**united_env;
 	char	*key;
 
+	//	redirect
 	t_node	*sublist;
 	int		check_redirect;
 }	t_parser;
@@ -147,14 +148,15 @@ char	*ft_dup_key(char *key, int n, t_env *env);
 char	*ft_join_key(char *key, int index, t_env *env);
 char	*ft_resizer(char **str);
 
-t_node	*ft_redirect_handler(char *str ,int i, int j, t_parser *pars);
+//				Redirect functions(7)
 char	**ft_redirect_parser(t_parser *pars, t_node *list);
-t_node	*ft_redirect_handler(char *str ,int i, int j, t_parser *pars);
+t_node	*ft_redirect_handler(char *str, int i, int j, t_parser *pars);
 int		ft_split_redirect(char *str, int len, int *j, t_parser *pars);
 t_node	*ft_finish_redirect(char *str, int i, int *j, t_parser *pars);
-int		ft_listlen(t_node *lst);
 char	**ft_node_to_double(t_node **list, int i, int list_size);
-//			3D string functions (3)
+int		ft_listlen(t_node *lst);
+
+//				3D string functions (3)
 char	***ft_parser_to_lexer(char **str, t_parser *parser);
 char	*ft_clean_first_last_quote(char *str);
 void	ft_free_thrd_str(char ***str);

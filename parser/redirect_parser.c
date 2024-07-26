@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:00:18 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/26 17:26:48 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/26 18:49:49 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,17 +120,3 @@ t_node	*ft_finish_redirect(char *str, int i, int *j, t_parser *pars)
 	return (dest);
 }
 
-int	ft_listlen(t_node *lst)
-{
-	int	i;
-
-	i = 0;
-	if (!lst)
-		return (0);
-	while (lst)
-	{
-		lst = lst -> next;
-		i++;
-	}
-	return (i);
-}
