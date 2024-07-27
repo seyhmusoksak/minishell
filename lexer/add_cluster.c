@@ -156,5 +156,213 @@ void	ft_add_cluster(t_state *state)
 	}
 	//ft_free_thrd_str(state->clean_thrd_argv); leak yiyor
 }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+		i++;
+	return (s1[i] - s2[i]);
+}
+int	ft_open_output(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_CREAT | O_TRUNC | O_RDWR, 0777);
+	if (fd == -1)
+		return (-1);
+	close(fd);
+	return (0);
+}
+int	ft_open_input(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY, 0777);
+	if (fd == -1)
+		return (-1);
+	close(fd);
+	return (0);
+}
+
+static t_files *ft_new_files_node(char **arg)
+{
+	t_files	*node;
+	int		i;
+
+	node =(t_files *) malloc(sizeof(t_files));
+	i = 0;
+	while (arg[i])
+	{
+		if (i == 1)
+		{
+			node->output = ft_strdup("");
+			node->input = ft_strdup("");
+		}
+		if(ft_strcmp(arg[i],"<") == 0)
+		{
+			free(node->input);
+			node->input = ft_strdup(arg[i + 1]);
+			if (ft_open_input(node->input))
+				return (0);
+			i++;
+		}
+		else if(ft_strcmp(arg[i],">") == 0)
+		{
+			free(node->output);
+			node->output = ft_strdup(arg[i + 1]);
+			if(ft_open_output(node->output) == -1)
+				return (0);
+			i++;
+		}
+		i++;
+	}
+	return (node);
+}
+static int ft_len_arg(char **arg)
+{
+	int	i;
+	int	len;
+
+	len = 0;
+	if(ft_strcmp(arg[0],"<") == 0 || ft_strcmp(arg[0], ">") == 0)
+	{
+		i = 3;
+		while(arg[i])
+		{
+			if ((ft_strcmp(arg[i],">") != 0 && ft_strcmp(arg[i],"<") != 0)
+				&& ft_strncmp("-",arg[i],1) != 0)
+					len++;
+			i++;
+		}
+	}
+	i = 1;
+	while (arg[i])
+	{
+		if(ft_strcmp(arg[i],">") == 0 || ft_strcmp(arg[i],"<") == 0)
+			i += 2;
+		else if(ft_strncmp("-",arg[i],1) != 0)
+			i++;
+		else
+		{
+			len++;
+			i++;
+		}
+	}
+	return (len);
+}
+
+static	char	**ft_find_arg(char **arg)
+{
+	int		i;
+	char	**argumans;
+	int		j;
+
+	i = 1;
+	j = 0;
+	argumans = malloc(sizeof(char *) * (ft_len_arg(arg) + 1));
+	if(ft_strcmp(arg[0],"<") == 0 || ft_strcmp(arg[0], ">") == 0)
+		i += 2;
+	while (arg[i])
+	{
+		if(ft_strcmp(arg[i],">") == 0 || ft_strcmp(arg[i],"<") == 0)
+			i += 2;
+		else if(ft_strncmp("-",arg[i],1) != 0)
+			i++;
+		else
+			argumans[j++] = arg[i++];
+	}
+	argumans[j] = NULL;
+	return (argumans);
+}
+
+static char	**ft_find_flag(char	**arg)
+{
+	int	i;
+	int	j;
+	int	len;
+	char	**flag;
+
+	i = 0;
+	len = 0;
+	j = 0;
+	while(arg[i])
+	{
+		if (ft_strncmp("-",arg[i],1) == 0)
+			len++;
+		i++;
+	}
+	flag = malloc(sizeof(char *) * (len + 1));
+	i = 0;
+	while(arg[i])
+	{
+		if (ft_strncmp("-",arg[i],1) == 0)
+		{
+			flag[j] = ft_strdup(arg[i]);
+			j++;
+		}
+		i++;
+	}
+	flag[j] = NULL;
+	return (flag);
+}
+
+static char	*ft_find_cmd(char	**arg)
+{
+	if(ft_strcmp(arg[0], ">") == 0 || ft_strcmp(arg[0], "<") == 0)
+	{
+		return (arg[2]);
+	}
+	else
+		return (arg[0]);
+}
+static void	ft_cluster_addback(t_cluster **cluster_node, t_cluster *new)
+{
+	t_cluster	*tmp;
+
+	if (!cluster_node || !new)
+		return ;
+	if (!*cluster_node)
+	{
+		*cluster_node = new;
+		return ;
+	}
+	tmp = *cluster_node;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp ->next = new;
+}
+static t_cluster	*ft_new_cluster_node(char	**arg)
+{
+	t_cluster	*new;
+
+	new = (t_cluster *)malloc(sizeof(t_cluster));
+	new->cmd = ft_find_cmd(arg);
+	new->flag = ft_find_flag(arg);
+	new->arg = ft_find_arg(arg);
+	new->files = ft_new_files_node(arg);
+	new->next = NULL;
+	return (new);
+}
+
+
+void	ft_cluster(t_state *state)
+{
+	char	***thrd_arg;
+	t_cluster	*tmp_node;
+	int		i;
+
+	i = 0;
+	tmp_node = NULL;
+	thrd_arg = state->clean_thrd_argv;
+	while(thrd_arg[i])
+	{
+		ft_cluster_addback(&tmp_node, ft_new_cluster_node(thrd_arg[i]));
+		i++;
+	}
+	state->cluster = tmp_node;
+}
 
 
