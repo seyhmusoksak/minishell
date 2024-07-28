@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/26 21:03:23 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/28 21:03:20 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_parser(t_state *state)
 	i = -1;
 	while (state->pars->cleaned[++i])
 		printf("i(%d): %s\n", i, state->pars->cleaned[i]);
-	// ft_check_redirect(state->pars);
+	printf("%d\n", redirection_control(state->pars));
 	pars_redirect = ft_redirect_parser(state->pars, state->dolar);
 	printf("------------------Pars_Redirect---------------------\n");
 	i = -1;
