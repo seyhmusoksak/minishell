@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:54:53 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/26 18:53:10 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/28 14:16:45 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,3 +102,14 @@ int	ft_check_is_in(char *str, int index, t_parser *parser)
 	sub = NULL;
 	return (0);
 }
+
+int	ft_check_special(char *str, int i)
+{
+	if (str[i + 1] != '%' && str[i +1] != '+' && str[i +1] != ','
+		&& str[i +1] != '/' && str[i +1] != ':' && str[i +1] != '='
+		&& str[i +1] != ']' && str[i +1] != '^'
+		&& str[i +1] != '}' && str[i +1] != '~')
+		return (1);
+	return (0);
+}
+

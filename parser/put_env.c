@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 20:23:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/26 17:25:21 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/28 15:28:23 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ char	*ft_find_env(char *str, int n, t_parser *parser, t_env *env)
 	parser->key = ft_substr(str, 0, n);
 	if (!parser->key || !str)
 		return (NULL);
-	if (ft_isdigit(parser->key[0]))
+	if (ft_isdigit(parser->key[0])
+		|| parser->key[0] == '@' || parser->key[0] == '*')
 		dest = ft_strdup(parser->key + 1);
 	else if (ft_strchr(parser->key, '$'))
 		dest = ft_united_dolar(parser, env);
@@ -107,6 +108,11 @@ char	*ft_join_key(char *key, int index, t_env *env)
 
 char	*ft_dup_key(char *key, int n, t_env *env)
 {
+	if (key[0] == '#')
+	{
+		key[0] = '0';
+		return (ft_strdup(key));
+	}
 	while (env != NULL)
 	{
 		if (ft_strncmp(key, env->key, n) == 0)

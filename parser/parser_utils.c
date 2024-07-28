@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/26 18:46:57 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/28 12:59:47 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	ft_quote_control(char **src, char **tmp, char c, t_parser *parser)
 			parser->char_check = ++i;
 			j++;
 		}
-		free(dst);
+		if (ft_quote_check(dst, ft_strlen(dst), parser) == 0)
+			free (dst);
 	}
 	tmp[j] = NULL;
 }

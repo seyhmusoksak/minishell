@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/26 19:08:53 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/28 14:19:15 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void	ft_united_handler(int *chk_dq, int *chk_dlr, t_parser *prs, t_env *env);
 int		ft_init_united(int **chk_dq, int **chk_dolr, char **tmp, t_parser *prs);
 int		ft_mini_dolar_counter(char *str, int ***chck_dolr, int ***chck_dq);
 int		ft_check_after_key(char *key);
+int		ft_check_special(char *str, int i);
 char	*ft_dup_key(char *key, int n, t_env *env);
 char	*ft_join_key(char *key, int index, t_env *env);
 char	*ft_resizer(char **str);
