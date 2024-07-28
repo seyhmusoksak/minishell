@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/26 16:59:50 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/28 21:15:11 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,39 +25,48 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	state->parser->exit_check = 0;
-	state->env = get_env(state, envp);
-	state->parser->env = state->env;
 
-	// tmp = state->env;
-	// while (tmp != NULL)
-	// {
-	// 	printf("Key: %s\n", tmp->key);
-	// 	printf("Value: %s\n", tmp->value);
-	// 	tmp = tmp->next;
-	// }
 	// printf("pid : %d\n", getpid());
 	while (1)
 	{
+	state->env = get_env(state, envp);
+	state->parser->env = state->env;
+	// t_env *tmp;
+	// tmp = state->env;
+	// while (tmp != NULL)
+	// {
+	// 	printf("%s=%s\n", tmp->key,tmp->value);
+	// 	// printf("Value %s\n", tmp->value);
+	// 	tmp = tmp->next;
+	// }
 		state->line = readline("minishell>");
 		if (ft_parser(state))
 			break ;
-		ft_add_cluster(state);
-		int i = 0;
-		t_cluster *head = state->cluster;
-		while(head)
-		{
-			i = 0;
-			while(head->arg[i])
-			{
-				printf("arg->%s\n",head->arg[i]);
-				i++;
-			}
-			printf("input->%s\n",head->files->input);
-			printf("output->%s\n",head->files->output);
-			printf("----------\n");
+		ft_cluster(state);
+		ft_route(state);
+	ft_clean_env(&state->env);
+		// int i = 0;
+		// t_cluster *head = state->cluster;
+		// while(head)
+		// {
+		// 	i = 0;
+		// 	printf("%s\n",head->cmd);
+		// 	while(head->flag[i])
+		// 		printf("flag->%s\n",head->flag[i++]);
+		// 	i = 0;
+		// 	while(head->arg[i])
+		// 	{
+		// 		printf("arg->%s\n",head->arg[i]);
+		// 		i++;
+		// 	}
+		// 	if(*(head->files->input))
+		// 		printf("input->%s\n",head->files->input);
+		// 	if(*(head->files->output))
+		// 		printf("output->%s\n",head->files->output);
+		// 	printf("----------\n");
+		// 	head = head->next;
+		//}
 
-			head = head->next;
-		}
 		// ft_cluster_free(state);
 
 
@@ -80,6 +89,6 @@ int	main(int argc, char **argv, char **envp)
 		// my_lexer_free(state->lexer);
 		// ft_free_thrd_str(state->clean_thrd_argv);
 	}
-	ft_full_free(state);
+	// ft_full_free(state);
 	return (0);
 }

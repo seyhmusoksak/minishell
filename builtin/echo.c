@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:36:59 by ekose             #+#    #+#             */
-/*   Updated: 2024/05/11 17:37:13 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/28 21:41:51 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	ft_echo(t_state *state)
 	char	**arg;
 	int		i;
 
-	arg = state->parser->arg;
+	arg = state->cluster->arg;
 	i = 0;
 	if (arg == NULL)
 	{
-		if (state->parser->flag == NULL)
+		if (state->cluster->flag == NULL)
 			write(1, "\n", 1);
 		return ;
 	}
@@ -34,6 +34,6 @@ void	ft_echo(t_state *state)
 		write (1, arg[i], ft_strlen(arg[i]));
 	}
 	// -n dışındaki flag kontrolü yapılacak
-	if (ft_strncmp(state->parser->flag[0], "-n", 2) != 0)
+	if (ft_strncmp(state->cluster->flag[0], "-n", 2) != 0)
 		write(1, "\n", 1);
 }

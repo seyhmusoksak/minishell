@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/26 16:58:16 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/28 19:12:41 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@
 
 typedef struct s_files
 {
+	int		error;
 	char	*input;
 	char	*output;
-
 }	t_files;
 
 typedef struct s_cluster
 {
 	char				*cmd;
+	char				**flag;
 	char				**arg;
 	t_files				*files;
 	struct s_cluster	*next;
@@ -199,14 +200,16 @@ void	my_lexer_free(t_lexer **lexer);
 
 
 
+void	ft_cd(t_state **state);
+void	ft_route(t_state *state);
 
 
-void	ft_add_cluster(t_state *state);
-void	ft_lenght(t_cluster *structt, char **cluster);
-void	ft_cluster_creat(t_state *state);
-int		ft_args_add(t_state *state, char **cluster, t_cluster *structt);
-int		ft_file_open_error(t_state *state, char *file);
-void 	ft_cluster_free(t_state *state);
-
+t_cluster	*ft_file_open_error(t_cluster *cluster, char *file);
+t_files		*ft_new_files_node(char **arg);
+char		**ft_find_arg(char **arg);
+void		ft_cluster_free(t_cluster *cluster);
+void		ft_cluster(t_state *state);
+int			ft_open_input(char *file);
+int			ft_open_output(char *file);
 
 #endif

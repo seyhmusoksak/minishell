@@ -16,7 +16,7 @@ char	*ft_cmd_get(t_state *state)
 {
 	char	*tmp;
 	char	*command;
-	int i=0;
+	int i = 0;
 
 	while (state->sep_path[i])
 	{

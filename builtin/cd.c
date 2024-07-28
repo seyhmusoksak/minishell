@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:53:36 by ekose             #+#    #+#             */
-/*   Updated: 2024/05/17 17:35:45 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/28 21:13:09 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,15 @@ static void	ft_up_dir(t_state **state)
 
 void	ft_cd(t_state **state)//cd işlemi argümanlarına göre yönlendirme
 {
-	t_parser	*tmp;
+	t_cluster	*tmp;
 
-	tmp = (*state)->parser;
+	tmp = (*state)->cluster;
+	// printf("arg->%s\n",tmp->arg[0]);
 	if (tmp->arg == NULL || tmp->arg[0] == NULL)
 		ft_select_dir(state, "HOME");
 	else if (ft_strncmp(tmp->arg[0], "~", ft_strlen(tmp->arg[0])) == 0)
 		ft_select_dir(state, "HOME");
-	else if (ft_strncmp(tmp->arg[0], "-", ft_strlen(tmp->arg[0])) == 0)
+	else if (ft_strncmp(tmp->arg[0], "-", ft_strlen(tmp->arg[0])) == 0)//env den oldpwd deişmiyor bakılacak
 		ft_select_dir(state, "OLDPWD");
 	else if (ft_strncmp(tmp->arg[0], ".", ft_strlen(tmp->arg[0])) == 0)
 		return ;

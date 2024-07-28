@@ -6,42 +6,35 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:40:08 by ekose             #+#    #+#             */
-/*   Updated: 2024/07/26 17:00:40 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/28 14:53:54 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 
-void	ft_cluster_free(t_state *state)
+void	ft_cluster_free(t_cluster *cluster)
 {
-	t_cluster	*tmp;
-	t_cluster	*head;
-	int			i;
+	int	i;
 
-	head = state->cluster;
-	while (head)
-	{
-		printf("aa\n");
-		tmp = head->next;
-		i = 0;
-		while (head->arg[i])
-		{
-			free(head->arg[i]);
-			i++;
-		}
-		free(head->arg);
-		free(head->files->input);
-		free(head->files->output);
-		free(head);
-		head = tmp;
-	}
-		head = NULL;
+	i = 0;
+	free(cluster->cmd);
+	while (cluster->arg[i])
+		free(cluster->arg[i++]);
+	free(cluster->arg);
+	i = 0;
+	while (cluster->flag[i])
+		free(cluster->flag[i++]);
+	free(cluster->flag);
+	free(cluster->files->input);
+	free(cluster->files->output);
+	free(cluster->files);
+	free(cluster);
 }
-int	ft_file_open_error(t_state *state, char *file)
+
+t_cluster	*ft_file_open_error(t_cluster *cluster, char *file)
 {
-	(void) state;
 	perror(file);
-	ft_cluster_free(state);
-	return (-1);
+	ft_cluster_free(cluster);
+	return (NULL);
 }
