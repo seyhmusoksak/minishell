@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:50:09 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/26 19:00:33 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/28 20:44:14 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ft_free_thrd_str(char ***str)
 	}
 	free(str);
 }
+
 void	ft_free_double_str(char **str)
 {
 	int	i;

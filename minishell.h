@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/28 14:19:15 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/28 21:42:22 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ typedef struct s_parser
 	//	redirect
 	t_node	*sublist;
 	int		check_redirect;
+	int		r;
+	int		check_heradoc;
 }	t_parser;
 
 typedef struct s_lexer
@@ -151,11 +153,13 @@ char	*ft_resizer(char **str);
 
 //				Redirect functions(7)
 char	**ft_redirect_parser(t_parser *pars, t_node *list);
-t_node	*ft_redirect_handler(char *str, int i, int j, t_parser *pars);
-int		ft_split_redirect(char *str, int len, int *j, t_parser *pars);
-t_node	*ft_finish_redirect(char *str, int i, int *j, t_parser *pars);
+t_node	*ft_redirect_handler(char *str, int i, t_parser *pars);
+void	ft_heradoc_handler(char *str, int *i, t_parser *pars);
+int		ft_split_redirect(char *str, int len, t_parser *pars);
+t_node	*ft_finish_redirect(char *str, int i, t_parser *pars);
 char	**ft_node_to_double(t_node **list, int i, int list_size);
 int		ft_listlen(t_node *lst);
+int		ft_check_full_char(char *str);
 
 //				3D string functions (3)
 char	***ft_parser_to_lexer(char **str, t_parser *parser);

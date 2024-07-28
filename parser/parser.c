@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/26 18:17:07 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/28 20:51:33 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,11 @@ int	ft_parser(t_state *state)
 		return (ft_exit(line, "Error: open quotation mark", state->pars));
 	if (line[0] == '|' || line[ft_strlen(line) - 1] == '|')
 		return (ft_exit(line, "Error: Failure to use pipe ", state->pars));
+
 	split_str = ft_pipe_split(line, '|', state->pars);
 	ft_init_quote_str(split_str, state->pars);
+	// if (ft_redirect_control(state->pars))
+	// 	ft_exit(line, "Error: Redirect syntax error", state->pars);
 	printf("--------------------cleaned_argv--------------------\n");
 	i = -1;
 	while (state->pars->cleaned[++i])
@@ -115,11 +118,14 @@ char	*ft_clean_first_last_quote(char *str)
 	int		i;
 	int		j;
 	char	*dest;
+	int		dq;
+	int		sq;
 
 	i = 0;
 	j = -1;
-	if ((str[0] == '"' && str[ft_strlen(str) - 1] == '"')
-		|| (str[0] == '\'' && str[ft_strlen(str) - 1] == '\''))
+	dq = (str[0] == '"' && str[ft_strlen(str) - 1] == '"');
+	sq = (str[0] == '\'' && str[ft_strlen(str) - 1] == '\'');
+	if ((dq || sq) && ft_check_full_char(str +1))
 	{
 		dest = malloc(sizeof(char) * ft_strlen(str) - 1);
 		if (!dest)
