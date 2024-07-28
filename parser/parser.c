@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/26 18:17:07 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/26 21:03:23 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	ft_parser(t_state *state)
 	i = -1;
 	while (state->pars->cleaned[++i])
 		printf("i(%d): %s\n", i, state->pars->cleaned[i]);
+	// ft_check_redirect(state->pars);
 	pars_redirect = ft_redirect_parser(state->pars, state->dolar);
 	printf("------------------Pars_Redirect---------------------\n");
 	i = -1;
@@ -156,3 +157,7 @@ char	**ft_put_env(char **str, t_state *state)
 	}
 	return (dest);
 }
+// int	ft_check_redirect(t_parser *pars)
+// {
+// 	pars->cleaned[]
+// }

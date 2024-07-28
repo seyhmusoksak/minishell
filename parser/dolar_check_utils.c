@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dolar_check_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:58:11 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/26 18:53:44 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/28 13:32:51 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	ft_count_dolar(char *str, t_parser *parser)
 				i++;
 		}
 	}
+
+
 	return (count_dolar);
 }
 
