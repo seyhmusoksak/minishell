@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 13:40:19 by musozer           #+#    #+#             */
-/*   Updated: 2024/07/28 21:24:32 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/28 21:51:58 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	ft_sing_in(t_parser *parser)
 	int	sing_in;
 
 	sing_in = -1;
-	j = -1;
 	i = -1;
 	while (parser->cleaned[++i])
 	{
+		j = -1;
 		while (parser->cleaned[i][++j])
 		{
 			if ((parser->cleaned[i][j] == '<'
@@ -55,10 +55,10 @@ int	ft_sing_out(t_parser *parser)
 	int	sing_out;
 
 	sing_out = -1;
-	j = -1;
 	i = -1;
 	while (parser->cleaned[++i])
 	{
+		j = -1;
 		while (parser->cleaned[i][++j])
 		{
 			if ((parser->cleaned[i][j] == '>'

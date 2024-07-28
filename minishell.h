@@ -6,7 +6,7 @@
 /*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/28 21:20:45 by musozer          ###   ########.fr       */
+/*   Updated: 2024/07/28 21:38:18 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ t_node	*ft_redirect_handler(char *str, int i, int j, t_parser *pars);
 int		redirection_control(t_parser *pars);
 int		ft_sing_in(t_parser *parser);
 int		ft_sing_out(t_parser *parser);
+int	ft_split_redirect(char *str, int len, int *j, t_parser *pars);
 t_node	*ft_finish_redirect(char *str, int i, int *j, t_parser *pars);
 char	**ft_node_to_double(t_node **list, int i, int list_size);
 int		ft_listlen(t_node *lst);
