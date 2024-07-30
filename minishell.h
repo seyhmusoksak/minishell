@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/28 21:42:22 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/30 23:59:50 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,9 @@ typedef struct s_parser
 	//	redirect
 	t_node	*sublist;
 	int		check_redirect;
+	int		control;
+	int		nr;
 	int		r;
-	int		check_heradoc;
 }	t_parser;
 
 typedef struct s_lexer
@@ -151,18 +152,21 @@ char	*ft_dup_key(char *key, int n, t_env *env);
 char	*ft_join_key(char *key, int index, t_env *env);
 char	*ft_resizer(char **str);
 
-//				Redirect functions(7)
+//				Redirect functions(11)
 char	**ft_redirect_parser(t_parser *pars, t_node *list);
-t_node	*ft_redirect_handler(char *str, int i, t_parser *pars);
-void	ft_heradoc_handler(char *str, int *i, t_parser *pars);
-int		ft_split_redirect(char *str, int len, t_parser *pars);
-t_node	*ft_finish_redirect(char *str, int i, t_parser *pars);
-char	**ft_node_to_double(t_node **list, int i, int list_size);
+void	ft_heradoc_handler(char *str, t_parser *pars);
+t_node	*ft_redirect_handler(char *str, t_parser *pars);
+int		ft_right_redirect(char *str, int len, t_parser *pars);
+void	ft_left_redirect(char *str, int len, char type, t_parser *pars);
 int		ft_listlen(t_node *lst);
+char	**ft_node_to_double(t_node **list, int i, int list_size);
+t_node	*ft_finish_redirect(char *str, int i, t_parser *pars);
 int		ft_check_full_char(char *str);
+void	ft_check_control(t_parser *parser);
+void	ft_free_substr(char **sub, char **sub2, char **sub3);
 
 //				3D string functions (3)
 char	***ft_parser_to_lexer(char **str, t_parser *parser);
 char	*ft_clean_first_last_quote(char *str);
 void	ft_free_thrd_str(char ***str);
-#endif
+# endif
