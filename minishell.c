@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/28 21:15:11 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/30 21:24:46 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	state->parser->exit_check = 0;
 
+	state->exp = get_env(state,envp);
+	state->env = get_env(state, envp);
+	state->parser->env = state->env;
 	// printf("pid : %d\n", getpid());
 	while (1)
 	{
-	state->env = get_env(state, envp);
-	state->parser->env = state->env;
 	// t_env *tmp;
 	// tmp = state->env;
 	// while (tmp != NULL)
@@ -44,7 +45,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		ft_cluster(state);
 		ft_route(state);
-	ft_clean_env(&state->env);
+	// ft_clean_env(&state->env);
 		// int i = 0;
 		// t_cluster *head = state->cluster;
 		// while(head)

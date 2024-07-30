@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:48:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/05/17 17:36:33 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/30 19:21:36 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ static void	ft_transaction(t_env **ptr1, int *swapped)
 	*swapped = 0;
 }
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
+// int	ft_strcmp(char *s1, char *s2)
+// {
+// 	int	i;
 
-	i = 0;
-	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
-		i++;
-	return (s1[i] - s2[i]);
-}
+// 	i = 0;
+// 	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+// 		i++;
+// 	return (s1[i] - s2[i]);
+// }
 
 void	bubble_sort(t_env *exp, int (*cmp)(char *, char *))
 {
@@ -70,9 +70,9 @@ void	ft_print_exp(t_state **state)
 	while (tmp)
 	{
 		if (tmp->value == NULL)
-			printf("declare -x %s\n", tmp->key);
+			printf("declare -x %s=''\n", tmp->key);///printf wirte olacak;
 		else
-			printf("declare -x %s=%s\n", tmp->key, tmp->value);
+			printf("declare -x %s=%s\n", tmp->key, tmp->value);///printf wirte olacak;
 		tmp = tmp->next;
 	}
 }

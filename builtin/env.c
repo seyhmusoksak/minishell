@@ -6,11 +6,32 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:35:15 by ekose             #+#    #+#             */
-/*   Updated: 2024/05/17 17:25:33 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/30 19:41:30 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	ft_print_env(t_state *state)
+{
+	t_env	*tmp;
+	int		fd;
+	int		i;
+
+	i = 0;
+	fd = 1;
+	tmp = state->env;
+	if (*(state->cluster->files->output))
+		fd = open(state->cluster->files->output, O_CREAT | O_RDWR, 0777);
+	while (tmp)
+	{
+		write(fd, tmp->key, ft_strlen(tmp->key));
+		write(fd, "=", 1);
+		write(fd, tmp->value, ft_strlen(tmp->value));
+		write(fd, "\n", 1);
+		tmp = tmp->next;
+	}
+}
 
 int	ft_key_check(char arg, int index)//key isalnum(a-z A-Z 0-9 '-') kontrolü
 {
@@ -61,20 +82,18 @@ void	ft_add_env(t_state **state, char *arg)//yeni env eklemk için
 	(*state)->env = tmp_env;
 }
 
-void	ft_export_status(t_state **state) //export komutu
+void	ft_export_status(t_state **state, t_cluster *cluster) //export komutu
 {
-	t_parser	*tmp;
 	int			i;
 
-	i = 0;
-	tmp = (*state)->parser;
-	if (tmp->arg == NULL || tmp->arg[0] == NULL)
+	i = 1;
+	if (cluster->cmd[i] == NULL)
 		return (ft_print_exp(state));
-	while (tmp->arg[i])
+	while (cluster->cmd[i])
 	{
-		if (ft_strchr(tmp->arg[i], '=') != NULL) //export argumanını envye eklenip eklenmiyeceği kontrolü
-			ft_add_env(state, tmp->arg[i]);
-		ft_add_exp(state, tmp->arg[i]);
+		if (ft_strchr(cluster->cmd[i], '=') != NULL) //export argumanını envye eklenip eklenmiyeceği kontrolü
+			ft_add_env(state, cluster->cmd[i]);
+		ft_add_exp(state, cluster->cmd[i]);
 		i++;
 	}
 }

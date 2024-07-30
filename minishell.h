@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/28 19:12:41 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/30 20:57:32 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ typedef struct s_files
 
 typedef struct s_cluster
 {
-	char				*cmd;
-	char				**flag;
-	char				**arg;
+	char				**cmd;
 	t_files				*files;
 	struct s_cluster	*next;
 }	t_cluster;
@@ -106,6 +104,7 @@ typedef struct s_state
 	t_cluster	*cluster;
 	t_lexer		**lexer;
 	t_env		*env;
+	t_env		*exp;
 }	t_state;
 
 
@@ -118,9 +117,9 @@ char	**ft_sep_path(t_state *state);
 t_env	*new_env(char *key, char *value);
 void	env_addback(t_env **lst, t_env *new);
 void	ft_add_env(t_state **state, char *arg);
-void	ft_echo(t_state *state);
-void	ft_del_env(t_state **state);
-void	ft_pwd(void);
+void	ft_echo(t_cluster *cluster);
+void	ft_del_env(t_state **state, t_cluster *cluster);
+void	ft_pwd(t_cluster *cluster);
 void	ft_cd(t_state **state);
 void	ft_notdefine_dir(char *s);
 void	ft_cd_error(char *dir);
@@ -129,7 +128,7 @@ void	bubble_sort(t_env *exp, int (*cmp)(char *, char *));
 void	ft_print_exp(t_state **state);
 void	ft_add_exp(t_state **state, char *arg);
 void	ft_del_node(t_env **list, char *key);
-void	ft_export_status(t_state **state);
+void	ft_export_status(t_state **state, t_cluster *cluster);
 void	ft_key_error(char *s, char *cmd);
 int		ft_key_check(char arg, int index);
 void	ft_exec(t_state *state);
@@ -206,10 +205,11 @@ void	ft_route(t_state *state);
 
 t_cluster	*ft_file_open_error(t_cluster *cluster, char *file);
 t_files		*ft_new_files_node(char **arg);
-char		**ft_find_arg(char **arg);
+char		**ft_fill_cmd(char **arg);
 void		ft_cluster_free(t_cluster *cluster);
 void		ft_cluster(t_state *state);
 int			ft_open_input(char *file);
 int			ft_open_output(char *file);
+void	ft_print_env(t_state *state);
 
 #endif

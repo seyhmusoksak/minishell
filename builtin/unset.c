@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:16:26 by ekose             #+#    #+#             */
-/*   Updated: 2024/05/17 17:38:56 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/30 21:07:39 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,21 @@ static int	ft_value_check(t_state **state, char *key, char *value)
 	return (check);
 }
 
-static int	ft_del_if(t_state **state, int i, int j)//key ve value envde ki key ve value ile eşleşiyor mu
+static int	ft_del_if(t_state **state, t_cluster *cluster, int i, int j)//key ve value envde ki key ve value ile eşleşiyor mu
 {
-	t_parser	*tmp;
+	t_cluster	*tmp;
 	char		*value;
 	char		*key;
 
-	tmp = (*state)->parser;
-	if (ft_strchr(tmp->arg[i], '=') != NULL)
+	tmp = cluster;
+	if (ft_strchr(tmp->cmd[i], '=') != NULL)
 	{
-		key = ft_substr(tmp->arg[i], 0, j);
-		value = ft_substr(tmp->arg[i], j + 1,
-				ft_strlen(tmp->arg[i]) - j - 1);
+		key = ft_substr(tmp->cmd[i], 0, j);
+		value = ft_substr(tmp->cmd[i], j + 1,
+				ft_strlen(tmp->cmd[i]) - j - 1);
 		if (ft_value_check(state, key, value) == 1)
 		{
-			ft_key_error(tmp->arg[i], "unset");
+			ft_key_error(tmp->cmd[i], "unset");
 			free(key);
 			free(value);
 			return (1);
@@ -54,27 +54,28 @@ static int	ft_del_if(t_state **state, int i, int j)//key ve value envde ki key v
 	return (0);
 }
 
-void	ft_del_env(t_state **state)
+void	ft_del_env(t_state **state, t_cluster *cluster)
 {
-	t_parser	*tmp;
+	t_cluster	*tmp;
 	int			i;
 	int			j;
 
-	i = 0;
-	tmp = (*state)->parser;
-	while (tmp->arg[i])
+	i = 1;
+	tmp = cluster;
+	printf("-------\n");
+	while (tmp->cmd[i])
 	{
 		j = 0;
-		while (tmp->arg[i][j] && tmp->arg[i][j] != '=')
+		while (tmp->cmd[i][j] && tmp->cmd[i][j] != '=')
 		{
-			if (ft_key_check(tmp->arg[i][j], j) == 0)
-				ft_key_error(tmp->arg[i], "unset");
+			if (ft_key_check(tmp->cmd[i][j], j) == 0)
+				ft_key_error(tmp->cmd[i], "unset");
 			j++;
 		}
-		if (ft_del_if(state, i, j) == 0)
+		if (ft_del_if(state, cluster, i, j) == 0)
 		{
-			ft_del_node(&(*state)->env, tmp->arg[i]);
-			ft_del_node(&(*state)->exp, tmp->arg[i]);
+			ft_del_node(&(*state)->env, tmp->cmd[i]);
+			ft_del_node(&(*state)->exp, tmp->cmd[i]);
 		}
 		i++;
 	}

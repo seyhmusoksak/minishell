@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:53:36 by ekose             #+#    #+#             */
-/*   Updated: 2024/07/28 21:13:09 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/30 16:51:42 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,17 @@ void	ft_cd(t_state **state)//cd işlemi argümanlarına göre yönlendirme
 
 	tmp = (*state)->cluster;
 	// printf("arg->%s\n",tmp->arg[0]);
-	if (tmp->arg == NULL || tmp->arg[0] == NULL)
+	if (tmp->cmd == NULL || tmp->cmd[1] == NULL)
 		ft_select_dir(state, "HOME");
-	else if (ft_strncmp(tmp->arg[0], "~", ft_strlen(tmp->arg[0])) == 0)
+	else if (ft_strncmp(tmp->cmd[1], "~", ft_strlen(tmp->cmd[0])) == 0)
 		ft_select_dir(state, "HOME");
-	else if (ft_strncmp(tmp->arg[0], "-", ft_strlen(tmp->arg[0])) == 0)//env den oldpwd deişmiyor bakılacak
+	else if (ft_strncmp(tmp->cmd[1], "-", ft_strlen(tmp->cmd[1])) == 0)//env den oldpwd deişmiyor bakılacak
 		ft_select_dir(state, "OLDPWD");
-	else if (ft_strncmp(tmp->arg[0], ".", ft_strlen(tmp->arg[0])) == 0)
+	else if (ft_strncmp(tmp->cmd[1], ".", ft_strlen(tmp->cmd[1])) == 0)
 		return ;
-	else if (ft_strncmp(tmp->arg[0], "..", ft_strlen(tmp->arg[0])) == 0)
+	else if (ft_strncmp(tmp->cmd[1], "..", ft_strlen(tmp->cmd[1])) == 0)
 		ft_up_dir(state);
 	else
-		ft_dir_check(state, tmp->arg[0]);
+		ft_dir_check(state, tmp->cmd[1]);
 
 }

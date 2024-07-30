@@ -6,49 +6,25 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:11:58 by ekose             #+#    #+#             */
-/*   Updated: 2024/07/28 21:14:33 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/30 21:25:02 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	**ft_find_flag(char	**arg)
+int	ft_strcmp(char *s1, char *s2)
 {
-	int		i;
-	int		j;
-	int		len;
-	char	**flag;
+	int	i;
 
 	i = 0;
-	len = 0;
-	j = 0;
-	while (arg[i])
-	{
-		if (ft_strncmp("-", arg[i], 1) == 0)
-			len++;
+	if (s1 == NULL | s2 == NULL)
+		return (-1);
+	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
 		i++;
-	}
-	flag = malloc(sizeof(char *) * (len + 1));
-	i = 0;
-	while (arg[i])
-	{
-		if (ft_strncmp("-", arg[i], 1) == 0)
-			flag[j++] = ft_strdup(arg[i]);
-		i++;
-	}
-	flag[j] = NULL;
-	return (flag);
+	return (s1[i] - s2[i]);
 }
 
-static char	*ft_find_cmd(char	**arg)
-{
-	if (ft_strcmp(arg[0], ">") == 0 || ft_strcmp(arg[0], "<") == 0)
-	{
-		return (ft_strdup(arg[2]));
-	}
-	else
-		return (ft_strdup(arg[0]));
-}
+
 
 static void	ft_cluster_addback(t_cluster **cluster_node, t_cluster *new)
 {
@@ -72,17 +48,7 @@ static t_cluster	*ft_new_cluster_node(char	**arg)
 	t_cluster	*new;
 
 	new = (t_cluster *)malloc(sizeof(t_cluster));
-	new->cmd = ft_find_cmd(arg);
-	if (ft_strcmp("cd", new->cmd) == 0 && arg[1] != NULL)
-	{
-		if (ft_strncmp(arg[1], "-", 1) == 0)
-			new->arg = ft_find_flag(arg);
-		else
-			new->arg = ft_find_arg(arg);
-	}
-	else
-		new->arg = ft_find_arg(arg);
-	new->flag = ft_find_flag(arg);
+	new->cmd = ft_fill_cmd(arg);
 	new->files = ft_new_files_node(arg);
 	new->next = NULL;
 	if (new->files->error == 2)

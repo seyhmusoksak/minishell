@@ -6,34 +6,57 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:36:59 by ekose             #+#    #+#             */
-/*   Updated: 2024/07/28 21:41:51 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/30 18:21:37 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_echo(t_state *state)
+static int	ft_flag_check(char **cmd)
 {
-	//Write fonksiyonundaki standart çıktı fd ile değişecek
+	int	i;
+	int	j;
 
-	char	**arg;
-	int		i;
-
-	arg = state->cluster->arg;
-	i = 0;
-	if (arg == NULL)
+	i = 1;
+	while (cmd[i])
 	{
-		if (state->cluster->flag == NULL)
-			write(1, "\n", 1);
+		j = 0;
+		if (cmd[i][j] != '-')
+			return (i);
+		while (cmd[i][++j])
+		{
+			if (cmd[i][j] != 'n')
+				return (i);
+		}
+		i++;
+	}
+	return (i);
+}
+
+void	ft_echo(t_cluster *cluster)
+{
+	char	**cmd;
+	int		i;
+	int		fd;
+	int		index;
+
+	fd = 1;
+	index = ft_flag_check(cluster->cmd);
+	i = index;
+	if (*(cluster->files->output))
+		fd = open(cluster->files->output, O_CREAT | O_RDWR, 0777);
+	cmd = cluster->cmd;
+	if (cmd[1] == NULL)
+	{
+		write(fd, "\n", 2);
 		return ;
 	}
-	write (1, arg[i], ft_strlen(arg[i]));
-	while (arg[++i] != NULL)
+	while (cmd[index])
 	{
-		write (1, " ", 1);
-		write (1, arg[i], ft_strlen(arg[i]));
+		write(fd, cmd[index], ft_strlen(cmd[index]));
+		write(fd, " ", 1);
+		index++;
 	}
-	// -n dışındaki flag kontrolü yapılacak
-	if (ft_strncmp(state->cluster->flag[0], "-n", 2) != 0)
-		write(1, "\n", 1);
+	if (i == 1)
+		write(fd, "\n", 1);
 }

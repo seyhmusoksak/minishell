@@ -3,8 +3,10 @@ SRCS = get_env.c minishell.c parser/parser.c parser/parser_utils.c \
 		parser/parser_check.c error_utils.c parser/quote_utils.c \
 		parser/quote_check.c parser/put_env.c parser/put_env_utils.c \
 		parser/dolar_check_utils.c lexer/lexer.c lexer/lexer_utils.c lexer/add_cluster.c \
-		error/file_error.c lexer/arg_utils.c lexer/files_utils.c  lexer/open_files.c \
-		builtin/cd.c builtin/error.c route.c builtin/pwd.c builtin/echo.c
+		error/file_error.c   lexer/open_files.c  lexer/files_utils.c lexer/arg_utils.c \
+		route.c builtin/cd.c builtin/error.c builtin/pwd.c  builtin/echo.c builtin/env.c builtin/export.c \
+		builtin/unset.c
+
 OBJS = $(SRCS:.c=.o)
 LIBFT = ./libft/libft.a
 CC = gcc
