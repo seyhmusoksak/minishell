@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/31 13:01:31 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/31 19:47:18 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ char	*ft_cut_squote(char *str, int len, t_parser *pars);
 
 //						Put_env functions (20)
 char	**ft_put_env(char **str, t_state *state);
-int		ft_count_dolar(char *str ,t_parser *parser);
+int		ft_count_dolar(char *str , t_parser *parser);
 int		ft_isdolr(char *str, int index, t_parser *pars);
 int		ft_check_is_in(char *str, int index, t_parser *parser);
 char	*ft_dolar_handler(char *str, t_node *dolar, t_parser *prs, t_env *env);
@@ -212,7 +212,7 @@ char	**ft_node_to_double(t_node **list, int i, int list_size);
 t_node	*ft_finish_redirect(char *str, int i, t_parser *pars);
 int		ft_check_full_char(char *str);
 void	ft_check_control(t_parser *parser);
-void	ft_free_substr(char **sub, char **sub2, char **sub3);
+void	ft_free_substr(char **sub, char **sub2, char **sub3, t_parser *pars);
 
 //				3D string functions (3)
 char	***ft_parser_to_lexer(char **str, t_parser *parser);
@@ -228,4 +228,5 @@ int		ft_open_output(char *file);
 t_cluster	*ft_file_open_error(t_cluster *cluster, char *file);
 void	ft_print_env(t_state *state);
 void	ft_route(t_state *state);
+
 # endif
