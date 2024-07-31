@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 00:21:51 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/15 15:16:20 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/31 12:53:11 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 int	ft_lstsize(t_list *lst)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
+	if (!lst)
+		return (0);
 	while (lst)
 	{
-		lst = lst->next;
+		lst = lst -> next;
 		i++;
 	}
 	return (i);

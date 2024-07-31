@@ -6,89 +6,32 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/31 12:18:12 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/31 12:49:51 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_state	*state;
-	// t_env	*tmp;
-	// int		i;
-	// i = 0;
+
 	state = (t_state *)malloc(sizeof(t_state));
-	state->parser = malloc(sizeof(t_parser));
-	// if (!state->pars || !state->lexer || !state)
-	// 	ft_error_mesage("Error: Malloc problem !");
+	state->lexer = malloc(sizeof(t_lexer));
+	state->pars = malloc(sizeof(t_parser));
+	if (!state->pars || !state->lexer || !state)
+		ft_error_mesage("Error: Malloc problem !");
 	(void)argc;
 	(void)argv;
-	state->parser->exit_check = 0;
-
-	state->exp = get_env(state,envp);
+	state->pars->exit_check = 0;
 	state->env = get_env(state, envp);
-	state->parser->env = state->env;
-	// printf("pid : %d\n", getpid());
 	while (1)
 	{
-	// t_env *tmp;
-	// tmp = state->env;
-	// while (tmp != NULL)
-	// {
-	// 	printf("%s=%s\n", tmp->key,tmp->value);
-	// 	// printf("Value %s\n", tmp->value);
-	// 	tmp = tmp->next;
-	// }
 		state->line = readline("minishell>");
+		if (state->line)
+			add_history(state->line);
 		if (ft_parser(state))
 			break ;
-	
-	// ft_clean_env(&state->env);
-		// int i = 0;
-		// t_cluster *head = state->cluster;
-		// while(head)
-		// {
-		// 	i = 0;
-		// 	printf("%s\n",head->cmd);
-		// 	while(head->flag[i])
-		// 		printf("flag->%s\n",head->flag[i++]);
-		// 	i = 0;
-		// 	while(head->arg[i])
-		// 	{
-		// 		printf("arg->%s\n",head->arg[i]);
-		// 		i++;
-		// 	}
-		// 	if(*(head->files->input))
-		// 		printf("input->%s\n",head->files->input);
-		// 	if(*(head->files->output))
-		// 		printf("output->%s\n",head->files->output);
-		// 	printf("----------\n");
-		// 	head = head->next;
-		//}
-
-		// ft_cluster_free(state);
-
-
-		// state->lexer = add_lexer_node(state);
-		// int a = 0;
-		// while (state->lexer[a] != NULL)
-		// {
-
-		// 		printf("pipe = %d\n", a);
-		// 		printf("-------------------------\n");
-		// 	while (state->lexer[a])
-		// 	{
-		// 		printf("command: %s\n", state->lexer[a]->command);
-		// 		printf("type: %d\n", state->lexer[a]->type);
-		// 		state->lexer[a] = state->lexer[a]->next;
-		// 	}
-		// 		printf("-------------------------\n");
-		// 	a++;
-		// }
-		// my_lexer_free(state->lexer);
-		// ft_free_thrd_str(state->clean_thrd_argv);
 	}
-	// ft_full_free(state);
+	ft_full_free(state);
 	return (0);
 }

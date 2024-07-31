@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 00:37:46 by soksak            #+#    #+#             */
-/*   Updated: 2023/10/18 18:37:37 by soksak           ###   ########.fr       */
+/*   Created: 2023/10/24 17:17:49 by mehmyilm          #+#    #+#             */
+/*   Updated: 2023/10/29 12:52:22 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	while (lst != NULL)
+	if (!lst)
+		return (NULL);
+	while (lst -> next)
 	{
-		if (lst->next == NULL)
-			return (lst);
-		lst = lst->next;
+		lst = lst -> next;
 	}
-	return (NULL);
+	return (lst);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 21:18:52 by soksak            #+#    #+#             */
-/*   Updated: 2023/10/16 00:40:56 by soksak           ###   ########.fr       */
+/*   Created: 2023/10/09 12:49:06 by mehmyilm          #+#    #+#             */
+/*   Updated: 2023/10/17 11:35:13 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,5 @@
 
 int	ft_isascii(int c)
 {
-	if ((c >= 0) && (c <= 127))
-	{
-		return (1);
-	}
-	return (0);
+	return (c >= 0 && c <= 127);
 }

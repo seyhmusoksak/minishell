@@ -92,6 +92,5 @@ int main() {
 
 	// Komut listesini serbest bırak
 	freeCommandList(head);
-
 	return 0;
 }
