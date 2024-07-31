@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/28 20:51:33 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:02:17 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ int	ft_parser(t_state *state)
 	}
 	ft_free_double_str(state->pars->clean_argv);
 	free(line);
-	ft_free_thrd_str(state->clean_thrd_argv);
+	// ft_free_thrd_str(state->clean_thrd_argv);
+	ft_cluster(state);
+	ft_route(state);
 	return (0);
 }
 

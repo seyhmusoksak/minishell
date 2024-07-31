@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/04 16:22:02 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/24 20:27:29 by mehmyilm         ###   ########.fr       */
+/*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
+/*   Updated: 2024/07/31 12:49:51 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_state	*state;
-	
+
 	state = (t_state *)malloc(sizeof(t_state));
 	state->lexer = malloc(sizeof(t_lexer));
 	state->pars = malloc(sizeof(t_parser));

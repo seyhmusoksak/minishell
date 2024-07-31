@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_left_parser.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:09:14 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/30 23:54:31 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:00:11 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_left_redirect(char *str, int len, char type, t_parser *pars)
 	char	*result;
 	char	*sub2;
 
+	result = NULL;
 	sub = ft_substr(str, pars->nr, len - pars->nr);
 	if (type == 'h')
 	{

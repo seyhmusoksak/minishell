@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   file_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 00:21:51 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/31 12:53:11 by ekose            ###   ########.fr       */
+/*   Created: 2024/07/26 15:40:08 by ekose             #+#    #+#             */
+/*   Updated: 2024/07/30 16:16:36 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-int	ft_lstsize(t_list *lst)
+
+void	ft_cluster_free(t_cluster *cluster)
 {
 	int	i;
 
 	i = 0;
-	if (!lst)
-		return (0);
-	while (lst)
-	{
-		lst = lst -> next;
-		i++;
-	}
-	return (i);
+	while (cluster->cmd[i])
+		free(cluster->cmd[i++]);
+	free(cluster->cmd);
+	free(cluster->files->input);
+	free(cluster->files->output);
+	free(cluster->files);
+	free(cluster);
+}
+
+t_cluster	*ft_file_open_error(t_cluster *cluster, char *file)
+{
+	perror(file);
+	ft_cluster_free(cluster);
+	return (NULL);
 }

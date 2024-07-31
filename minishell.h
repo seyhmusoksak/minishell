@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/30 23:59:50 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:01:31 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,32 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <errno.h>
+# include <fcntl.h>
+
+// # define PERMISSION_DENIED "cd"
+
+# define INPUT 1
+# define OUTPUT 2
+# define APPEND 3
+# define HEREDOC 4
+
+typedef struct s_files
+{
+	int		error;
+	char	*input;
+	char	*output;
+}	t_files;
+
+typedef struct s_cluster
+{
+	char				**cmd;
+	t_files				*files;
+	struct s_cluster	*next;
+}	t_cluster;
 
 typedef struct s_env
 {
@@ -43,7 +69,6 @@ typedef struct s_parser
 	char	**cleaned;
 	char	**src;
 	char	**clean_argv;
-
 	//quote check func parameter
 	int		k;
 	int		m;
@@ -83,15 +108,39 @@ typedef struct s_state
 	char		***clean_thrd_argv;
 	char		**sep_path;
 	char		*line;
-	t_node		*dolar;
 	t_parser	*pars;
-	t_lexer		*lexer;
+	t_cluster	*cluster;
+	t_lexer		**lexer;
 	t_env		*env;
+	t_env		*exp;
+	t_node		*dolar;
 }	t_state;
+
+
 
 //			get env functions (4)
 t_env	*get_env(t_state *state, char **env);
 void	env_addback(t_env **lst, t_env *new);
+void	free_split(char **split);
+void	ft_exec(t_state *state);
+char	**ft_sep_path(t_state *state);
+t_env	*new_env(char *key, char *value);
+void	env_addback(t_env **lst, t_env *new);
+void	ft_add_env(t_state **state, char *arg);
+void	ft_echo(t_cluster *cluster);
+void	ft_del_env(t_state **state, t_cluster *cluster);
+void	ft_pwd(t_cluster *cluster);
+void	ft_cd(t_state **state);
+void	ft_notdefine_dir(char *s);
+void	ft_cd_error(char *dir);
+int		ft_strcmp(char *s1, char *s2);
+void	bubble_sort(t_env *exp, int (*cmp)(char *, char *));
+void	ft_print_exp(t_state **state);
+void	ft_add_exp(t_state **state, char *arg);
+void	ft_del_node(t_env **list, char *key);
+void	ft_export_status(t_state **state, t_cluster *cluster);
+void	ft_key_error(char *s, char *cmd);
+int		ft_key_check(char arg, int index);
 void	ft_exec(t_state *state);
 char	**ft_sep_path(t_state *state);
 void	ft_clean_env(t_env **env);
@@ -169,4 +218,14 @@ void	ft_free_substr(char **sub, char **sub2, char **sub3);
 char	***ft_parser_to_lexer(char **str, t_parser *parser);
 char	*ft_clean_first_last_quote(char *str);
 void	ft_free_thrd_str(char ***str);
+
+void	ft_cluster(t_state *state);
+int		ft_strcmp(char *s1, char *s2);
+char	**ft_fill_cmd(char **arg);
+t_files	*ft_new_files_node(char **arg);
+int		ft_open_input(char *file);
+int		ft_open_output(char *file);
+t_cluster	*ft_file_open_error(t_cluster *cluster, char *file);
+void	ft_print_env(t_state *state);
+void	ft_route(t_state *state);
 # endif

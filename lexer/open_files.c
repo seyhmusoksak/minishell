@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   add_cluster_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 00:21:51 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/31 12:53:11 by ekose            ###   ########.fr       */
+/*   Created: 2024/07/28 15:10:49 by ekose             #+#    #+#             */
+/*   Updated: 2024/07/28 16:04:24 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-int	ft_lstsize(t_list *lst)
+int	ft_open_output(char *file)
 {
-	int	i;
+	int	fd;
 
-	i = 0;
-	if (!lst)
-		return (0);
-	while (lst)
-	{
-		lst = lst -> next;
-		i++;
-	}
-	return (i);
+	fd = open(file, O_CREAT | O_TRUNC | O_RDWR, 0777);
+	if (fd == -1)
+		return (-1);
+	close(fd);
+	return (0);
+}
+
+int	ft_open_input(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_RDONLY, 0777);
+	if (fd == -1)
+		return (-1);
+	close(fd);
+	return (0);
 }
