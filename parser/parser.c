@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/30 13:50:35 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/31 12:18:59 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	ft_parser(t_state *state)
 	}
 	free(line);
 	//ft_free_thrd_str(state->clean_thrd_argv);
+	ft_cluster(state);
+	ft_route(state);
 	return (0);
 }
 

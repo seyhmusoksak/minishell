@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/30 21:24:46 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/31 12:18:12 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ int	main(int argc, char **argv, char **envp)
 		state->line = readline("minishell>");
 		if (ft_parser(state))
 			break ;
-		ft_cluster(state);
-		ft_route(state);
+	
 	// ft_clean_env(&state->env);
 		// int i = 0;
 		// t_cluster *head = state->cluster;
