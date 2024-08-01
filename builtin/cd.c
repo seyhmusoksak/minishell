@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:53:36 by ekose             #+#    #+#             */
-/*   Updated: 2024/07/30 16:51:42 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/01 13:19:53 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,4 @@ void	ft_cd(t_state **state)//cd işlemi argümanlarına göre yönlendirme
 		ft_up_dir(state);
 	else
 		ft_dir_check(state, tmp->cmd[1]);
-
 }

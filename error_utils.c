@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/31 12:48:04 by ekose            ###   ########.fr       */
+/*   Updated: 2024/07/31 20:04:20 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ int	ft_exit(char *line, char *msg, t_parser *parser)
 	free(line);
 	ft_error_mesage(msg);
 	parser->exit_check = 1;
-	return (1);
+	return (0);
 }

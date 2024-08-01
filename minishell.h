@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/31 13:01:31 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/01 18:13:55 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 typedef struct s_files
 {
 	int		error;
+	int		fd_input;
+	int		fd_output;
 	char	*input;
 	char	*output;
 }	t_files;
@@ -42,6 +44,7 @@ typedef struct s_files
 typedef struct s_cluster
 {
 	char				**cmd;
+	int					pid;
 	t_files				*files;
 	struct s_cluster	*next;
 }	t_cluster;
@@ -108,6 +111,9 @@ typedef struct s_state
 	char		***clean_thrd_argv;
 	char		**sep_path;
 	char		*line;
+	int			cmd_count;
+	int			**fd;
+	char		**envp;
 	t_parser	*pars;
 	t_cluster	*cluster;
 	t_lexer		**lexer;
@@ -135,7 +141,7 @@ void	ft_notdefine_dir(char *s);
 void	ft_cd_error(char *dir);
 int		ft_strcmp(char *s1, char *s2);
 void	bubble_sort(t_env *exp, int (*cmp)(char *, char *));
-void	ft_print_exp(t_state **state);
+void	ft_print_exp(t_state **state, t_cluster *cluster);
 void	ft_add_exp(t_state **state, char *arg);
 void	ft_del_node(t_env **list, char *key);
 void	ft_export_status(t_state **state, t_cluster *cluster);
@@ -219,6 +225,7 @@ char	***ft_parser_to_lexer(char **str, t_parser *parser);
 char	*ft_clean_first_last_quote(char *str);
 void	ft_free_thrd_str(char ***str);
 
+
 void	ft_cluster(t_state *state);
 int		ft_strcmp(char *s1, char *s2);
 char	**ft_fill_cmd(char **arg);
@@ -226,6 +233,14 @@ t_files	*ft_new_files_node(char **arg);
 int		ft_open_input(char *file);
 int		ft_open_output(char *file);
 t_cluster	*ft_file_open_error(t_cluster *cluster, char *file);
-void	ft_print_env(t_state *state);
+void	ft_print_env(t_state *state, t_cluster *cluster);
 void	ft_route(t_state *state);
+int		ft_check_built(t_cluster *cluster);
+
+
+
+void	ft_close_pipe(t_state *state);
+void	ft_dup_init(t_state *state, t_cluster *cluster, int i);
+void	ft_executer_error(char	**cmd, char *s);
+void	ft_executer(t_state *state);
 # endif

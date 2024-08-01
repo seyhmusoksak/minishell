@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:31:02 by ekose             #+#    #+#             */
-/*   Updated: 2024/07/30 16:57:16 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/01 14:01:55 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ void	ft_pwd(t_cluster *cluster)
 	char	pwd[1024];
 	int		fd;
 
-	fd = 1;
-	if (*(cluster->files->output))
-		fd = open(cluster->files->output, O_RDWR | O_CREAT, 0777);
+	printf("%d\n",cluster->files->fd_output);
+	fd = cluster->files->fd_output;
 	if (getcwd(pwd, sizeof(pwd)) != NULL)
 	{
 		write(fd, pwd, ft_strlen(pwd));

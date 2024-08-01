@@ -6,23 +6,21 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:35:15 by ekose             #+#    #+#             */
-/*   Updated: 2024/07/30 19:41:30 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/01 14:59:45 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_print_env(t_state *state)
+void	ft_print_env(t_state *state, t_cluster *cluster)
 {
 	t_env	*tmp;
 	int		fd;
 	int		i;
 
 	i = 0;
-	fd = 1;
+	fd = cluster->files->fd_output;
 	tmp = state->env;
-	if (*(state->cluster->files->output))
-		fd = open(state->cluster->files->output, O_CREAT | O_RDWR, 0777);
 	while (tmp)
 	{
 		write(fd, tmp->key, ft_strlen(tmp->key));
@@ -88,7 +86,7 @@ void	ft_export_status(t_state **state, t_cluster *cluster) //export komutu
 
 	i = 1;
 	if (cluster->cmd[i] == NULL)
-		return (ft_print_exp(state));
+		return (ft_print_exp(state,cluster));
 	while (cluster->cmd[i])
 	{
 		if (ft_strchr(cluster->cmd[i], '=') != NULL) //export argumanını envye eklenip eklenmiyeceği kontrolü

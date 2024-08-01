@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/31 13:02:17 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/01 18:17:07 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	ft_parser(t_state *state)
 	while (state->pars->clean_argv[++i])
 		printf("i(%d): %s\n", i, state->pars->clean_argv[i]);
 	ft_free_double_str(pars_redirect);
+	state->cmd_count = ft_double_str_len(state->pars->clean_argv);
 	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
 	printf("----------------------3d_Str------------------------\n");
 	i = -1;
@@ -62,7 +63,7 @@ int	ft_parser(t_state *state)
 	free(line);
 	// ft_free_thrd_str(state->clean_thrd_argv);
 	ft_cluster(state);
-	ft_route(state);
+	ft_executer(state);
 	return (0);
 }
 
