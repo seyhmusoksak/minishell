@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/31 19:47:18 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/01 15:34:45 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define OUTPUT 2
 # define APPEND 3
 # define HEREDOC 4
+
+int	sig_status;
 
 typedef struct s_files
 {
@@ -76,7 +78,7 @@ typedef struct s_parser
 	int		count_sq;
 	int		count_dq;
 	int		check_if;
-	int		exit_check;
+	int		exit_check;//kullanabilirim kalsın
 	int		char_check;
 
 	//	dolar
@@ -108,6 +110,7 @@ typedef struct s_state
 	char		***clean_thrd_argv;
 	char		**sep_path;
 	char		*line;
+	int			cmd_count;
 	t_parser	*pars;
 	t_cluster	*cluster;
 	t_lexer		**lexer;
@@ -152,7 +155,7 @@ void	ft_quote_control(char **src, char **tmp, char c, t_parser *parser);
 int		pipe_c(char *line, char c, t_parser *parser);
 int		ft_wait_for_input(t_state *state);
 void	ft_strjoin_and_free(char **dst, char *s2, char c);
-int		ft_exit(char *line, char *msg, t_parser *parser);
+int		ft_exit(char *line, char *msg);
 
 //			string clean functions (11)
 int		ft_init_quote_str(char **str, t_parser *pars);
@@ -218,6 +221,9 @@ void	ft_free_substr(char **sub, char **sub2, char **sub3, t_parser *pars);
 char	***ft_parser_to_lexer(char **str, t_parser *parser);
 char	*ft_clean_first_last_quote(char *str);
 void	ft_free_thrd_str(char ***str);
+void	ft_write_double_str(char **str); //kaldırcam bunu
+void	ft_init_signals(void);
+void	ft_signal_handler(int	sig);
 
 void	ft_cluster(t_state *state);
 int		ft_strcmp(char *s1, char *s2);

@@ -20,20 +20,21 @@ CFLAGS= -Wall -Werror -Wextra
 
 all: $(NAME)
 
-
 $(NAME): $(OBJS)
-	ar -rc $(NAME) $(OBJS)
-
+	@ar -rc $(NAME) $(OBJS)
 
 clean:
-	$(RM) $(OBJS) $(BONUS_OBJS)
+	@$(RM) $(OBJS) $(BONUS_OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 
 bonus: $(BONUS_OBJS)
-	ar rc  $(NAME) $(BONUS_OBJS)
+	@ar rc $(NAME) $(BONUS_OBJS)
+
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 .PHONY: all clean fclean re bonus

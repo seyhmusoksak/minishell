@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:50:09 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/28 20:44:14 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/01 13:17:01 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,12 @@ void	ft_free_double_str(char **str)
 	while (str[++i])
 		free(str[i]);
 	free(str);
+}
+void	ft_write_double_str(char **str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		printf("str[%d]: %s\n", i, str[i]);
 }

@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:33:05 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/24 19:10:20 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/01 16:34:46 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_mini_dolar_counter(char *str, int ***chck_dolr, int ***chck_dq)
 	i = -1;
 	while (str[++i])
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && str[i + 1] && str[i +1] != '$')
 		{
 			if (***chck_dolr == 1 && i == len)
 				break ;

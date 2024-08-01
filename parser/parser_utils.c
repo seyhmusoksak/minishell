@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/28 19:59:11 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:36:24 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,6 @@ int	ft_wait_for_input(t_state *state)
 			return (1);
 		i++;
 	}
+	free (state->line);
 	return (0);
 }
