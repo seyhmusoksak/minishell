@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/02 17:13:25 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/02 19:39:43 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,27 @@ int	main(int argc, char **argv, char **envp)
 		ft_error_mesage("Error: Malloc problem !");
 	(void)argc;
 	(void)argv;
+	sig_status = 0;
+	ft_init_signals();
 	state->env = get_env(state, envp);
 	state->exp = get_env(state,envp);
 	ft_sep_path(state);
-	state->envp =  envp;
+	state->envp = envp;
 	state->error = 0;
 	while (1)
 	{
+		state->pars->ptr_errno = &(state->error);
 		state->line = readline("minishell>");
 		if (state->line)
 			add_history(state->line);
 		if (ft_parser(state))
 			break ;
+		free(state->line);
 	}
 	ft_full_free(state);
 	return (0);
 }
+
+
+
+ 

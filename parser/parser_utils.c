@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/01 14:50:57 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/02 19:18:34 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,13 @@ int	ft_wait_for_input(t_state *state)
 	int	i;
 
 	i = 0;
+	if (!state->line)
+		return (2);
 	while (state->line[i])
 	{
 		if ((state->line[i] != 10) && (state->line[i] != 32))
 			return (1);
 		i++;
 	}
-	free (state->line);
 	return (0);
 }

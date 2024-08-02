@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   open_files.c                                       :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/28 15:10:49 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/02 17:38:34 by mehmyilm         ###   ########.fr       */
+/*   Created: 2024/08/02 13:05:15 by mehmyilm          #+#    #+#             */
+/*   Updated: 2024/08/02 13:09:59 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-int	ft_open_output(char *file)
+
+static void	ft_signal_handler(int sig)
 {
-	int	fd;
-
-	fd = open(file, O_CREAT | O_TRUNC | O_RDWR, 0777);
-	if (fd == -1)
-		return (-1);
-	printf("fddd->%d\n",fd);
-	return (fd);
+	if (sig == SIGINT)
+	{
+		write (1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
-int	ft_open_input(char *file)
+void	ft_init_signals(void)
 {
-	int	fd;
-
-	fd = open(file, O_RDONLY, 0777);
-	if (fd == -1)
-		return (-1);
-	return (fd);
+	signal(SIGINT, ft_signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_left_parser.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:09:14 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/31 13:00:11 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/02 17:39:16 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void	ft_left_redirect(char *str, int len, char type, t_parser *pars)
 		result = ft_strjoin(join, sub2);
 		pars->nr = len + 1;
 	}
-	ft_free_substr(&sub, &sub2, &join);
-	pars->control = ++pars->check_redirect;
+	ft_free_substr(&sub, &sub2, &join, pars);
 	new_node = ft_dolar_new(result);
 	ft_dolar_add_back(&pars->sublist, new_node);
 }
@@ -65,6 +64,8 @@ int	ft_check_full_char(char *str)
 	int	i;
 
 	i = 0;
+	if (ft_strlen(str) == 1 && (str[0] == '"' || str[0] == '\''))
+		return(1);
 	while (i < (int)(ft_strlen(str) -1) && str[i])
 	{
 		if (str[i] == '>' || str[i] == ' ' || str[i] == '<')
@@ -84,8 +85,9 @@ void	ft_check_control(t_parser *parser)
 	}
 }
 
-void	ft_free_substr(char **sub, char **sub2, char **sub3)
+void	ft_free_substr(char **sub, char **sub2, char **sub3, t_parser *pars)
 {
+	pars->control = ++pars->check_redirect;
 	free (*sub);
 	sub = NULL;
 	free (*sub2);

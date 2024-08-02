@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_cluster.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:11:58 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/02 16:23:38 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/02 17:38:06 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static char	**ft_clean_cmd(char **str)
 	ft_free_double_str(str);
 	return (dest);
 }
-
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
