@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:11:58 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/01 14:11:41 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/02 16:23:38 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static t_cluster	*ft_new_cluster_node(char	**arg)
 	new = (t_cluster *)malloc(sizeof(t_cluster));
 	new->cmd = ft_clean_cmd(ft_fill_cmd(arg));
 	new->files = ft_new_files_node(arg);
+	new->pid = -1;
 	new->next = NULL;
 	if (new->files->error == 2)
 		return (ft_file_open_error(new, new->files->output));
@@ -80,6 +81,7 @@ static t_cluster	*ft_new_cluster_node(char	**arg)
 
 void	ft_cluster(t_state *state)
 {
+	t_cluster	*new;
 	char		***thrd_arg;
 	t_cluster	*tmp_node;
 	int			i;
@@ -89,10 +91,12 @@ void	ft_cluster(t_state *state)
 	thrd_arg = state->clean_thrd_argv;
 	while (thrd_arg[i])
 	{
-		ft_cluster_addback(&tmp_node, ft_new_cluster_node(thrd_arg[i]));
+		new = ft_new_cluster_node(thrd_arg[i]);
+		if (new == NULL)
+			state->error = 1;
+		ft_cluster_addback(&tmp_node, new);
 		i++;
 	}
 	state->cluster = tmp_node;
 }
-
 

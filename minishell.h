@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/01 18:13:55 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/02 16:58:35 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_files
 typedef struct s_cluster
 {
 	char				**cmd;
-	int					pid;
+	pid_t				pid;
 	t_files				*files;
 	struct s_cluster	*next;
 }	t_cluster;
@@ -112,6 +112,7 @@ typedef struct s_state
 	char		**sep_path;
 	char		*line;
 	int			cmd_count;
+	int			error;
 	int			**fd;
 	char		**envp;
 	t_parser	*pars;
@@ -147,7 +148,6 @@ void	ft_del_node(t_env **list, char *key);
 void	ft_export_status(t_state **state, t_cluster *cluster);
 void	ft_key_error(char *s, char *cmd);
 int		ft_key_check(char arg, int index);
-void	ft_exec(t_state *state);
 char	**ft_sep_path(t_state *state);
 void	ft_clean_env(t_env **env);
 
@@ -239,8 +239,9 @@ int		ft_check_built(t_cluster *cluster);
 
 
 
-void	ft_close_pipe(t_state *state);
-void	ft_dup_init(t_state *state, t_cluster *cluster, int i);
+void	ft_close_pipe(t_state *state, int check);
+void	ft_dup_init(t_state *state, t_cluster *cluster, int i,int check);
 void	ft_executer_error(char	**cmd, char *s);
 void	ft_executer(t_state *state);
+void	ft_wait(t_state *state, int check);
 # endif

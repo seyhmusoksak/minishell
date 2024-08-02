@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:59:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/01 19:57:30 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/02 17:16:47 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	ft_execve(t_state *state, t_cluster *cluster, int i, int check)
 {
 	char	*cmd_path;
 
-	ft_dup_init(state, cluster, i);
+	ft_dup_init(state, cluster, i, check);
 	if (state->cmd_count > 1 && check > 0)
 	{
 		ft_route(state);
@@ -89,10 +89,9 @@ void	ft_executer(t_state *state)
 				if (tmp->pid == 0)
 					ft_execve(state, tmp, i, check);
 			}
+			i++;
 		}
-		i++;
 		tmp = tmp->next;
 	}
-	ft_close_pipe(state);
-	wait(NULL);
+	ft_close_pipe(state,check);
 }

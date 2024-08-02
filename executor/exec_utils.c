@@ -6,13 +6,45 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:20:17 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/01 19:50:02 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/02 17:27:24 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_close_pipe(t_state *state)
+static void	ft_int_free(t_state *state)
+{
+	int	i;
+
+	i = 0;
+	if (state->fd)
+	{
+		while (state->fd[i])
+		{
+			free(state->fd[i]);
+			i++;
+		}
+		free(state->fd);
+	}
+}
+
+void	ft_wait(t_state *state, int check)
+{
+	t_cluster	*tmp;
+	int			result;
+
+	tmp = state->cluster;
+	while (tmp)
+	{
+		waitpid(tmp->pid, &result, 0);
+		if (!(check > 0))
+			state->error = result >> 8;
+		tmp = tmp->next;
+	}
+	ft_int_free(state);
+}
+
+void	ft_close_pipe(t_state *state, int check)
 {
 	int	i;
 
@@ -25,9 +57,10 @@ void	ft_close_pipe(t_state *state)
 			close(state->fd[i][1]);
 		i++;
 	}
+	ft_wait(state, check);
 }
 
-void	ft_pipe_connect(t_state *state, t_cluster *cluster, int i)
+void	ft_pipe_connect(t_state *state, t_cluster *cluster, int i, int check)
 {
 	if (state->cluster == cluster)
 		dup2(state->fd[i][1], STDOUT_FILENO);
@@ -38,14 +71,14 @@ void	ft_pipe_connect(t_state *state, t_cluster *cluster, int i)
 		dup2(state->fd[i - 1][0], STDIN_FILENO);
 		dup2(state->fd[i][1], STDOUT_FILENO);
 	}
-	ft_close_pipe(state);
+	ft_close_pipe(state, check);
 }
 
-void	ft_dup_init(t_state *state, t_cluster *cluster, int i)
+void	ft_dup_init(t_state *state, t_cluster *cluster, int i, int check)
 {
 	if (state->cmd_count > 1 && ft_strcmp(state->cluster->cmd[0], "exit"))
 	{
-		ft_pipe_connect(state, cluster, i);
+		ft_pipe_connect(state, cluster, i, check);
 	}
 	if (cluster->files->fd_output >= 2)
 		dup2(cluster->files->fd_output, STDOUT_FILENO);
