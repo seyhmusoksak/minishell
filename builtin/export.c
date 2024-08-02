@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:48:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/07/30 19:21:36 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/02 12:47:32 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,29 @@ void	bubble_sort(t_env *exp, int (*cmp)(char *, char *))
 	}
 }
 
-void	ft_print_exp(t_state **state)
+void	ft_print_exp(t_state **state, t_cluster *cluster)
 {
 	t_env	*tmp;
+	int		fd;
 
+	fd = cluster->files->fd_output;
 	tmp = (*state)->exp;
 	while (tmp)
 	{
 		if (tmp->value == NULL)
-			printf("declare -x %s=''\n", tmp->key);///printf wirte olacak;
+		{
+			write(fd, "declare -x ", ft_strlen("declare -x "));
+			write(fd, tmp->key, ft_strlen(tmp->key));
+			write(fd, "\n", 1);
+		}
 		else
-			printf("declare -x %s=%s\n", tmp->key, tmp->value);///printf wirte olacak;
+		{
+			write(fd, "declare -x ", ft_strlen("declare -x "));
+			write(fd, tmp->key, ft_strlen(tmp->key));
+			write(fd, "=", 1);
+			write(fd, tmp->value, ft_strlen(tmp->value));
+			write(fd, "\n", 1);
+		}
 		tmp = tmp->next;
 	}
 }

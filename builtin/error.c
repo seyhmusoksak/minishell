@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 14:57:55 by ekose             #+#    #+#             */
-/*   Updated: 2024/05/17 16:51:00 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/02 13:03:47 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,17 @@
 void	ft_notdefine_dir(char *s)
 {
 	// GELIŞTIRILEBİLİR bunun yerine yeni bir error fonkiyonu
-	//standart çıktı fd ile dğiştirilecek
-
-	write(1, "cd: ", 4);
-	write(1, s, ft_strlen(s));
-	write(1, " ", 1);
-	write(1, "not set\n", ft_strlen("not set\n"));
+	write(2, "cd: ", 4);
+	write(2, s, ft_strlen(s));
+	write(2, " ", 1);
+	write(2, "not set\n", ft_strlen("not set\n"));
 }
 
 void	ft_cd_error(char *dir)
 {
 	//standart çıktı fd ile dğiştirilecek
 
-	write(1, "cd: ", 4);
+	write(2, "cd: ", ft_strlen("cd: "));
 	perror(dir);
 }
 

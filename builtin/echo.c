@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:36:59 by ekose             #+#    #+#             */
-/*   Updated: 2024/07/30 18:21:37 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/01 14:12:44 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,9 @@ void	ft_echo(t_cluster *cluster)
 	int		fd;
 	int		index;
 
-	fd = 1;
+	fd = cluster->files->fd_output;
 	index = ft_flag_check(cluster->cmd);
 	i = index;
-	if (*(cluster->files->output))
-		fd = open(cluster->files->output, O_CREAT | O_RDWR, 0777);
 	cmd = cluster->cmd;
 	if (cmd[1] == NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:53:36 by ekose             #+#    #+#             */
-/*   Updated: 2024/07/30 16:51:42 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/02 15:55:33 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ static void	ft_select_dir(t_state **state, char *type)//home dizinimi oldpwd mi
 	}
 	dir = tmp_env->value;
 	ft_dir_check(state, dir);
+	if (ft_strcmp("OLDPWD", type) == 0)
+	{
+		write((*state)->cluster->files->fd_output, dir, ft_strlen(dir));
+		write((*state)->cluster->files->fd_output, "\n", 1);
+	}
 }
 
 static void	ft_up_dir(t_state **state)
@@ -84,14 +89,16 @@ static void	ft_up_dir(t_state **state)
 void	ft_cd(t_state **state)//cd işlemi argümanlarına göre yönlendirme
 {
 	t_cluster	*tmp;
+	char		pwd[1024];
+	char		*oldpwd;
 
+	getcwd(pwd, sizeof(pwd));
 	tmp = (*state)->cluster;
-	// printf("arg->%s\n",tmp->arg[0]);
 	if (tmp->cmd == NULL || tmp->cmd[1] == NULL)
 		ft_select_dir(state, "HOME");
 	else if (ft_strncmp(tmp->cmd[1], "~", ft_strlen(tmp->cmd[0])) == 0)
 		ft_select_dir(state, "HOME");
-	else if (ft_strncmp(tmp->cmd[1], "-", ft_strlen(tmp->cmd[1])) == 0)//env den oldpwd deişmiyor bakılacak
+	else if (ft_strncmp(tmp->cmd[1], "-", ft_strlen(tmp->cmd[1])) == 0)
 		ft_select_dir(state, "OLDPWD");
 	else if (ft_strncmp(tmp->cmd[1], ".", ft_strlen(tmp->cmd[1])) == 0)
 		return ;
@@ -99,5 +106,8 @@ void	ft_cd(t_state **state)//cd işlemi argümanlarına göre yönlendirme
 		ft_up_dir(state);
 	else
 		ft_dir_check(state, tmp->cmd[1]);
-
+	oldpwd = ft_strjoin("OLDPWD=", pwd);
+	ft_add_exp(state, oldpwd);
+	ft_add_env(state, oldpwd);
+	free(oldpwd);
 }
