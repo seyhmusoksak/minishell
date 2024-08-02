@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/02 14:35:22 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/02 20:15:15 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,16 @@ int	ft_parser(t_state *state)
 	if (!ft_wait_for_input(state))
 		return (0);
 	line = ft_strtrim(state->line, " ");
-	free(state->line);
 	if (ft_quote_check(line, (int)ft_strlen(line), state->pars))
 		return (ft_exit(line, "Error: Open quotation mark !"));
 	if (line[0] == '|' || line[ft_strlen(line) - 1] == '|')
 		return (ft_exit(line, "Error: Failure to use pipe ! "));
-
 	split_str = ft_pipe_split(line, '|', state->pars);
 	ft_init_quote_str(split_str, state->pars);
-	// if (ft_redirect_control(state->pars))
-	// 	ft_exit(line, "Error: Redirect syntax error", state->pars);
 	printf("--------------------cleaned_argv--------------------\n");
 	ft_write_double_str(state->pars->cleaned);
-
+	// if (ft_redirection_control(state->pars))
+	// 	return(ft_exit_redirect(line, "Error: Redirect syntax error", state->pars));
 	pars_redirect = ft_redirect_parser(state->pars, state->dolar);
 	printf("------------------Pars_Redirect---------------------\n");
 	ft_write_double_str(pars_redirect);
@@ -62,7 +59,7 @@ int	ft_parser(t_state *state)
 	ft_free_double_str(state->pars->clean_argv);
 	free(line);
 	ft_cluster(state);
-	ft_route(state);
+	ft_executer(state);
 	return (0);
 }
 

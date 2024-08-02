@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:33:05 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/02 16:43:10 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/02 18:00:44 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_united_handler(int *chk_dq, int *chk_dlr, t_parser *prs, t_env *env)
 	i = -1;
 	check_sub = ft_init_united(&chk_dq, &chk_dlr, &tmp, prs);
 	while (prs->united_key[++i])
-		prs->united_env[i] = ft_put_united_env(prs->united_key[i], env);
+		prs->united_env[i] = ft_put_united_env(prs->united_key[i], prs, env);
 	i--;
 	if (*chk_dq)
 	{
@@ -100,7 +100,7 @@ void	ft_united_handler(int *chk_dq, int *chk_dlr, t_parser *prs, t_env *env)
 		prs->united_env[i] = ft_strjoin(prs->united_env[i], "$");
 }
 
-char	*ft_put_united_env(char *key, t_env *env)
+char	*ft_put_united_env(char *key, t_parser *pars, t_env *env)
 {
 	char	*dest;
 
@@ -110,7 +110,7 @@ char	*ft_put_united_env(char *key, t_env *env)
 		|| key[0] == '@' || key[0] == '*')
 		dest = ft_strdup(key + 1);
 	else if (!ft_check_after_key(key))
-		dest = ft_dup_key(key, env);
+		dest = ft_dup_key(key, pars, env);
 	else
 		dest = ft_join_key(key, ft_check_after_key(key), env);
 	return (dest);

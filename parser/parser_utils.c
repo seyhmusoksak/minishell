@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/02 12:57:06 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/02 19:18:34 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	ft_wait_for_input(t_state *state)
 	int	i;
 
 	i = 0;
-	if (state->line == NULL)
+	if (!state->line)
 		return (2);
 	while (state->line[i])
 	{
@@ -120,6 +120,5 @@ int	ft_wait_for_input(t_state *state)
 			return (1);
 		i++;
 	}
-	free (state->line);
 	return (0);
 }

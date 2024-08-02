@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 20:23:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/02 17:23:59 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/02 19:37:43 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*ft_find_env(char *str, int n, t_parser *parser, t_env *env)
 	else if (ft_strchr(parser->key, '$'))
 		dest = ft_united_dolar(parser, env);
 	else if (!ft_check_after_key(parser->key))
-		dest = ft_dup_key(parser->key, env);
+		dest = ft_dup_key(parser->key, parser, env);
 	else
 		dest = ft_join_key(parser->key, ft_check_after_key(parser->key), env);
 	free(parser->key);
@@ -107,12 +107,23 @@ char	*ft_join_key(char *key, int index, t_env *env)
 	return (after_key);
 }
 
-char	*ft_dup_key(char *key, t_env *env)
+char	*ft_dup_key(char *key, t_parser *pars, t_env *env)
 {
+	char	*quest;
+	char	*result;
+
 	if (key[0] == '#')
 	{
 		key[0] = '0';
 		return (ft_strdup(key));
+	}
+	else if (key[0] == '?')
+	{
+		quest = ft_itoa(*(pars->ptr_errno));
+		result = ft_strjoin(quest, key +1);
+		free(quest);
+		*(pars->ptr_errno) = 0;
+		return(result);
 	}
 	while (env != NULL)
 	{

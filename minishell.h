@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/02 17:19:53 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/02 19:54:52 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	sig_status;
 typedef struct s_files
 {
 	int		error;
+	int		fd_input;
+	int		fd_output;
 	char	*input;
 	char	*output;
 }	t_files;
@@ -44,6 +46,7 @@ typedef struct s_files
 typedef struct s_cluster
 {
 	char				**cmd;
+	pid_t				pid;
 	t_files				*files;
 	struct s_cluster	*next;
 }	t_cluster;
@@ -97,6 +100,9 @@ typedef struct s_parser
 	int		control;
 	int		nr;
 	int		r;
+
+	int	one;
+	int	two;
 }	t_parser;
 
 typedef struct s_lexer
@@ -112,6 +118,9 @@ typedef struct s_state
 	char		**sep_path;
 	char		*line;
 	int			cmd_count;
+	int			error;
+	int			**fd;
+	char		**envp;
 	t_parser	*pars;
 	t_cluster	*cluster;
 	t_lexer		**lexer;
@@ -139,13 +148,12 @@ void	ft_notdefine_dir(char *s);
 void	ft_cd_error(char *dir);
 int		ft_strcmp(char *s1, char *s2);
 void	bubble_sort(t_env *exp, int (*cmp)(char *, char *));
-void	ft_print_exp(t_state **state);
+void	ft_print_exp(t_state **state, t_cluster *cluster);
 void	ft_add_exp(t_state **state, char *arg);
 void	ft_del_node(t_env **list, char *key);
 void	ft_export_status(t_state **state, t_cluster *cluster);
 void	ft_key_error(char *s, char *cmd);
 int		ft_key_check(char arg, int index);
-void	ft_exec(t_state *state);
 char	**ft_sep_path(t_state *state);
 void	ft_clean_env(t_env **env);
 
@@ -170,6 +178,14 @@ void	ft_free_double_str(char **str);
 int		ft_double_str_len(char **str);
 void	ft_free_double_str(char **str);
 int		ft_full_free(t_state *state);
+
+//			Char control
+int		ft_redirection_control(t_parser *parser);
+int		ft_sing_in(t_parser *parser);
+int		ft_sing_out(t_parser *parser);
+int		ft_redirection_in(t_parser *parser);
+int		ft_redirection_out(t_parser *parser);
+int		ft_exit_redirect(char *line, char *msg, t_parser *parser);
 
 //			quote functions (8)
 int		ft_quote_check(char *str, int len, t_parser *pars);
@@ -197,11 +213,11 @@ char	*ft_find_env(char *str, int n, t_parser *parser, t_env *env);
 char	*ft_united_dolar(t_parser *parser, t_env *env);
 void	ft_united_handler(int *chk_dq, int *chk_dlr, t_parser *prs, t_env *env);
 int		ft_init_united(int **chk_dq, int **chk_dolr, char **tmp, t_parser *prs);
-char	*ft_put_united_env(char *key, t_env *env);
+char	*ft_put_united_env(char *key, t_parser *pars, t_env *env);
 int		ft_mini_dolar_counter(char *str, int ***chck_dolr, int ***chck_dq);
 int		ft_check_after_key(char *key);
 int		ft_check_special(char c);
-char	*ft_dup_key(char *key, t_env *env);
+char	*ft_dup_key(char *key, t_parser *pars, t_env *env);
 char	*ft_join_key(char *key, int index, t_env *env);
 char	*ft_resizer(char **str);
 
@@ -232,7 +248,15 @@ t_files	*ft_new_files_node(char **arg);
 int		ft_open_input(char *file);
 int		ft_open_output(char *file);
 t_cluster	*ft_file_open_error(t_cluster *cluster, char *file);
-void	ft_print_env(t_state *state);
+void	ft_print_env(t_state *state, t_cluster *cluster);
 void	ft_route(t_state *state);
+int		ft_check_built(t_cluster *cluster);
 
+
+
+void	ft_close_pipe(t_state *state, int check);
+void	ft_dup_init(t_state *state, t_cluster *cluster, int i,int check);
+void	ft_executer_error(char	**cmd, char *s);
+void	ft_executer(t_state *state);
+void	ft_wait(t_state *state, int check);
 # endif
