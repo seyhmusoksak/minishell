@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:58:11 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/28 14:20:00 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:12:06 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_isdolr(char *str, int i, t_parser *parser)
 
 	if (str[i] == '$' && str[i +1] != '\0' && str[i +1] != ' '
 		&& str[i +1] != '$' && str[i +1] != '"' && str[i +1] != '\''
-		&& str[ft_strlen(str)- 1] != '\'' && ft_check_special(str, i))
+		&& str[ft_strlen(str)- 1] != '\'' && ft_check_special(str[i +1]))
 	{
 		start = i;
 		while (str[i] != ' ' && str[i])

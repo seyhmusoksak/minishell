@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:09:14 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/31 19:38:56 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/02 14:44:52 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	ft_check_full_char(char *str)
 	int	i;
 
 	i = 0;
+	if (ft_strlen(str) == 1 && (str[0] == '"' || str[0] == '\''))
+		return(1);
 	while (i < (int)(ft_strlen(str) -1) && str[i])
 	{
 		if (str[i] == '>' || str[i] == ' ' || str[i] == '<')

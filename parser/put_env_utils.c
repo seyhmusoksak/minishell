@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:54:53 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/28 20:43:53 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:03:51 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,12 @@ int	ft_check_is_in(char *str, int index, t_parser *parser)
 	return (0);
 }
 
-int	ft_check_special(char *str, int i)
+int	ft_check_special(char c)
 {
-	if (str[i + 1] != '%' && str[i +1] != '+' && str[i +1] != ','
-		&& str[i +1] != '/' && str[i +1] != ':' && str[i +1] != '='
-		&& str[i +1] != ']' && str[i +1] != '^'
-		&& str[i +1] != '}' && str[i +1] != '~')
-		return (1);
-	return (0);
+	if ((c > 36 && c < 48)
+		|| (c > 57 && c <= 60)
+		|| (c > 122 && c < 127))
+		return (0);
+	return (1);
 }
 

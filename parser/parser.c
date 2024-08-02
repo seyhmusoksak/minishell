@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/01 13:44:46 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/02 14:35:22 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ int	ft_parser(t_state *state)
 	int		i;
 	int		j;
 
+
+	if (ft_wait_for_input(state) == 2)
+		return (1);
 	if (!ft_wait_for_input(state))
 		return (0);
 	line = ft_strtrim(state->line, " ");
@@ -58,7 +61,6 @@ int	ft_parser(t_state *state)
 	}
 	ft_free_double_str(state->pars->clean_argv);
 	free(line);
-	// ft_free_thrd_str(state->clean_thrd_argv);
 	ft_cluster(state);
 	ft_route(state);
 	return (0);
@@ -125,7 +127,7 @@ char	*ft_clean_first_last_quote(char *str)
 	j = -1;
 	dq = (str[0] == '"' && str[ft_strlen(str) - 1] == '"');
 	sq = (str[0] == '\'' && str[ft_strlen(str) - 1] == '\'');
-	if ((dq || sq) && ft_check_full_char(str +1))
+	if ((dq || sq) && ft_check_full_char(str + 1))
 	{
 		dest = malloc(sizeof(char) * ft_strlen(str) - 1);
 		if (!dest)

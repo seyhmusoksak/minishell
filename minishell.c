@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/01 20:18:04 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:23:33 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,12 @@ int	main(int argc, char **argv, char **envp)
 		state->line = readline("minishell>");
 		if (state->line)
 			add_history(state->line);
-		if (sig_status)
-		{
-			sig_status = 0;
-			continue ;
-		}
-		ft_parser(state);
+		if (ft_parser(state))
+			break ;
 	}
 	ft_full_free(state);
 	return (0);
 }
 
-void	ft_signal_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write (1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("kardes kontrol c yapmaaaa !", 0);
-		rl_redisplay();
-	}
-}
-void	ft_init_signals(void)
-{
-	signal(SIGINT, ft_signal_handler);
-	// signal(SIGQUIT, SIG_IGN);
-}
+
 
