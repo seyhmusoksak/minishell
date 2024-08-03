@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:37:07 by soksak            #+#    #+#             */
-/*   Updated: 2024/05/06 13:59:04 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/02 17:39:52 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,7 @@ t_env	*get_env(t_state *data, char **env)
 
 char	**ft_sep_path(t_state *state)
 {
-	// int	i;
 
-	// i = 0;
 	while (state->env)
 	{
 		if (ft_strncmp(state->env->key, "PATH",

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dolar_check_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:58:11 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/28 13:32:51 by musozer          ###   ########.fr       */
+/*   Updated: 2024/08/02 17:12:06 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,33 +31,30 @@ int	ft_count_dolar(char *str, t_parser *parser)
 				i++;
 		}
 	}
-
-
 	return (count_dolar);
 }
 
-int	ft_isdolr(char *str, int index, t_parser *parser)
+int	ft_isdolr(char *str, int i, t_parser *parser)
 {
 	char	*check_str;
-	int		start;
 	int		dval;
 	int		sval;
+	int		start;
 
-	if (str[index] == '$' && str[index +1] != '\0' && str[index +1] != ' '
-		&& str[index +1] != '$' && str[index +1] != '"' && str[index +1] != '\''
-		&& str[ft_strlen(str)- 1] != '\'')
+	if (str[i] == '$' && str[i +1] != '\0' && str[i +1] != ' '
+		&& str[i +1] != '$' && str[i +1] != '"' && str[i +1] != '\''
+		&& str[ft_strlen(str)- 1] != '\'' && ft_check_special(str[i +1]))
 	{
-		start = index;
-		while (str[index] != ' ' && str[index])
-			index++;
-		check_str = ft_substr(str, start, (index - start));
-		dval = ft_count_quote(check_str, index - start, '"') % 2;
-		sval = ft_count_quote(check_str, index - start, '\'') % 2;
+		start = i;
+		while (str[i] != ' ' && str[i])
+			i++;
+		check_str = ft_substr(str, start, (i - start));
+		dval = ft_count_quote(check_str, i - start, '"') % 2;
+		sval = ft_count_quote(check_str, i - start, '\'') % 2;
 		if ((dval && sval) || (!dval && !sval) || (dval && !sval)
-			|| (sval && ft_check_is_in(str, index, parser)))
+			|| (sval && ft_check_is_in(str, i, parser)))
 		{
 			free(check_str);
-			check_str = NULL;
 			return (1);
 		}
 		free(check_str);

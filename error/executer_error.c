@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   executer_error.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 00:21:51 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/31 12:53:11 by ekose            ###   ########.fr       */
+/*   Created: 2024/08/01 17:07:29 by ekose             #+#    #+#             */
+/*   Updated: 2024/08/01 18:57:04 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-int	ft_lstsize(t_list *lst)
+void	ft_executer_error(char	**cmd, char *s)
 {
-	int	i;
-
-	i = 0;
-	if (!lst)
-		return (0);
-	while (lst)
-	{
-		lst = lst -> next;
-		i++;
-	}
-	return (i);
+	write(2, "minishell: ", ft_strlen("minishell: "));
+	write(2, cmd[0], ft_strlen(cmd[0]));
+	write(2, ":", 1);
+	write(2, s, ft_strlen(s));
+	write(2, "\n", 1);
 }

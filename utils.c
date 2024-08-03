@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 00:21:51 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/31 12:53:11 by ekose            ###   ########.fr       */
+/*   Created: 2024/05/06 03:59:28 by soksak            #+#    #+#             */
+/*   Updated: 2024/05/06 03:59:43 by soksak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_lstsize(t_list *lst)
+
+void	free_split(char **split)
 {
 	int	i;
 
 	i = 0;
-	if (!lst)
-		return (0);
-	while (lst)
+	while (split[i])
 	{
-		lst = lst -> next;
+		free(split[i]);
 		i++;
 	}
-	return (i);
+	free(split);
 }

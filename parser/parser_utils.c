@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/26 20:54:05 by musozer          ###   ########.fr       */
+/*   Updated: 2024/08/02 19:18:34 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	ft_quote_control(char **src, char **tmp, char c, t_parser *parser)
 			parser->char_check = ++i;
 			j++;
 		}
-		if(ft_quote_check(dst, ft_strlen(dst), parser) == 0)
-			free(dst);
+		if (ft_quote_check(dst, ft_strlen(dst), parser) == 0)
+			free (dst);
 	}
 	tmp[j] = NULL;
 }
@@ -112,6 +112,8 @@ int	ft_wait_for_input(t_state *state)
 	int	i;
 
 	i = 0;
+	if (!state->line)
+		return (2);
 	while (state->line[i])
 	{
 		if ((state->line[i] != 10) && (state->line[i] != 32))

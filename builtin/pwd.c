@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 00:21:51 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/31 12:53:11 by ekose            ###   ########.fr       */
+/*   Created: 2024/05/10 16:31:02 by ekose             #+#    #+#             */
+/*   Updated: 2024/08/02 12:35:14 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-int	ft_lstsize(t_list *lst)
+void	ft_pwd(t_cluster *cluster)
 {
-	int	i;
+	//write fonkiyonu standart çıktı fd ile değiştirilecek
+	char	pwd[1024];
+	int		fd;
 
-	i = 0;
-	if (!lst)
-		return (0);
-	while (lst)
+	fd = cluster->files->fd_output;
+	if (getcwd(pwd, sizeof(pwd)) != NULL)
 	{
-		lst = lst -> next;
-		i++;
+		write(fd, pwd, ft_strlen(pwd));
+		write(fd, "\n", 1);
 	}
-	return (i);
+	else
+		perror("PWD");
+
 }

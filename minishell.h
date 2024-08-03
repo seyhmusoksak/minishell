@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/01 21:32:27 by musozer          ###   ########.fr       */
+/*   Updated: 2024/08/02 19:54:52 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,37 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <signal.h>
+// # define PERMISSION_DENIED "cd"
+
+# define INPUT 1
+# define OUTPUT 2
+# define APPEND 3
+# define HEREDOC 4
+
+int	sig_status;
+
+typedef struct s_files
+{
+	int		error;
+	int		fd_input;
+	int		fd_output;
+	char	*input;
+	char	*output;
+}	t_files;
+
+typedef struct s_cluster
+{
+	char				**cmd;
+	pid_t				pid;
+	t_files				*files;
+	struct s_cluster	*next;
+}	t_cluster;
 
 typedef struct s_env
 {
@@ -43,7 +74,6 @@ typedef struct s_parser
 	char	**cleaned;
 	char	**src;
 	char	**clean_argv;
-
 	//quote check func parameter
 	int		k;
 	int		m;
@@ -51,7 +81,7 @@ typedef struct s_parser
 	int		count_sq;
 	int		count_dq;
 	int		check_if;
-	int		exit_check;
+	int		exit_check;//kullanabilirim kalsın
 	int		char_check;
 
 	//	dolar
@@ -62,13 +92,17 @@ typedef struct s_parser
 	char	**united_key;
 	char	**united_env;
 	char	*key;
-	
+	int		*ptr_errno;
 
 	//	redirect
 	t_node	*sublist;
 	int		check_redirect;
-	int one;
-	int two;
+	int		control;
+	int		nr;
+	int		r;
+
+	int	one;
+	int	two;
 }	t_parser;
 
 typedef struct s_lexer
@@ -83,16 +117,43 @@ typedef struct s_state
 	char		***clean_thrd_argv;
 	char		**sep_path;
 	char		*line;
-	t_node		*dolar;
+	int			cmd_count;
+	int			error;
+	int			**fd;
+	char		**envp;
 	t_parser	*pars;
-	t_lexer		*lexer;
+	t_cluster	*cluster;
+	t_lexer		**lexer;
 	t_env		*env;
+	t_env		*exp;
+	t_node		*dolar;
 }	t_state;
+
+
 
 //			get env functions (4)
 t_env	*get_env(t_state *state, char **env);
 void	env_addback(t_env **lst, t_env *new);
+void	free_split(char **split);
 void	ft_exec(t_state *state);
+char	**ft_sep_path(t_state *state);
+t_env	*new_env(char *key, char *value);
+void	env_addback(t_env **lst, t_env *new);
+void	ft_add_env(t_state **state, char *arg);
+void	ft_echo(t_cluster *cluster);
+void	ft_del_env(t_state **state, t_cluster *cluster);
+void	ft_pwd(t_cluster *cluster);
+void	ft_cd(t_state **state);
+void	ft_notdefine_dir(char *s);
+void	ft_cd_error(char *dir);
+int		ft_strcmp(char *s1, char *s2);
+void	bubble_sort(t_env *exp, int (*cmp)(char *, char *));
+void	ft_print_exp(t_state **state, t_cluster *cluster);
+void	ft_add_exp(t_state **state, char *arg);
+void	ft_del_node(t_env **list, char *key);
+void	ft_export_status(t_state **state, t_cluster *cluster);
+void	ft_key_error(char *s, char *cmd);
+int		ft_key_check(char arg, int index);
 char	**ft_sep_path(t_state *state);
 void	ft_clean_env(t_env **env);
 
@@ -103,7 +164,7 @@ void	ft_quote_control(char **src, char **tmp, char c, t_parser *parser);
 int		pipe_c(char *line, char c, t_parser *parser);
 int		ft_wait_for_input(t_state *state);
 void	ft_strjoin_and_free(char **dst, char *s2, char c);
-int		ft_exit(char *line, char *msg, t_parser *parser);
+int		ft_exit(char *line, char *msg);
 
 //			string clean functions (11)
 int		ft_init_quote_str(char **str, t_parser *pars);
@@ -118,6 +179,14 @@ int		ft_double_str_len(char **str);
 void	ft_free_double_str(char **str);
 int		ft_full_free(t_state *state);
 
+//			Char control
+int		ft_redirection_control(t_parser *parser);
+int		ft_sing_in(t_parser *parser);
+int		ft_sing_out(t_parser *parser);
+int		ft_redirection_in(t_parser *parser);
+int		ft_redirection_out(t_parser *parser);
+int		ft_exit_redirect(char *line, char *msg, t_parser *parser);
+
 //			quote functions (8)
 int		ft_quote_check(char *str, int len, t_parser *pars);
 void	ft_init_paremeter(t_parser *pars);
@@ -130,7 +199,7 @@ char	*ft_cut_squote(char *str, int len, t_parser *pars);
 
 //						Put_env functions (20)
 char	**ft_put_env(char **str, t_state *state);
-int		ft_count_dolar(char *str ,t_parser *parser);
+int		ft_count_dolar(char *str , t_parser *parser);
 int		ft_isdolr(char *str, int index, t_parser *pars);
 int		ft_check_is_in(char *str, int index, t_parser *parser);
 char	*ft_dolar_handler(char *str, t_node *dolar, t_parser *prs, t_env *env);
@@ -142,30 +211,52 @@ char	*ft_node_resizer(t_node *dolar);
 char	*ft_env_handler(char *str, t_env *env, t_parser *parser);
 char	*ft_find_env(char *str, int n, t_parser *parser, t_env *env);
 char	*ft_united_dolar(t_parser *parser, t_env *env);
-int		ft_clear_for_dolr(char quote_type, t_parser *parser);
 void	ft_united_handler(int *chk_dq, int *chk_dlr, t_parser *prs, t_env *env);
 int		ft_init_united(int **chk_dq, int **chk_dolr, char **tmp, t_parser *prs);
+char	*ft_put_united_env(char *key, t_parser *pars, t_env *env);
 int		ft_mini_dolar_counter(char *str, int ***chck_dolr, int ***chck_dq);
 int		ft_check_after_key(char *key);
-char	*ft_dup_key(char *key, int n, t_env *env);
+int		ft_check_special(char c);
+char	*ft_dup_key(char *key, t_parser *pars, t_env *env);
 char	*ft_join_key(char *key, int index, t_env *env);
 char	*ft_resizer(char **str);
 
-//				Redirect functions(7)
+//				Redirect functions(11)
 char	**ft_redirect_parser(t_parser *pars, t_node *list);
-t_node	*ft_redirect_handler(char *str, int i, int j, t_parser *pars);
-int		redirection_control(t_parser *pars);
-int		ft_sing_in(t_parser *parser);
-int		ft_sing_out(t_parser *parser);
-int		redirection_in(t_parser *parser);
-int		redirection_out(t_parser *parser);
-int	ft_split_redirect(char *str, int len, int *j, t_parser *pars);
-t_node	*ft_finish_redirect(char *str, int i, int *j, t_parser *pars);
-char	**ft_node_to_double(t_node **list, int i, int list_size);
+void	ft_heradoc_handler(char *str, t_parser *pars);
+t_node	*ft_redirect_handler(char *str, t_parser *pars);
+int		ft_right_redirect(char *str, int len, t_parser *pars);
+void	ft_left_redirect(char *str, int len, char type, t_parser *pars);
 int		ft_listlen(t_node *lst);
+char	**ft_node_to_double(t_node **list, int i, int list_size);
+t_node	*ft_finish_redirect(char *str, int i, t_parser *pars);
+int		ft_check_full_char(char *str);
+void	ft_check_control(t_parser *parser);
+void	ft_free_substr(char **sub, char **sub2, char **sub3, t_parser *pars);
 
 //				3D string functions (3)
 char	***ft_parser_to_lexer(char **str, t_parser *parser);
 char	*ft_clean_first_last_quote(char *str);
 void	ft_free_thrd_str(char ***str);
-#endif
+void	ft_write_double_str(char **str); //kaldırcam bunu
+void	ft_init_signals(void);
+
+void	ft_cluster(t_state *state);
+int		ft_strcmp(char *s1, char *s2);
+char	**ft_fill_cmd(char **arg);
+t_files	*ft_new_files_node(char **arg);
+int		ft_open_input(char *file);
+int		ft_open_output(char *file);
+t_cluster	*ft_file_open_error(t_cluster *cluster, char *file);
+void	ft_print_env(t_state *state, t_cluster *cluster);
+void	ft_route(t_state *state);
+int		ft_check_built(t_cluster *cluster);
+
+
+
+void	ft_close_pipe(t_state *state, int check);
+void	ft_dup_init(t_state *state, t_cluster *cluster, int i,int check);
+void	ft_executer_error(char	**cmd, char *s);
+void	ft_executer(t_state *state);
+void	ft_wait(t_state *state, int check);
+# endif
