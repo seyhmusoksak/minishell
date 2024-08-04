@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:11:58 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/04 20:23:06 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/04 20:39:46 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,13 @@ static t_cluster	*ft_new_cluster_node(char	**arg)
 	new = (t_cluster *)malloc(sizeof(t_cluster));
 	new->cmd = ft_clean_cmd(ft_fill_cmd(arg));
 	new->files = ft_new_files_node(arg);
+	if (new->cmd[0] == NULL)
+	{
+		free(new->cmd);
+		new->cmd = malloc(sizeof(char*) * (2));
+		new->cmd[0] = ft_strdup("cat");
+		new->cmd[1] = NULL;
+	}
 	if (new->files->heredoc[0] != '\0' && new->files->fd_input < 2)
 		new->files->fd_input = -2;
 	new->pid = -1;
