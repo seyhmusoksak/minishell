@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:11:58 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/04 14:05:51 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:32:39 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static t_cluster	*ft_new_cluster_node(char	**arg)
 	new = (t_cluster *)malloc(sizeof(t_cluster));
 	new->cmd = ft_clean_cmd(ft_fill_cmd(arg));
 	new->files = ft_new_files_node(arg);
+	if (new->files->heredoc[0] != '\0' && new->files->fd_input < 2)
+		new->files->fd_input = -2;
 	new->pid = -1;
 	new->next = NULL;
 	if (new->files->error == 2)

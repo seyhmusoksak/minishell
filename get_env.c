@@ -56,23 +56,24 @@ t_env	*get_env(t_state *data, char **env)
 			x++;
 		env_addback(&tmp, new_env(ft_substr(env[i], 0, x),
 				ft_substr(env[i], x + 1, ft_strlen(env[i]) - x - 1)));
-		i++;
+		i++;        
 	}
 	return (tmp);
 }
 
-char	**ft_sep_path(t_state *state)
+void	ft_sep_path(t_state *state)
 {
+	t_env *tmp;
 
-	while (state->env)
+	tmp = state->env;
+	while (tmp)
 	{
-		if (ft_strncmp(state->env->key, "PATH",
-				ft_strlen(state->env->key)) == 0)
+		if (ft_strncmp(tmp->key, "PATH",
+				ft_strlen(tmp->key)) == 0)
 		{
-			state->sep_path = ft_split(state->env->value, ':');
+			state->sep_path = ft_split(tmp->value, ':');
 			break ;
 		}
-		state->env = state->env->next;
+		tmp = tmp->next;
 	}
-	return (state->sep_path);
 }

@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:20:17 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/02 17:27:24 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/04 18:24:05 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,25 @@ void	ft_pipe_connect(t_state *state, t_cluster *cluster, int i, int check)
 
 void	ft_dup_init(t_state *state, t_cluster *cluster, int i, int check)
 {
+	int		fd[2];
+	t_files	*files;
+
+	files = cluster->files;
 	if (state->cmd_count > 1 && ft_strcmp(state->cluster->cmd[0], "exit"))
 	{
 		ft_pipe_connect(state, cluster, i, check);
 	}
-	if (cluster->files->fd_output >= 2)
-		dup2(cluster->files->fd_output, STDOUT_FILENO);
-	if (cluster->files->fd_input >= 2)
-		dup2(cluster->files->fd_input, STDIN_FILENO);
+	if (files->fd_input == -2)
+	{
+		pipe(fd);
+		write(fd[1], files->heredoc, ft_strlen(files->heredoc));
+		close (fd[1]);
+		if (cluster->next || ft_strcmp(cluster->cmd[0], "echo"))
+			dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+	}
+	if (files->fd_output >= 2)
+		dup2(files->fd_output, STDOUT_FILENO);
+	if (files->fd_input >= 2)
+		dup2(files->fd_input, STDIN_FILENO);
 }

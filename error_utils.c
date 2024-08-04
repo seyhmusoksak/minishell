@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/04 14:35:09 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:35:05 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,17 @@ void	ft_clean_env(t_env **env)
 		tmp = tmp->next;
 		free(tmp2);
 	}
+
 }
 
 int	ft_full_free(t_state *state)
 {
 	ft_clean_env(&state->env);
+	ft_clean_env(&state->exp);
+	ft_free_double_str(state->sep_path);
+	if (state->line)
+		ft_all_cluster_free(state);
 	free(state->pars);
-	free(state->lexer);
 	free(state);
 	exit (0);
 }

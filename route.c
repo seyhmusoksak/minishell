@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 19:07:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/02 17:43:03 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:37:58 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ft_route(t_state *state)
 {
 	t_cluster	*tmp;
 
-	/////enter gönderince leak var;
 	tmp = state->cluster;
 	while (tmp)
 	{

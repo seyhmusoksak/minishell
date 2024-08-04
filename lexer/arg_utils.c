@@ -6,11 +6,20 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:17:17 by ekose             #+#    #+#             */
-/*   Updated: 2024/07/30 21:16:29 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/04 16:05:58 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static int	ft_check_redirect(char *arg)
+{
+	if (ft_strcmp(arg, ">") == 0 || ft_strcmp(arg, "<") == 0
+		|| ft_strcmp(arg, "<<") == 0 || ft_strcmp(arg, ">>") == 0)
+		return (1);
+	else
+		return (0);
+}
 
 char	**ft_find_cmd(char **arg, int len)
 {
@@ -25,16 +34,16 @@ char	**ft_find_cmd(char **arg, int len)
 	{
 		if (i == 0)
 		{
-			if (ft_strcmp(arg[i], ">") == 0 || ft_strcmp(arg[i], "<") == 0)
+			if (ft_check_redirect(arg[i]) == 1)
 				i++;
 			else
 				cmd[j++] = ft_strdup(arg[i]);
 		}
 		else
 		{
-			if (ft_strcmp(arg[i], ">") == 0 || ft_strcmp(arg[i], "<") == 0)
+			if (ft_check_redirect(arg[i]) == 1)
 				i++;
-			else if (ft_strcmp(arg[i - 1], ">") != 0 && ft_strcmp(arg[i - 1], "<") != 0)
+			else if (ft_check_redirect(arg[i -1]) == 0)
 				cmd[j++] = ft_strdup(arg[i]);
 		}
 	}
@@ -55,7 +64,8 @@ int	ft_cmd_len(char **arg)
 	i = 0;
 	while (arg[i])
 	{
-		if (ft_strcmp(arg[i], ">") == 0 || ft_strcmp(arg[i], "<") == 0)
+		if (ft_strcmp(arg[i], ">") == 0 || ft_strcmp(arg[i], "<") == 0
+			|| ft_strcmp(arg[i], ">>") == 0 || ft_strcmp(arg[i], "<<") == 0)
 			rdr++;
 		i++;
 	}

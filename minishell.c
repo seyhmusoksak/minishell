@@ -6,17 +6,18 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/04 18:31:42 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:38:14 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+///export düzeltilecek	heredoc komutsuz düzeltilecek
 #include "minishell.h"
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_state	*state;
 
 	state = (t_state *)malloc(sizeof(t_state));
-	state->lexer = malloc(sizeof(t_lexer));
 	state->pars = malloc(sizeof(t_parser));
 	if (!state->pars || !state->lexer || !state)
 		ft_error_mesage("Error: Malloc problem !");
@@ -38,6 +39,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_parser(state))
 			break ;
 		free(state->line);
+		ft_all_cluster_free(state);
 	}
 	ft_full_free(state);
 	return (0);

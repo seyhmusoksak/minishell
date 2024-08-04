@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:39:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/02 17:38:18 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:32:55 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_files	*ft_new_files_node(char **arg)
 
 	node = NULL;
 	node = ft_files_init(node);
+	ft_heredoc_check(node, arg);
 	i = 0;
 	while (arg[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/04 14:09:52 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:42:01 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,20 @@
 
 # define IN_CAT 1
 # define IN_HERADOC 2
+# define BUFFER_SIZE 42
+# define MAX 1024
 
 int		sig_status;
 
 typedef struct s_files
 {
+	int		fd_heredoc[2];
 	int		error;
 	int		fd_input;
 	int		fd_output;
 	char	*input;
 	char	*output;
+	char	*heredoc;
 }	t_files;
 
 typedef struct s_cluster
@@ -58,7 +62,6 @@ typedef struct s_env
 {
 	char			*key;
 	char			*value;
-	char			**sep_path;
 	struct s_env	*next;
 }	t_env;
 
@@ -137,8 +140,8 @@ typedef struct s_state
 t_env	*get_env(t_state *state, char **env);
 void	env_addback(t_env **lst, t_env *new);
 void	free_split(char **split);
-void	ft_exec(t_state *state);
-char	**ft_sep_path(t_state *state);
+
+void	ft_sep_path(t_state *state);
 t_env	*new_env(char *key, char *value);
 void	env_addback(t_env **lst, t_env *new);
 void	ft_add_env(t_state **state, char *arg);
@@ -156,7 +159,6 @@ void	ft_del_node(t_env **list, char *key);
 void	ft_export_status(t_state **state, t_cluster *cluster);
 void	ft_key_error(char *s, char *cmd);
 int		ft_key_check(char arg, int index);
-char	**ft_sep_path(t_state *state);
 void	ft_clean_env(t_env **env);
 
 //			parser function (6)
@@ -261,5 +263,8 @@ void	ft_dup_init(t_state *state, t_cluster *cluster, int i,int check);
 void	ft_executer_error(char	**cmd, char *s);
 void	ft_executer(t_state *state, int i);
 void	ft_wait(t_state *state, int check);
-
+void	ft_heredoc_check(t_files *node, char **arg);
+char	**ft_find_cmd(char **arg, int len);
+char	*get_next_line(int fd);
+void	ft_all_cluster_free(t_state *state);
 # endif
