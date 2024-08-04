@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:05:15 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/02 13:09:59 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/04 13:50:03 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,14 @@
 
 static void	ft_signal_handler(int sig)
 {
-	if (sig == SIGINT)
+	(void)sig;
+	if (sig_status == IN_CAT)
+	{
+		write (1, "\n", 1);
+		rl_on_new_line();
+		sig_status = 0;
+	}
+	else
 	{
 		write (1, "\n", 1);
 		rl_on_new_line();

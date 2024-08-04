@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:35:15 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/01 14:59:45 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/04 14:01:17 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ void	ft_print_env(t_state *state, t_cluster *cluster)
 {
 	t_env	*tmp;
 	int		fd;
-	int		i;
 
-	i = 0;
 	fd = cluster->files->fd_output;
 	tmp = state->env;
 	while (tmp)

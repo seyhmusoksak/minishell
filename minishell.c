@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/02 19:39:43 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/04 18:31:42 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		state->pars->ptr_errno = &(state->error);
-		state->line = readline("minishell>");
+		state->line = readline("minishell$");
 		if (state->line)
 			add_history(state->line);
 		if (ft_parser(state))
@@ -45,4 +45,3 @@ int	main(int argc, char **argv, char **envp)
 
 
 
- 

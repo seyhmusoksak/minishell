@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/02 17:39:41 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/04 14:35:09 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_full_free(t_state *state)
 	free(state->pars);
 	free(state->lexer);
 	free(state);
-	return (1);
+	exit (0);
 }
 
 int	ft_exit(char *line, char *msg)

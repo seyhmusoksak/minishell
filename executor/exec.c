@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:59:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/02 17:16:47 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/04 13:57:57 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static char	*ft_cmd_get(t_state *state, t_cluster *cluster)
 	}
 	return (NULL);
 }
+
 static void	ft_open_pipes(t_state *state)
 {
 	int	**fd;
@@ -67,15 +68,13 @@ static void	ft_execve(t_state *state, t_cluster *cluster, int i, int check)
 	exit(127);
 }
 
-void	ft_executer(t_state *state)
+void	ft_executer(t_state *state, int i)
 {
 	t_cluster	*tmp;
-	int			i;
 	int			check;
 
 	ft_open_pipes(state);
 	tmp = state->cluster;
-	i = 0;
 	while (tmp)
 	{
 		check = ft_check_built(tmp);
@@ -85,6 +84,8 @@ void	ft_executer(t_state *state)
 				ft_route(state);
 			else
 			{
+				if (!ft_strncmp(tmp->cmd[0], "cat", 3))
+					sig_status = 1;
 				tmp->pid = fork();
 				if (tmp->pid == 0)
 					ft_execve(state, tmp, i, check);
@@ -93,5 +94,5 @@ void	ft_executer(t_state *state)
 		}
 		tmp = tmp->next;
 	}
-	ft_close_pipe(state,check);
+	ft_close_pipe(state, check);
 }

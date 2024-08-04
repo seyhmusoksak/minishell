@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/02 20:15:15 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/04 14:39:51 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	ft_parser(t_state *state)
 	char	**pars_redirect;
 	int		i;
 	int		j;
-
 
 	if (ft_wait_for_input(state) == 2)
 		return (1);
@@ -34,8 +33,9 @@ int	ft_parser(t_state *state)
 	ft_init_quote_str(split_str, state->pars);
 	printf("--------------------cleaned_argv--------------------\n");
 	ft_write_double_str(state->pars->cleaned);
-	// if (ft_redirection_control(state->pars))
-	// 	return(ft_exit_redirect(line, "Error: Redirect syntax error", state->pars));
+	if (ft_redirection_control(state->pars))
+		return (ft_exit_redirect(line, "Error: Redirect syntax error !", state->pars));
+	free(line);
 	pars_redirect = ft_redirect_parser(state->pars, state->dolar);
 	printf("------------------Pars_Redirect---------------------\n");
 	ft_write_double_str(pars_redirect);
@@ -57,9 +57,8 @@ int	ft_parser(t_state *state)
 			printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
 	}
 	ft_free_double_str(state->pars->clean_argv);
-	free(line);
 	ft_cluster(state);
-	ft_executer(state);
+	ft_executer(state, 0);
 	return (0);
 }
 
