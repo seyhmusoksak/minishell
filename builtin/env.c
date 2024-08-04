@@ -16,9 +16,7 @@ void	ft_print_env(t_state *state, t_cluster *cluster)
 {
 	t_env	*tmp;
 	int		fd;
-	int		i;
 
-	i = 0;
 	fd = cluster->files->fd_output;
 	tmp = state->env;
 	while (tmp)

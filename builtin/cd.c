@@ -15,9 +15,8 @@
 static void	ft_dir_check(t_state **state, char *dir)
 {
 	struct stat	file_info;
-	t_state		*tmp;
+	(void)state;
 
-	tmp = (*state);
 	if (stat(dir, &file_info) == 0) //dizinin infosu alınır
 	{
 		if (S_ISDIR(file_info.st_mode))//S_ISDIR ile dizinmi kontrol edilir

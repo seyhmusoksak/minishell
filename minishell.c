@@ -16,7 +16,6 @@ int	main(int argc, char **argv, char **envp)
 	t_state	*state;
 
 	state = (t_state *)malloc(sizeof(t_state));
-	state->lexer = malloc(sizeof(t_lexer));
 	state->pars = malloc(sizeof(t_parser));
 	if (!state->pars || !state->lexer || !state)
 		ft_error_mesage("Error: Malloc problem !");
@@ -38,6 +37,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_parser(state))
 			break ;
 		free(state->line);
+		ft_all_cluster_free(state);
 	}
 	ft_full_free(state);
 	return (0);

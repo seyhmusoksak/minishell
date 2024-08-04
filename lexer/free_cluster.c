@@ -12,14 +12,14 @@
 
 #include "../minishell.h"
 
-void	ft_cluster_free(t_state *state)
+void	ft_all_cluster_free(t_state *state)
 {
-	int			i;
 	t_cluster	*tmp;
 
 	tmp = state->cluster;
 	while (tmp)
 	{
+
 		state->cluster = tmp->next;
 		ft_free_double_str(tmp->cmd);
 		if (tmp->files->input)

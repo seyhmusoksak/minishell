@@ -58,6 +58,7 @@ int	ft_parser(t_state *state)
 	// }
 	ft_free_double_str(state->pars->clean_argv);
 	free(line);
+	
 	ft_cluster(state);
 	ft_executer(state);
 	return (0);
