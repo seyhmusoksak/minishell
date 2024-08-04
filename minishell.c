@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/02 19:39:43 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:29:05 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+///export düzeltilecek	heredoc komutsuz düzeltilecek
 #include "minishell.h"
 int	main(int argc, char **argv, char **envp)
 {
@@ -45,4 +46,3 @@ int	main(int argc, char **argv, char **envp)
 
 
 
- 
