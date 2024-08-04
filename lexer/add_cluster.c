@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_cluster.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:11:58 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/02 17:38:06 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/04 18:19:42 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static char	**ft_clean_cmd(char **str)
 	ft_free_double_str(str);
 	return (dest);
 }
+
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
@@ -69,6 +70,9 @@ static t_cluster	*ft_new_cluster_node(char	**arg)
 	new = (t_cluster *)malloc(sizeof(t_cluster));
 	new->cmd = ft_clean_cmd(ft_fill_cmd(arg));
 	new->files = ft_new_files_node(arg);
+	if (new->cmd[1] == NULL && ft_strcmp(new->cmd[0], "cat") == 0
+		&& new->files->heredoc[0] != '\0' && new->files->fd_input < 2)
+		new->files->fd_input = -2;
 	new->pid = -1;
 	new->next = NULL;
 	if (new->files->error == 2)

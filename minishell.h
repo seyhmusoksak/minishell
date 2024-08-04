@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/02 19:54:52 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/04 17:17:26 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,20 @@
 # define APPEND 3
 # define HEREDOC 4
 
+# define BUFFER_SIZE 42
+# define MAX 10240
+
 int	sig_status;
 
 typedef struct s_files
 {
+	int		fd_heredoc[2];
 	int		error;
 	int		fd_input;
 	int		fd_output;
 	char	*input;
 	char	*output;
+	char	*heredoc;
 }	t_files;
 
 typedef struct s_cluster
@@ -259,4 +264,7 @@ void	ft_dup_init(t_state *state, t_cluster *cluster, int i,int check);
 void	ft_executer_error(char	**cmd, char *s);
 void	ft_executer(t_state *state);
 void	ft_wait(t_state *state, int check);
+void	ft_heredoc_check(t_files *node, char **arg);
+char	**ft_find_cmd(char **arg, int len);
+char	*get_next_line(int fd);
 # endif

@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:59:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/02 17:16:47 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/04 18:20:11 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static char	*ft_cmd_get(t_state *state, t_cluster *cluster)
 	}
 	return (NULL);
 }
+
 static void	ft_open_pipes(t_state *state)
 {
 	int	**fd;
@@ -93,5 +94,5 @@ void	ft_executer(t_state *state)
 		}
 		tmp = tmp->next;
 	}
-	ft_close_pipe(state,check);
+	ft_close_pipe(state, check);
 }
