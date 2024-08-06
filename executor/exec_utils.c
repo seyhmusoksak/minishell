@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:20:17 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/04 18:24:05 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/06 18:08:57 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,7 @@ void	ft_dup_init(t_state *state, t_cluster *cluster, int i, int check)
 
 	files = cluster->files;
 	if (state->cmd_count > 1 && ft_strcmp(state->cluster->cmd[0], "exit"))
-	{
 		ft_pipe_connect(state, cluster, i, check);
-	}
 	if (files->fd_input == -2)
 	{
 		pipe(fd);

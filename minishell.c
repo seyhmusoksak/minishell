@@ -6,11 +6,11 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/04 20:38:14 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:29:01 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-///export düzeltilecek	heredoc komutsuz düzeltilecek
+///export düzeltilecek	heredoc komutsuz düzeltilecek exec envsiz düzeltilecek
 #include "minishell.h"
 
 int	main(int argc, char **argv, char **envp)
@@ -27,17 +27,19 @@ int	main(int argc, char **argv, char **envp)
 	ft_init_signals();
 	state->env = get_env(state, envp);
 	state->exp = get_env(state,envp);
-	ft_sep_path(state);
 	state->envp = envp;
 	state->error = 0;
+	state->cluster = NULL;
 	while (1)
 	{
+		ft_sep_path(state);
 		state->pars->ptr_errno = &(state->error);
-		state->line = readline("minishell$");
+		state->line = readline("minishell>");
 		if (state->line)
 			add_history(state->line);
 		if (ft_parser(state))
 			break ;
+		ft_free_double_str(state->sep_path);
 		free(state->line);
 		ft_all_cluster_free(state);
 	}

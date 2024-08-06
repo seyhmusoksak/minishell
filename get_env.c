@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:37:07 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/02 17:39:52 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/06 12:44:39 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ t_env	*get_env(t_state *data, char **env)
 			x++;
 		env_addback(&tmp, new_env(ft_substr(env[i], 0, x),
 				ft_substr(env[i], x + 1, ft_strlen(env[i]) - x - 1)));
-		i++;        
+		i++;
 	}
 	return (tmp);
 }
 
 void	ft_sep_path(t_state *state)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = state->env;
 	while (tmp)
@@ -72,8 +72,9 @@ void	ft_sep_path(t_state *state)
 				ft_strlen(tmp->key)) == 0)
 		{
 			state->sep_path = ft_split(tmp->value, ':');
-			break ;
+			return ;
 		}
 		tmp = tmp->next;
 	}
+	state->sep_path = ft_split("", ':');
 }

@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/06 18:10:16 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:22:31 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	ft_parser(t_state *state)
 	char	*line;
 	char	**split_str;
 	char	**pars_redirect;
-	// int		i;
-	// int		j;
+	int		i;
+	int		j;
 
 	if (ft_wait_for_input(state) == 2)
 		return (1);
@@ -48,14 +48,17 @@ int	ft_parser(t_state *state)
 	ft_free_double_str(pars_redirect);
 	state->cmd_count = ft_double_str_len(state->pars->clean_argv);
 	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
-	// printf("----------------------3d_Str------------------------\n");
-	// i = -1;
-	// while (state->clean_thrd_argv[++i])
-	// {
-	// 	j = -1;
-	
+	printf("----------------------3d_Str------------------------\n");
+	i = -1;
+	while (state->clean_thrd_argv[++i])
+	{
+		j = -1;
+		while (state->clean_thrd_argv[i][++j])
+			printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
+	}
 	ft_free_double_str(state->pars->clean_argv);
 	ft_cluster(state);
+	ft_free_thrd_str(state->clean_thrd_argv);
 	ft_executer(state, 0);
 	return (0);
 }

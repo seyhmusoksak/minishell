@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:05:15 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/04 20:38:06 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/06 19:40:26 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,19 @@ static void	ft_signal_handler(int sig)
 		rl_on_new_line();
 		sig_status = 0;
 	}
-	else
+	else if (sig_status == IN_HERADOC)
+	{
+		write (1, "\n", 1);
+		exit(0);
+	}
+	else if (sig_status == 0)
 	{
 		write (1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+	sig_status = 0;
 }
 
 void	ft_init_signals(void)

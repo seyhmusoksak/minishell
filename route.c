@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 19:07:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/04 20:37:58 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:17:30 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	ft_route(t_state *state)
 			ft_print_env(state, tmp);
 		else if (ft_strcmp(tmp->cmd[0], "unset") == 0)
 			ft_del_env(&state, tmp);
-		// close(tmp->files->fd_output);
-		// close(tmp->files->fd_input);
 		tmp = tmp->next;
 	}
 }
