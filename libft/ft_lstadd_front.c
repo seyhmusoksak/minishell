@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 23:22:42 by soksak            #+#    #+#             */
-/*   Updated: 2023/10/19 19:43:28 by soksak           ###   ########.fr       */
+/*   Created: 2023/10/24 12:48:10 by mehmyilm          #+#    #+#             */
+/*   Updated: 2023/10/29 12:57:09 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	if (lst && new)
+	if (!*lst)
+		*lst = new;
+	else
 	{
-		new->next = *lst;
+		new -> next = *lst;
 		*lst = new;
 	}
 }

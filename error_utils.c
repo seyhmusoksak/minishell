@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/19 16:48:44 by soksak           ###   ########.fr       */
+/*   Updated: 2024/08/06 18:18:42 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,16 @@
 
 int	ft_error_mesage(char *str)
 {
+	char	*red_color;
+	char	*reset_color;
+
+	red_color = "\033[1;31m";
+	reset_color = "\033[0m";
+	write(2, red_color, ft_strlen(red_color));
 	write(2, str, ft_strlen(str));
+	write(2, reset_color, ft_strlen(reset_color));
 	write(2, "\n", 1);
+
 	return (1);
 }
 
@@ -30,7 +38,6 @@ void	ft_clean_env(t_env **env)
 		tmp2 = tmp;
 		free(tmp2->key);
 		free(tmp2->value);
-		//free(tmp2->sep_path);
 		tmp = tmp->next;
 		free(tmp2);
 	}
@@ -39,49 +46,19 @@ void	ft_clean_env(t_env **env)
 
 int	ft_full_free(t_state *state)
 {
-	if (!state->pars->exit_check)
-		ft_free_double_str(state->pars->clean_argv);
 	ft_clean_env(&state->env);
+	ft_clean_env(&state->exp);
+	ft_free_double_str(state->sep_path);
+	if (state->line)
+		ft_all_cluster_free(state);
 	free(state->pars);
 	free(state);
-	return (1);
+	exit (0);
 }
 
-void	ft_free_double_str(char **str)
-{
-	int	i;
-
-	if (!str)
-		return ;
-	i = -1;
-	while (str[++i])
-		free(str[i]);
-	free(str);
-}
-
-
-int	ft_exit(char *line, char *msg, t_parser *parser)
+int	ft_exit(char *line, char *msg)
 {
 	free(line);
 	ft_error_mesage(msg);
-	parser->exit_check = 1;
-	return (1);
-}
-
-void	ft_free_thrd_str(char ***str)
-{
-	int	i;
-	int	j;
-
-	if (!str)
-		return ;
-	i = -1;
-	while (str[++i])
-	{
-		j = -1;
-		while (str[i][++j])
-			free(str[i][j]);
-		free(str[i]);
-	}
-	free(str);
+	return (0);
 }

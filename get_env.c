@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:37:07 by soksak            #+#    #+#             */
-/*   Updated: 2024/07/19 16:41:00 by soksak           ###   ########.fr       */
+/*   Updated: 2024/08/06 12:44:39 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,20 @@ t_env	*get_env(t_state *data, char **env)
 	return (tmp);
 }
 
-char	**ft_sep_path(t_state *state)
+void	ft_sep_path(t_state *state)
 {
-	while (state->env)
+	t_env	*tmp;
+
+	tmp = state->env;
+	while (tmp)
 	{
-		if (ft_strncmp(state->env->key, "PATH",
-				ft_strlen(state->env->key)) == 0)
+		if (ft_strncmp(tmp->key, "PATH",
+				ft_strlen(tmp->key)) == 0)
 		{
-			state->sep_path = ft_split(state->env->value, ':');
-			break ;
+			state->sep_path = ft_split(tmp->value, ':');
+			return ;
 		}
-		state->env = state->env->next;
+		tmp = tmp->next;
 	}
-	return (state->sep_path);
+	state->sep_path = ft_split("", ':');
 }
