@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:54:53 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/02 19:37:58 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:09:26 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,10 @@ int	ft_check_is_in(char *str, int index, t_parser *parser)
 
 int	ft_check_special(char c)
 {
-	if ((c > 36 && c < 48)
+	if ((c >= 36 && c < 48)
 		|| (c > 57 && c <= 62)
 		|| (c > 122 && c < 127)
 		|| (c > 90 && c < 97))
 		return (0);
 	return (1);
 }
-

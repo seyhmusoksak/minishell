@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 20:23:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/02 19:37:43 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:46:35 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char	*ft_dup_key(char *key, t_parser *pars, t_env *env)
 		result = ft_strjoin(quest, key +1);
 		free(quest);
 		*(pars->ptr_errno) = 0;
-		return(result);
+		return (result);
 	}
 	while (env != NULL)
 	{

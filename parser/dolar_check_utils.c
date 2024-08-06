@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:58:11 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/02 17:12:06 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:09:21 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_isdolr(char *str, int i, t_parser *parser)
 	int		start;
 
 	if (str[i] == '$' && str[i +1] != '\0' && str[i +1] != ' '
-		&& str[i +1] != '$' && str[i +1] != '"' && str[i +1] != '\''
+		&& str[i +1] != '"' && str[i +1] != '\''
 		&& str[ft_strlen(str)- 1] != '\'' && ft_check_special(str[i +1]))
 	{
 		start = i;
@@ -62,55 +62,3 @@ int	ft_isdolr(char *str, int i, t_parser *parser)
 	return (0);
 }
 
-t_node	*ft_dolar_new(char *content)
-{
-	t_node	*new_node;
-
-	new_node = (t_node *)malloc(sizeof(t_node));
-	if (!new_node)
-		return (NULL);
-	new_node->str = content;
-	new_node->next = NULL;
-	return (new_node);
-}
-
-void	ft_dolar_add_back(t_node **lst, t_node *new_node)
-{
-	t_node	*temp;
-
-	if (!lst || !new_node)
-		return ;
-	if (*lst == NULL)
-		*lst = new_node;
-	else
-	{
-		temp = *lst;
-		while (temp->next)
-			temp = temp->next;
-		temp->next = new_node;
-	}
-}
-
-char	*ft_node_resizer(t_node *dolar)
-{
-	char	*dest;
-	t_node	*tmp;
-	t_node	*tmp2;
-
-	tmp = dolar;
-	dest = ft_strdup("");
-	while (tmp)
-	{
-		dest = ft_strjoin(dest, tmp->str);
-		tmp = tmp->next;
-	}
-	tmp = dolar;
-	while (tmp)
-	{
-		tmp2 = tmp;
-		free(tmp2->str);
-		tmp = tmp->next;
-		free(tmp2);
-	}
-	return (dest);
-}
