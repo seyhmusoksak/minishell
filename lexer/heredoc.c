@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:38 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/06 12:16:13 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/06 19:39:35 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static void	ft_heradoc_helper(char *line, t_files *node)
+{
+	if (line == NULL)
+	{
+		close(node->fd_heredoc[1]);
+		exit(0);
+	}
+	if (ft_strcmp(line, node->input) == 0)
+	{
+		free(line);
+		exit(0);
+	}
+	write(node->fd_heredoc[1], line, ft_strlen(line));
+	write(node->fd_heredoc[1], "\n", 1);
+	free(line);
+}
 
 static void	ft_heredoc(t_files *node)
 {
@@ -22,21 +39,18 @@ static void	ft_heredoc(t_files *node)
 	pid = fork();
 	if (pid == 0)
 	{
+		sig_status = IN_HERADOC;
 		while (1)
 		{
 			line = readline(">");
-			if (ft_strcmp(line, node->input) == 0)
-			{
-				free(line);
-				exit(0);
-			}
-			write(node->fd_heredoc[1], line, ft_strlen(line));
-			write(node->fd_heredoc[1], "\n", 1);
-			free(line);
+			ft_heradoc_helper(line, node);
 		}
 	}
 	else
+	{
+		sig_status = IN_PARENT;
 		waitpid(pid, &error, 0);
+	}
 	close(node->fd_heredoc[1]);
 }
 

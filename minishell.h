@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/06 18:03:31 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/06 19:36:11 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/stat.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <sys/ioctl.h>
 # include <signal.h>
 // # define PERMISSION_DENIED "cd"
 
@@ -32,10 +33,14 @@
 # define APPEND 3
 # define HEREDOC 4
 
-# define BUFFER_SIZE 42
-# define MAX 10240
 
-int	sig_status;
+# define IN_CAT 1
+# define IN_HERADOC 2
+# define IN_PARENT 3
+# define BUFFER_SIZE 42
+# define MAX 1024
+
+int		sig_status;
 
 typedef struct s_files
 {
@@ -78,6 +83,7 @@ typedef struct s_parser
 	char	**cleaned;
 	char	**src;
 	char	**clean_argv;
+
 	//quote check func parameter
 	int		k;
 	int		m;
@@ -85,7 +91,6 @@ typedef struct s_parser
 	int		count_sq;
 	int		count_dq;
 	int		check_if;
-	int		exit_check;//kullanabilirim kalsın
 	int		char_check;
 
 	//	dolar
@@ -105,8 +110,8 @@ typedef struct s_parser
 	int		nr;
 	int		r;
 
-	int	one;
-	int	two;
+	int		one;
+	int		two;
 }	t_parser;
 
 typedef struct s_lexer
@@ -132,7 +137,6 @@ typedef struct s_state
 	t_env		*exp;
 	t_node		*dolar;
 }	t_state;
-
 
 
 //			get env functions (4)
@@ -202,7 +206,7 @@ char	*ft_cut_squote(char *str, int len, t_parser *pars);
 
 //						Put_env functions (20)
 char	**ft_put_env(char **str, t_state *state);
-int		ft_count_dolar(char *str , t_parser *parser);
+int		ft_count_dolar(char *str, t_parser *parser);
 int		ft_isdolr(char *str, int index, t_parser *pars);
 int		ft_check_is_in(char *str, int index, t_parser *parser);
 char	*ft_dolar_handler(char *str, t_node *dolar, t_parser *prs, t_env *env);
@@ -260,7 +264,7 @@ int		ft_check_built(t_cluster *cluster);
 void	ft_close_pipe(t_state *state, int check);
 void	ft_dup_init(t_state *state, t_cluster *cluster, int i,int check);
 void	ft_executer_error(char	**cmd, char *s, int exit_code);
-void	ft_executer(t_state *state);
+void	ft_executer(t_state *state, int i);
 void	ft_wait(t_state *state, int check);
 void	ft_heredoc_check(t_files *node, char **arg);
 char	**ft_find_cmd(char **arg, int len);

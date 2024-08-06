@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_cluster.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:31:23 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/06 16:43:15 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/06 18:20:26 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_all_cluster_free(t_state *state)
 {
 	t_cluster	*tmp;
 
+	if (!state->cluster)
+		return ;
 	tmp = state->cluster;
 	while (tmp)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/02 17:39:41 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 00:02:04 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,12 @@ void	ft_clean_env(t_env **env)
 int	ft_full_free(t_state *state)
 {
 	ft_clean_env(&state->env);
-	ft_clean_env(&state->exp);
 	ft_free_double_str(state->sep_path);
 	if (state->line)
 		ft_all_cluster_free(state);
 	free(state->pars);
 	free(state);
-	return (1);
+	exit (0);
 }
 
 int	ft_exit(char *line, char *msg)

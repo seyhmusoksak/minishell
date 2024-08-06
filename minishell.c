@@ -6,12 +6,13 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/06 12:31:59 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/07 00:01:44 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 ///export düzeltilecek	heredoc komutsuz düzeltilecek exec envsiz düzeltilecek
 #include "minishell.h"
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_state	*state;
@@ -25,9 +26,10 @@ int	main(int argc, char **argv, char **envp)
 	sig_status = 0;
 	ft_init_signals();
 	state->env = get_env(state, envp);
-	state->exp = get_env(state,envp);
+	state->exp = state->env;
 	state->envp = envp;
 	state->error = 0;
+	state->cluster = NULL;
 	while (1)
 	{
 		ft_sep_path(state);

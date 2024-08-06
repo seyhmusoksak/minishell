@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:53:36 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/06 14:32:35 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/06 18:16:08 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	ft_dir_check(t_state **state, char *dir)
 {
 	struct stat	file_info;
 
+	(void) state;
 	if (stat(dir, &file_info) == 0) //dizinin infosu alınır
 	{
 		if (S_ISDIR(file_info.st_mode))//S_ISDIR ile dizinmi kontrol edilir
