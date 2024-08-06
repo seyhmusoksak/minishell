@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:31:23 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/04 18:50:45 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/06 16:43:15 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	ft_all_cluster_free(t_state *state)
 	tmp = state->cluster;
 	while (tmp)
 	{
-
 		state->cluster = tmp->next;
 		ft_free_double_str(tmp->cmd);
 		if (tmp->files->input)

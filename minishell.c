@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/04 20:40:22 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/06 12:31:59 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,18 @@ int	main(int argc, char **argv, char **envp)
 	ft_init_signals();
 	state->env = get_env(state, envp);
 	state->exp = get_env(state,envp);
-	ft_sep_path(state);
 	state->envp = envp;
 	state->error = 0;
 	while (1)
 	{
+		ft_sep_path(state);
 		state->pars->ptr_errno = &(state->error);
 		state->line = readline("minishell>");
 		if (state->line)
 			add_history(state->line);
 		if (ft_parser(state))
 			break ;
+		ft_free_double_str(state->sep_path);
 		free(state->line);
 		ft_all_cluster_free(state);
 	}

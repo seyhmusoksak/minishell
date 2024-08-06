@@ -6,27 +6,29 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 14:57:55 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/02 13:03:47 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/06 14:30:12 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_notdefine_dir(char *s)
+void	ft_notdefine_dir(char *s, t_state *state)
 {
 	// GELIŞTIRILEBİLİR bunun yerine yeni bir error fonkiyonu
 	write(2, "cd: ", 4);
 	write(2, s, ft_strlen(s));
 	write(2, " ", 1);
 	write(2, "not set\n", ft_strlen("not set\n"));
+	state->error = 1;
 }
 
-void	ft_cd_error(char *dir)
+void	ft_cd_error(char *dir, t_state *state)
 {
 	//standart çıktı fd ile dğiştirilecek
 
 	write(2, "cd: ", ft_strlen("cd: "));
 	perror(dir);
+	state->error = 1;
 }
 
 void	ft_key_error(char *s, char *cmd)

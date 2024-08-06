@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 19:07:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/04 18:22:06 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/06 15:58:18 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	ft_route(t_state *state)
 			ft_print_env(state, tmp);
 		else if (ft_strcmp(tmp->cmd[0], "unset") == 0)
 			ft_del_env(&state, tmp);
-		// close(tmp->files->fd_output);
-		// close(tmp->files->fd_input);
 		tmp = tmp->next;
 	}
 }

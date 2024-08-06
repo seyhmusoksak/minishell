@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:53:36 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/02 15:55:33 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/06 14:32:35 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,24 @@
 static void	ft_dir_check(t_state **state, char *dir)
 {
 	struct stat	file_info;
-	(void)state;
 
 	if (stat(dir, &file_info) == 0) //dizinin infosu alınır
 	{
 		if (S_ISDIR(file_info.st_mode))//S_ISDIR ile dizinmi kontrol edilir
 		{
-			if (access(dir, R_OK) == 0)//dsoya okunabilir mi
+			if (access(dir, R_OK) == 0) //dsoya okunabilir mi
 			{
-				if (chdir(dir) != 0)//dizine gidilir
+				if (chdir(dir) != 0) //dizine gidilir
 					perror("CHDIR");
 			}
 			else
-				ft_cd_error(dir);
+				ft_cd_error(dir,*state);
 		}
 		else
-			ft_cd_error(dir);
+			ft_cd_error(dir,*state);
 	}
 	else
-		ft_cd_error(dir);
+		ft_cd_error(dir,*state);
 }
 
 static void	ft_select_dir(t_state **state, char *type)//home dizinimi oldpwd mi
@@ -51,7 +50,7 @@ static void	ft_select_dir(t_state **state, char *type)//home dizinimi oldpwd mi
 			tmp_env = tmp_env->next;
 	if (tmp_env == NULL)//dizin bulunmuş mu bulunmadı ise notset yazdır
 	{
-		ft_notdefine_dir(type); //notdefine fonkiyonunu geliştirilebilir
+		ft_notdefine_dir(type, *state); //notdefine fonkiyonunu geliştirilebilir
 		return ;
 	}
 	dir = tmp_env->value;

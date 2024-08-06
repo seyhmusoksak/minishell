@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:38 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/04 18:53:08 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/06 12:16:13 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,7 @@ void	ft_heredoc_check(t_files *node, char **arg)
 		}
 		i++;
 	}
+	if (node->heredoc == NULL)
+		node->heredoc = ft_strdup("");
 }
 

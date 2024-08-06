@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/04 17:17:26 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/06 18:03:31 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,8 @@ void	ft_echo(t_cluster *cluster);
 void	ft_del_env(t_state **state, t_cluster *cluster);
 void	ft_pwd(t_cluster *cluster);
 void	ft_cd(t_state **state);
-void	ft_notdefine_dir(char *s);
-void	ft_cd_error(char *dir);
+void	ft_notdefine_dir(char *s,t_state *state);
+void	ft_cd_error(char *dir, t_state *state);
 int		ft_strcmp(char *s1, char *s2);
 void	bubble_sort(t_env *exp, int (*cmp)(char *, char *));
 void	ft_print_exp(t_state **state, t_cluster *cluster);
@@ -259,7 +259,7 @@ int		ft_check_built(t_cluster *cluster);
 
 void	ft_close_pipe(t_state *state, int check);
 void	ft_dup_init(t_state *state, t_cluster *cluster, int i,int check);
-void	ft_executer_error(char	**cmd, char *s);
+void	ft_executer_error(char	**cmd, char *s, int exit_code);
 void	ft_executer(t_state *state);
 void	ft_wait(t_state *state, int check);
 void	ft_heredoc_check(t_files *node, char **arg);
