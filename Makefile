@@ -8,7 +8,8 @@ SRCS = get_env.c minishell.c signal.c parser/parser.c parser/parser_utils.c \
 		route.c builtin/cd.c builtin/error.c builtin/pwd.c  builtin/echo.c builtin/env.c builtin/export.c \
 		builtin/unset.c  parser/united_dolar.c parser/redirect_right_parser.c \
 		parser/redirect_left_parser.c parser/len_utils.c executor/exec.c executor/exec_utils.c error/executer_error.c \
-		parser/char_control.c GNL/get_next_line.c lexer/free_cluster.c lexer/heredoc.c parser/node_utils.c builtin/exit.c \
+		parser/char_control.c GNL/get_next_line.c lexer/free_cluster.c lexer/heredoc.c parser/node_utils.c \
+		parser/pipe_utils.c  builtin/exit.c
 		# lexer/lexer.c lexer/lexer_utils.c
 
 OBJS = $(SRCS:.c=.o)

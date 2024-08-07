@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/07 16:19:15 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/07 16:34:56 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ int	ft_full_free(t_state *state, int status)
 	exit(status);
 }
 
-int	ft_exit(char *line, char *msg)
+int	ft_exit(char *line, char *msg, t_state *state)
 {
+	state->error = 258;
 	free(line);
 	ft_error_mesage(msg);
 	return (0);

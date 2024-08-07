@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:50:09 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/06 18:11:36 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:36:39 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ void	ft_write_double_str(char **str)
 		printf("str[%d]: %s\n", i, str[i]);
 }
 
-int	ft_exit_redirect(char *line, char *msg, t_parser *parser)
+int	ft_exit_redirect(char *line, char *msg, t_state  *state)
 {
-	(void)parser;
+	state->error = 258;
 	free(line);
-	ft_free_double_str(parser->cleaned);
+	ft_free_double_str(state->pars->cleaned);
 	ft_error_mesage(msg);
 	return (0);
 }

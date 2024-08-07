@@ -6,11 +6,12 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/04 20:34:16 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:58:54 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 
 char	**ft_pipe_split(char *line, char c, t_parser *parser)
 {
@@ -20,7 +21,7 @@ char	**ft_pipe_split(char *line, char c, t_parser *parser)
 
 	parser->char_check = 1;
 	pc = (pipe_c(line, c, parser) + 1);
-	src = ft_split(line, c);
+	src = ft_new_split(line, c, parser);
 	tmp = (char **)malloc(sizeof(char *) * (pc + 1));
 	if (!tmp)
 		return (NULL);
