@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_check.c                                     :+:      :+:    :+:   */
+/*   parser_clean.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:07:17 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/10 16:55:49 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:41:50 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ void	ft_cleaner(t_parser *pars, int i)
 void	ft_cleaner_helper(t_parser *prs, int *i)
 {
 	if (prs->space > 0
-		&& (prs->src[prs->i][*i] == '"'
+		&& (prs->src[prs->i][*i] == '"' && *i -1 >= 0
 		&& ((prs->src[prs->i][*i -1] != '\0' && prs->src[prs->i][*i -1] == ' ')
 		&& ft_quote_check(prs->src[prs->i], *i, prs) == 0))
 		&& ft_is_first(prs->src[prs->i] + *i, '"', *i, prs) == 2)
 		*i += ft_write_in_quote(prs->src[prs->i] + *i, 'F', '"', prs);
 	else if (prs->space > 0
-		&& (prs->src[prs->i][*i] == '\''
+		&& (prs->src[prs->i][*i] == '\'' && *i -1 >= 0
 		&& ((prs->src[prs->i][*i -1] != '\0' && prs->src[prs->i][*i -1] == ' ')
 		&& ft_quote_check(prs->src[prs->i], *i, prs) == 0))
 		&& ft_is_first(prs->src[prs->i] + *i, '\'', *i, prs) == 1)

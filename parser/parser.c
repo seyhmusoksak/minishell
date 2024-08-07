@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/07 16:39:08 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:32:50 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	ft_parser(t_state *state)
 	char	*line;
 	char	**split_str;
 	char	**pars_redirect;
-	// int		i;
-	// int		j;
+	int		i;
+	int		j;
 
 	if (ft_wait_for_input(state) == 2)
 		return (1);
@@ -31,8 +31,8 @@ int	ft_parser(t_state *state)
 		return (ft_exit(line, "Error: Failure to use pipe ! ", state));
 	split_str = ft_pipe_split(line, '|', state->pars);
 	ft_init_quote_str(split_str, state->pars);
-	// printf("--------------------cleaned_argv--------------------\n");
-	// ft_write_double_str(state->pars->cleaned);
+	printf("--------------------cleaned_argv--------------------\n");
+	ft_write_double_str(state->pars->cleaned);
 	if (ft_redirection_control(state->pars))
 		return (ft_exit_redirect(line, "Error: Redirect syntax error !", state));
 	free(line);
@@ -48,14 +48,14 @@ int	ft_parser(t_state *state)
 	ft_free_double_str(pars_redirect);
 	state->cmd_count = ft_double_str_len(state->pars->clean_argv);
 	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
-	// printf("----------------------3d_Str------------------------\n");
-	// i = -1;
-	// while (state->clean_thrd_argv[++i])
-	// {
-	// 	j = -1;
-	// 	while (state->clean_thrd_argv[i][++j])
-	// 		printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
-	// }
+	printf("----------------------3d_Str------------------------\n");
+	i = -1;
+	while (state->clean_thrd_argv[++i])
+	{
+		j = -1;
+		while (state->clean_thrd_argv[i][++j])
+			printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
+	}
 	ft_free_double_str(state->pars->clean_argv);
 	ft_cluster(state);
 	ft_free_thrd_str(state->clean_thrd_argv);
@@ -131,6 +131,7 @@ char	*ft_clean_first_last_quote(char *str)
 			return (NULL);
 		while (str[++i] && (i < ((int)ft_strlen(str))))
 			dest[++j] = str[i];
+		free (str);
 		dest[j] = '\0';
 		return (dest);
 	}

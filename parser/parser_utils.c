@@ -6,61 +6,13 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/07 13:58:54 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:19:47 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-char	**ft_pipe_split(char *line, char c, t_parser *parser)
-{
-	char	**src;
-	char	**tmp;
-	int		pc;
-
-	parser->char_check = 1;
-	pc = (pipe_c(line, c, parser) + 1);
-	src = ft_new_split(line, c, parser);
-	tmp = (char **)malloc(sizeof(char *) * (pc + 1));
-	if (!tmp)
-		return (NULL);
-	tmp[pc] = NULL;
-	ft_quote_control(src, tmp, c, parser);
-	ft_free_double_str(src);
-	return (tmp);
-}
-
-void	ft_quote_control(char **src, char **tmp, char c, t_parser *parser)
-{
-	char		*dst;
-	int			j;
-	int			i;
-
-	i = 0;
-	j = 0;
-	while (src[i] != NULL)
-	{
-		if (parser->char_check)
-		{
-			dst = ft_strdup(src[i]);
-			parser->char_check = 0;
-		}
-		if (ft_quote_check(dst, ft_strlen(dst), parser) != 0)
-			ft_strjoin_and_free(&dst, src[++i], c);
-		if (ft_quote_check(dst, ft_strlen(dst), parser) == 0 && dst != NULL)
-		{
-			tmp[j] = ft_strdup(dst);
-			parser->char_check = ++i;
-			j++;
-		}
-		if (ft_quote_check(dst, ft_strlen(dst), parser) == 0)
-			free (dst);
-	}
-	tmp[j] = NULL;
-}
-
-int	pipe_c(char *line, char c, t_parser *parser)
+int	ft_count_real_char(char *line, char c, t_parser *parser)
 {
 	int	i;
 	int	count;
@@ -88,26 +40,6 @@ int	pipe_c(char *line, char c, t_parser *parser)
 	return (count);
 }
 
-void	ft_strjoin_and_free(char **dst, char *s2, char c)
-{
-	char	*result;
-	char	*tmp;
-	char	c_str[2];
-
-	c_str[0] = c;
-	c_str[1] = '\0';
-	if (!*dst || !s2)
-		return ;
-	tmp = ft_strjoin(*dst, c_str);
-	result = ft_strjoin(tmp, s2);
-	free(tmp);
-	free(*dst);
-	*dst = NULL;
-	*dst = ft_strdup(result);
-	free(result);
-	return ;
-}
-
 int	ft_wait_for_input(t_state *state)
 {
 	int	i;
@@ -122,4 +54,16 @@ int	ft_wait_for_input(t_state *state)
 		i++;
 	}
 	return (0);
+}
+char	*ft_resizer(char **str)
+{
+	char	*line;
+	int		i;
+
+	line = ft_strdup("");
+	i = -1;
+	while (str[++i])
+		line = ft_strjoin(line, str[i]);
+	ft_free_double_str(str);
+	return (line);
 }
