@@ -132,6 +132,7 @@ char	*ft_clean_first_last_quote(char *str)
 		while (str[++i] && (i < ((int)ft_strlen(str))))
 			dest[++j] = str[i];
 		dest[j] = '\0';
+		free(str);
 		return (dest);
 	}
 	return (str);

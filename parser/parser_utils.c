@@ -16,19 +16,19 @@
 char	**ft_pipe_split(char *line, char c, t_parser *parser)
 {
 	char	**src;
-	char	**tmp;
-	int		pc;
+	// char	**tmp;
+	// int		pc;
 
-	parser->char_check = 1;
-	pc = (pipe_c(line, c, parser) + 1);
+	// parser->char_check = 1;
+	// pc = (pipe_c(line, c, parser) + 1);
 	src = ft_new_split(line, c, parser);
-	tmp = (char **)malloc(sizeof(char *) * (pc + 1));
-	if (!tmp)
-		return (NULL);
-	tmp[pc] = NULL;
-	ft_quote_control(src, tmp, c, parser);
-	ft_free_double_str(src);
-	return (tmp);
+	// tmp = (char **)malloc(sizeof(char *) * (pc + 1));
+	// if (!tmp)
+	// 	return (NULL);
+	// tmp[pc] = NULL;
+	// ft_quote_control(src, tmp, c, parser);
+	// ft_free_double_str(src);
+	return (src);
 }
 
 void	ft_quote_control(char **src, char **tmp, char c, t_parser *parser)

@@ -28,6 +28,7 @@ static void	ft_init_program(int argc, char **argv, char **envp, t_state **state)
 	(*state)->envp = envp;
 	(*state)->error = 0;
 	(*state)->cluster = NULL;
+	(*state)->fd = NULL;
 
 }
 

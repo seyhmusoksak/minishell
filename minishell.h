@@ -260,7 +260,7 @@ int		ft_open_output(char *file);
 int		ft_open_append(char *file);
 t_cluster	*ft_file_open_error(t_cluster *cluster, char *file);
 void	ft_print_env(t_state *state, t_cluster *cluster);
-void	ft_route(t_state *state);
+void	ft_route(t_state *state, t_cluster *tmp);
 int		ft_check_built(t_cluster *cluster);
 
 
@@ -275,4 +275,5 @@ char	**ft_find_cmd(char **arg, int len);
 char	*get_next_line(int fd);
 void	ft_all_cluster_free(t_state *state);
 void	ft_built_exit_cmd(t_state *state, t_cluster *cluster);
+void	ft_int_free(t_state *state);
 # endif
