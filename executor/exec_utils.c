@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-static void	ft_int_free(t_state *state)
+void	ft_int_free(t_state *state)
 {
 	int	i;
 
@@ -26,6 +26,7 @@ static void	ft_int_free(t_state *state)
 		}
 		free(state->fd);
 	}
+	state->fd = NULL;
 }
 
 void	ft_wait(t_state *state, int check)

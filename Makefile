@@ -9,8 +9,7 @@ SRCS = get_env.c minishell.c signal.c parser/parser.c parser/parser_utils.c \
 		builtin/unset.c  parser/united_dolar.c parser/redirect_right_parser.c \
 		parser/redirect_left_parser.c parser/len_utils.c executor/exec.c executor/exec_utils.c error/executer_error.c \
 		parser/char_control.c GNL/get_next_line.c lexer/free_cluster.c lexer/heredoc.c parser/node_utils.c \
-		parser/pipe_utils.c  builtin/exit.c parser/free_utils.c 
-		# lexer/lexer.c lexer/lexer_utils.c
+		parser/pipe_utils.c  builtin/exit.c parser/free_utils.c
 
 OBJS = $(SRCS:.c=.o)
 LIBFT_DIR = ./libft
@@ -19,7 +18,7 @@ CC = gcc
 READLINE_LIB_LOC = readline/lib
 READLINE_INC_LOC = readline/include
 CFLAGS = -g -Wall -Wextra -Werror -fsanitize=address -I $(READLINE_INC_LOC)
-LDFLAGS = -L$(READLINE_LIB_LOC) -I$(READLINE_INC_LOC) -lreadline -lhistory
+LDFLAGS = -L$(READLINE_LIB_LOC) -I$(READLINE_INC_LOC) -lreadline -lhistory -lncurses
 
 READLINE_URL = https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz
 READLINE_DIR = readline-8.2

@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/07 16:43:11 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:40:26 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	ft_init_program(int argc, char **argv, char **envp, t_state **state)
 	(*state)->envp = envp;
 	(*state)->error = 0;
 	(*state)->cluster = NULL;
+	(*state)->fd = NULL;
 
 }
 

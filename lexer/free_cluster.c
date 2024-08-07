@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_cluster.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:31:23 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/06 18:20:26 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 17:18:27 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ void	ft_all_cluster_free(t_state *state)
 	{
 		state->cluster = tmp->next;
 		ft_free_double_str(tmp->cmd);
+		if (tmp->files->fd_input > 2)
+			close(tmp->files->fd_input);
+		if (tmp->files->fd_output > 2)
+			close(tmp->files->fd_output);
 		if (tmp->files->input)
 			free(tmp->files->input);
 		if (tmp->files->output)

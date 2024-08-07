@@ -88,7 +88,8 @@ static void	ft_execve(t_state *state, t_cluster *cluster, int i, int check)
 	ft_dup_init(state, cluster, i, check);
 	if (state->cmd_count > 1 && check > 0)
 	{
-		ft_route(state);
+		ft_route(state, cluster);
+		free(state->line);
 		exit(0);
 	}
 	cmd_path = ft_cmd_get(state, cluster);
@@ -112,7 +113,7 @@ void	ft_executer(t_state *state, int i)
 		if (tmp->cmd)
 		{
 			if (check > 0 && state->cmd_count == 1)
-				ft_route(state);
+				ft_route(state, tmp);
 			else
 			{
 				sig_status = 1;
