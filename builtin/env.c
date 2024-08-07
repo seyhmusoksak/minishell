@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:35:15 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/07 00:06:39 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/07 13:11:36 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	ft_del_node(t_env **list, char *key) //env veya exporttan düğüm silmek i
 		*list = tmp->next;
 	if (prev != NULL)
 		prev->next = tmp->next;
-	if(tmp->key)
+	if (tmp->key)
 		free(tmp->key);
-	if(tmp->value)
+	if (tmp->value)
 		free(tmp->value);
 	free(tmp);
 }

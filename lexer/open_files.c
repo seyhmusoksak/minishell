@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:10:49 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/02 17:38:34 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 13:21:53 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ int	ft_open_input(char *file)
 	int	fd;
 
 	fd = open(file, O_RDONLY, 0777);
+	if (fd == -1)
+		return (-1);
+	return (fd);
+}
+
+int	ft_open_append(char *file)
+{
+	int	fd;
+
+	fd = open(file, O_CREAT | O_APPEND | O_RDWR, 0777);
 	if (fd == -1)
 		return (-1);
 	return (fd);

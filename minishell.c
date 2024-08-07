@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/07 00:01:44 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/07 16:12:18 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ int	main(int argc, char **argv, char **envp)
 		ft_error_mesage("Error: Malloc problem !");
 	(void)argc;
 	(void)argv;
-	sig_status = 0;
 	ft_init_signals();
 	state->env = get_env(state, envp);
-	state->exp = state->env;
+	state->exp = get_env(state, envp);
 	state->envp = envp;
 	state->error = 0;
 	state->cluster = NULL;
 	while (1)
 	{
+		sig_status = 0;
 		ft_sep_path(state);
 		state->pars->ptr_errno = &(state->error);
 		state->line = readline("minishell>");
@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **envp)
 		free(state->line);
 		ft_all_cluster_free(state);
 	}
-	ft_full_free(state);
+	ft_full_free(state, 0);
 	return (0);
 }
 

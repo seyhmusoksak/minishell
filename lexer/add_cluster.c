@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_cluster.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:11:58 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/06 18:16:27 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:04:46 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static t_cluster	*ft_new_cluster_node(char	**arg)
 
 	new = (t_cluster *)malloc(sizeof(t_cluster));
 	new->cmd = ft_clean_cmd(ft_fill_cmd(arg));
-	new->files = ft_new_files_node(arg);
+	new->files = ft_new_files_node(arg, -1);
 	if (new->files->heredoc[0] != '\0' && new->files->fd_input < 2)
 		new->files->fd_input = -2;
 	new->pid = -1;

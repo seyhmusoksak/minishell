@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:05:15 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/06 19:40:26 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:21:07 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 static void	ft_signal_handler(int sig)
 {
 	(void)sig;
+	// printf("sintyal->%d",sig_status);
 	if (sig_status == IN_CAT)
 	{
 		write (1, "\n", 1);
 		rl_on_new_line();
-		sig_status = 0;
 	}
 	else if (sig_status == IN_HERADOC)
 	{

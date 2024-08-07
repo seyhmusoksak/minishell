@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/07 00:02:04 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/07 16:19:15 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	ft_error_mesage(char *str)
 	write(2, str, ft_strlen(str));
 	write(2, reset_color, ft_strlen(reset_color));
 	write(2, "\n", 1);
-
 	return (1);
 }
 
@@ -41,18 +40,20 @@ void	ft_clean_env(t_env **env)
 		tmp = tmp->next;
 		free(tmp2);
 	}
-
 }
 
-int	ft_full_free(t_state *state)
+int	ft_full_free(t_state *state, int status)
 {
 	ft_clean_env(&state->env);
+	ft_clean_env(&state->exp);
 	ft_free_double_str(state->sep_path);
 	if (state->line)
 		ft_all_cluster_free(state);
 	free(state->pars);
 	free(state);
-	exit (0);
+	if (status != 255 && status != 1)
+		ft_putstr_fd("exit\n", 2);
+	exit(status);
 }
 
 int	ft_exit(char *line, char *msg)

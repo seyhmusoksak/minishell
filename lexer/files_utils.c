@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:39:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/04 20:32:55 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:05:11 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static	t_files	*ft_files_init(t_files *node)
 {
-
 	node = (t_files *) malloc(sizeof(t_files));
 	node->error = 0;
 	node->output = ft_strdup("");
@@ -28,6 +27,8 @@ static	t_files	*ft_files_init_input(t_files *node, char *arg)
 {
 	free(node->input);
 	node->input = ft_strdup(arg);
+	if (node->fd_input > 2)
+		close(node->fd_input);
 	node->fd_input = ft_open_input(node->input);
 	if (node->fd_input == -1)
 		node->error = 1;
@@ -38,22 +39,34 @@ static	t_files	*ft_files_init_output(t_files *node, char *arg)
 {
 	free(node->output);
 	node->output = ft_strdup(arg);
+	if (node->fd_output > 2)
+		close(node->fd_output);
 	node->fd_output = ft_open_output(node->output);
 	if (node->fd_output == -1)
 		node->error = 2;
 	return (node);
 }
 
-t_files	*ft_new_files_node(char **arg)
+static t_files	*ft_files_init_append(t_files *node, char *arg)
+{
+	free(node->output);
+	printf("aa\n");
+	node->output = ft_strdup(arg);
+	if (node->fd_output > 2)
+		close(node->fd_output);
+	node->fd_output = ft_open_append(node->output);
+	if (node->fd_output == -1)
+		node->error = 2;
+	return (node);
+}
+
+t_files	*ft_new_files_node(char **arg, int i)
 {
 	t_files	*node;
-	int		i;
 
-	node = NULL;
-	node = ft_files_init(node);
+	node = ft_files_init(NULL);
 	ft_heredoc_check(node, arg);
-	i = 0;
-	while (arg[i])
+	while (arg[++i])
 	{
 		if (ft_strcmp(arg[i], "<") == 0)
 		{
@@ -62,14 +75,16 @@ t_files	*ft_new_files_node(char **arg)
 				return (node);
 			i++;
 		}
-		else if (ft_strcmp(arg[i], ">") == 0)
+		else if (arg[i][0] == '>')
 		{
-			node = ft_files_init_output(node, arg[i + 1]);
+			if (arg[i][1] == '>')
+				node = ft_files_init_append(node, arg[i + 1]);
+			else
+				node = ft_files_init_output(node, arg[i + 1]);
 			if (node->error == 2)
 				return (node);
 			i++;
 		}
-		i++;
 	}
 	return (node);
 }

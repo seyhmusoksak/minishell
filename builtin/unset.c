@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:16:26 by ekose             #+#    #+#             */
-/*   Updated: 2024/07/30 21:07:39 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/07 13:08:20 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	ft_del_env(t_state **state, t_cluster *cluster)
 
 	i = 1;
 	tmp = cluster;
-	printf("-------\n");
 	while (tmp->cmd[i])
 	{
 		j = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/06 19:36:11 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:11:47 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ int		ft_error_mesage(char *str);
 void	ft_free_double_str(char **str);
 int		ft_double_str_len(char **str);
 void	ft_free_double_str(char **str);
-int		ft_full_free(t_state *state);
+int		ft_full_free(t_state *state, int status);
 
 //			Char control
 int		ft_redirection_control(t_parser *parser);
@@ -251,9 +251,10 @@ void	ft_init_signals(void);
 void	ft_cluster(t_state *state);
 int		ft_strcmp(char *s1, char *s2);
 char	**ft_fill_cmd(char **arg);
-t_files	*ft_new_files_node(char **arg);
+t_files	*ft_new_files_node(char **arg, int i);
 int		ft_open_input(char *file);
 int		ft_open_output(char *file);
+int		ft_open_append(char *file);
 t_cluster	*ft_file_open_error(t_cluster *cluster, char *file);
 void	ft_print_env(t_state *state, t_cluster *cluster);
 void	ft_route(t_state *state);
@@ -270,4 +271,5 @@ void	ft_heredoc_check(t_files *node, char **arg);
 char	**ft_find_cmd(char **arg, int len);
 char	*get_next_line(int fd);
 void	ft_all_cluster_free(t_state *state);
+void	ft_built_exit_cmd(t_state *state, t_cluster *cluster);
 # endif
