@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:35:15 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/07 12:19:10 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:28:21 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void	ft_del_node(t_env **list, char *key) //env veya exporttan düğüm silmek i
 		*list = tmp->next;
 	if (prev != NULL)
 		prev->next = tmp->next;
-	if(tmp->key)
+	if (tmp->key)
 		free(tmp->key);
-	if(tmp->value)
+	if (tmp->value)
 		free(tmp->value);
 	free(tmp);
 }

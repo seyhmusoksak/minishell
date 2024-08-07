@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:48:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/02 12:47:32 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/07 13:11:07 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,6 @@ static void	ft_transaction(t_env **ptr1, int *swapped)
 	(*ptr1)->next->value = tmpvalue;
 	*swapped = 0;
 }
-
-// int	ft_strcmp(char *s1, char *s2)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
-// 		i++;
-// 	return (s1[i] - s2[i]);
-// }
 
 void	bubble_sort(t_env *exp, int (*cmp)(char *, char *))
 {
@@ -75,15 +65,16 @@ void	ft_print_exp(t_state **state, t_cluster *cluster)
 		{
 			write(fd, "declare -x ", ft_strlen("declare -x "));
 			write(fd, tmp->key, ft_strlen(tmp->key));
-			write(fd, "\n", 1);
+			write(fd, "=\"", 3);
+			write(fd, "\"\n", 3);
 		}
 		else
 		{
 			write(fd, "declare -x ", ft_strlen("declare -x "));
 			write(fd, tmp->key, ft_strlen(tmp->key));
-			write(fd, "=", 1);
+			write(fd, "=\"", 3);
 			write(fd, tmp->value, ft_strlen(tmp->value));
-			write(fd, "\n", 1);
+			write(fd, "\"\n", 3);
 		}
 		tmp = tmp->next;
 	}
@@ -94,9 +85,12 @@ void	ft_add_exp(t_state **state, char *arg)
 	t_env		*tmp_exp;
 	int			i;
 
-	tmp_exp = (*state)->exp;
 	i = 0;
+	tmp_exp = (*state)->exp;
 	ft_del_node(&tmp_exp, arg); //Aynı keyden varsa silmek için
+	if(ft_key_check(arg[0], 0) == 0)
+		return (ft_key_error(arg, "export"));
+
 	while (arg[i] && arg[i] != '=' )
 	{
 		if (ft_key_check(arg[i], i) == 0)//key uygun mu isalnum kontorlü

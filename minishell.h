@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/07 15:23:02 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:38:20 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ int		pipe_c(char *line, char c, t_parser *parser);
 int		ft_wait_for_input(t_state *state);
 void	ft_strjoin_and_free(char **dst, char *s2, char c);
 char	**ft_new_split(char *s, char c, t_parser *parser);
-int		ft_exit(char *line, char *msg);
+int		ft_exit(char *line, char *msg, t_state *state);
 
 //			string clean functions (11)
 int		ft_init_quote_str(char **str, t_parser *pars);
@@ -186,7 +186,7 @@ int		ft_error_mesage(char *str);
 void	ft_free_double_str(char **str);
 int		ft_double_str_len(char **str);
 void	ft_free_double_str(char **str);
-int		ft_full_free(t_state *state);
+int		ft_full_free(t_state *state, int status);
 
 //			Char control
 int		ft_redirection_control(t_parser *parser);
@@ -194,7 +194,7 @@ int		ft_sing_in(t_parser *parser, char c);
 int		ft_redirection_in(t_parser *parser, char c, char d);
 int		new_redirection(t_parser *parser, char c, char d);
 int		ft_redirect(t_parser *parser, int k, char c, char d);
-int		ft_exit_redirect(char *line, char *msg, t_parser *parser);
+int	ft_exit_redirect(char *line, char *msg, t_state  *state);
 int		ft_pipe_check(char *line, t_parser *parser);
 
 //			quote functions (8)
@@ -254,9 +254,10 @@ void	ft_init_signals(void);
 void	ft_cluster(t_state *state);
 int		ft_strcmp(char *s1, char *s2);
 char	**ft_fill_cmd(char **arg);
-t_files	*ft_new_files_node(char **arg);
+t_files	*ft_new_files_node(char **arg, int i);
 int		ft_open_input(char *file);
 int		ft_open_output(char *file);
+int		ft_open_append(char *file);
 t_cluster	*ft_file_open_error(t_cluster *cluster, char *file);
 void	ft_print_env(t_state *state, t_cluster *cluster);
 void	ft_route(t_state *state);
@@ -273,4 +274,5 @@ void	ft_heredoc_check(t_files *node, char **arg);
 char	**ft_find_cmd(char **arg, int len);
 char	*get_next_line(int fd);
 void	ft_all_cluster_free(t_state *state);
+void	ft_built_exit_cmd(t_state *state, t_cluster *cluster);
 # endif

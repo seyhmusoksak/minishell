@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:59:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/06 19:28:13 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:27:36 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,7 @@ void	ft_executer(t_state *state, int i)
 				ft_route(state);
 			else
 			{
-				if (tmp->cmd[0] && !ft_strncmp(tmp->cmd[0], "cat", 3))
-					sig_status = 1;
+				sig_status = 1;
 				tmp->pid = fork();
 				if (tmp->pid == 0)
 					ft_execve(state, tmp, i, check);
