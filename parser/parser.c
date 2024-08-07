@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/06 18:22:31 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 15:22:48 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_parser(t_state *state)
 	line = ft_strtrim(state->line, " ");
 	if (ft_quote_check(line, (int)ft_strlen(line), state->pars))
 		return (ft_exit(line, "Error: Open quotation mark !"));
-	if (line[0] == '|' || line[ft_strlen(line) - 1] == '|')
+	if (ft_pipe_check(line, state->pars))
 		return (ft_exit(line, "Error: Failure to use pipe ! "));
 	split_str = ft_pipe_split(line, '|', state->pars);
 	ft_init_quote_str(split_str, state->pars);
