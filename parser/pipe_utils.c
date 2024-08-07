@@ -6,33 +6,11 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:56:39 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/07 15:34:07 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:39:29 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static int	ft_word(char *s, char c)
-{
-	int	i;
-	int	count;
-
-	count = 0;
-	i = 0;
-	while (s[i])
-	{
-		while (s[i] == c && s[i])
-			i++;
-		if (s[i] != c && s[i] != '\0')
-		{
-			i++;
-			count++;
-		}
-		while (s[i] != c && s[i])
-			i++;
-	}
-	return (count);
-}
 
 static int	ft_wordlen(char *s, char c, int j, t_parser *parser)
 {
@@ -48,7 +26,7 @@ static int	ft_wordlen(char *s, char c, int j, t_parser *parser)
 	return (i);
 }
 
-static char	*ft_write(char *s, char c, int start ,t_parser *parser)
+static char	*ft_write(char *s, char c, int start, t_parser *parser)
 {
 	int		i;
 	int		j;
@@ -69,7 +47,7 @@ static char	*ft_write(char *s, char c, int start ,t_parser *parser)
 	return (dest);
 }
 
-char	**ft_new_split(char *s, char c, t_parser *pars)
+char	**ft_pipe_split(char *s, char c, t_parser *pars)
 {
 	int		i;
 	int		j;
@@ -79,7 +57,7 @@ char	**ft_new_split(char *s, char c, t_parser *pars)
 	j = -1;
 	if (!s)
 		return (0);
-	dest = malloc(sizeof(char *) * (ft_word(s, c) + 1));
+	dest = malloc(sizeof(char *) * (ft_count_real_char(s, c, pars) + 2));
 	if (!dest)
 		return (0);
 	while (s[i])

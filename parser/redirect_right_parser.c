@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_right_parser.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:00:18 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/30 23:58:45 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 19:50:16 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ char	**ft_redirect_parser(t_parser *pars, t_node *list)
 		pars->nr = 0;
 		pars->control = 0;
 		pars->check_redirect = 0;
-		if (pipe_c(pars->cleaned[i], '>', pars)
-			|| pipe_c(pars->cleaned[i], '<', pars))
+		if (ft_count_real_char(pars->cleaned[i], '>', pars)
+			|| ft_count_real_char(pars->cleaned[i], '<', pars))
 			new_node = ft_redirect_handler(pars->cleaned[i], pars);
 		else
 			new_node = ft_dolar_new(ft_strdup(pars->cleaned[i]));

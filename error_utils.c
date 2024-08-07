@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/07 16:34:56 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:39:55 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,12 @@ int	ft_full_free(t_state *state, int status)
 	ft_clean_env(&state->env);
 	ft_clean_env(&state->exp);
 	ft_free_double_str(state->sep_path);
-
 	if (state->line)
 	{
 		ft_all_cluster_free(state);
 		free(state->line);
 	}
-	if(state->fd != NULL)	
+	if (state->fd != NULL)
 		ft_int_free(state);
 	free(state->pars);
 	free(state);

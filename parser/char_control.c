@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 19:43:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/07 14:58:53 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:43:45 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@ int	ft_redirection_control(t_parser *parser)
 	parser->one = -1;
 	parser->two = -1;
 
-	if (ft_sing_in(parser, '<') || ft_sing_in(parser, '>')
+	if (ft_sign_in(parser, '<') || ft_sign_in(parser, '>')
 		|| ft_redirection_in(parser, '>', '<')
 		|| ft_redirection_in(parser, '<', '>')
-		|| new_redirection(parser, '<', '>')
-		|| new_redirection(parser, '>', '<'))
+		|| ft_new_redirection(parser, '<', '>', 0)
+		|| ft_new_redirection(parser, '>', '<', 0))
 		return (1);
 	return (0);
 }
 
-int	ft_sing_in(t_parser *parser, char c)
+int	ft_sign_in(t_parser *parser, char c)
 {
-	int	sing_in;
+	int	sign_in;
 
-	sing_in = -1;
+	sign_in = -1;
 	parser->one = -1;
 	while (parser->cleaned[++parser->one])
 	{
@@ -40,14 +40,14 @@ int	ft_sing_in(t_parser *parser, char c)
 			if ((parser->cleaned[parser->one][parser->two] == c
 				&& ft_quote_check(parser->cleaned[parser->one],
 					parser->two, parser) == 0)
-				&& (++sing_in < 2))
+				&& (++sign_in < 2))
 			{
 				if (parser->cleaned[parser->one][parser->two + 1] == '\0')
 					return (1);
 				else if (parser->cleaned[parser->one][parser->two + 1] != c)
 					break ;
 			}
-			else if (sing_in == 2)
+			else if (sign_in == 2)
 				return (1);
 		}
 	}
@@ -82,11 +82,8 @@ int	ft_redirection_in(t_parser *parser, char c, char d)
 	return (0);
 }
 
-int	new_redirection(t_parser *parser, char c, char d)
+int	ft_new_redirection(t_parser *parser, char c, char d, int k)
 {
-	int	k;
-
-	k = 0;
 	parser->one = -1;
 	while (parser->cleaned[++parser->one])
 	{

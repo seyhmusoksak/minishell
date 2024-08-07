@@ -1,57 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   len_utils.c                                        :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/26 18:50:09 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/07 20:38:51 by mehmyilm         ###   ########.fr       */
+/*   Created: 2024/08/07 20:21:02 by mehmyilm          #+#    #+#             */
+/*   Updated: 2024/08/07 20:23:28 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_listlen(t_node *lst)
+void	ft_free_double_str(char **str)
 {
 	int	i;
 
-	i = 0;
-	if (!lst)
-		return (0);
-	while (lst)
-	{
-		lst = lst -> next;
-		i++;
-	}
-	return (i);
-}
-
-int	ft_double_str_len(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-
-void	ft_write_double_str(char **str)
-{
-	int	i;
-
+	if (!str)
+		return ;
 	i = -1;
 	while (str[++i])
-		printf("str[%d]: %s\n", i, str[i]);
+		free(str[i]);
+	free(str);
 }
 
-int	ft_exit_redirect(char *line, char *msg, t_state *state)
+void	ft_free_thrd_str(char ***str)
 {
-	state->error = 258;
-	free(line);
-	ft_free_double_str(state->pars->cleaned);
-	ft_error_mesage(msg);
-	return (0);
+	int	i;
+	int	j;
+
+	if (!str)
+		return ;
+	i = -1;
+	while (str[++i])
+	{
+		j = -1;
+		while (str[i][++j])
+			free(str[i][j]);
+		free(str[i]);
+	}
+	free(str);
 }
