@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:36:59 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:15:46 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/08 20:44:57 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	ft_echo(t_cluster *cluster)
 	while (cmd[index])
 	{
 		write(fd, cmd[index], ft_strlen(cmd[index]));
-		write(fd, " ", 1);
+		if (cmd[index + 1] != NULL)
+			write(fd, " ", 1);
 		index++;
 	}
 	if (i == 1)
