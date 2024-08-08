@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 14:51:35 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/07 20:40:26 by mehmyilm         ###   ########.fr       */
+/*   Created: 2024/08/08 15:35:43 by ekose             #+#    #+#             */
+/*   Updated: 2024/08/08 18:25:34 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-///export düzeltilecek	heredoc komutsuz düzeltilecek exec envsiz düzeltilecek
-#include "minishell.h"
+#include "./INCLUDES/minishell.h"
 
 static void	ft_init_program(int argc, char **argv, char **envp, t_state **state)
 {
@@ -29,7 +28,6 @@ static void	ft_init_program(int argc, char **argv, char **envp, t_state **state)
 	(*state)->error = 0;
 	(*state)->cluster = NULL;
 	(*state)->fd = NULL;
-
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -54,6 +52,3 @@ int	main(int argc, char **argv, char **envp)
 	ft_full_free(state, 0);
 	return (0);
 }
-
-
-

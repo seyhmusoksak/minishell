@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   put_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 20:23:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/06 17:46:35 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:20:21 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-
-// TEST METNİ:
-//echo "$PWD" $PWD "'$PWD'" "basta '$PWD' sonda" "sadece basta '$PWD'" "'PWD' sadece son" "$USER '$PWD' ikisi birden" | echo '$PWD' '"$PWD" bosluklu' '"$PWD"' 'valla "$PWD" dayi $' | noktalama $PWD.a1231 "$PWD,a12a131" | sayi $1234 $1PWD | birlesik "$PWD$USER'$PWD'" |  karisik "$PWD '$PWD'$bos.123 $  '$PWD' bu da son"
+#include "../INCLUDES/minishell.h"
 
 char	*ft_dolar_handler(char *str, t_node *dolar, t_parser *prs, t_env *env)
 {
@@ -67,13 +64,18 @@ char	*ft_find_env(char *str, int n, t_parser *parser, t_env *env)
 {
 	char	*dest;
 
+	dest = NULL;
 	parser->key = ft_substr(str, 0, n);
 	if (!parser->key || !str)
 		return (NULL);
 	if (ft_isdigit(parser->key[0])
 		|| parser->key[0] == '@' || parser->key[0] == '*')
 		dest = ft_strdup(parser->key + 1);
-	else if (ft_strchr(parser->key, '$'))
+	else if (parser->key[0] == '$' && !ft_strchr(parser->key + 1, '$'))
+		dest = ft_strdup(parser->key);
+	else if (parser->key[0] == '$' && ft_strchr(parser->key + 1, '$'))
+		dest = ft_refind_env(parser, env);
+	else if (parser->key[0] != '$' && ft_strchr(parser->key + 1, '$'))
 		dest = ft_united_dolar(parser, env);
 	else if (!ft_check_after_key(parser->key))
 		dest = ft_dup_key(parser->key, parser, env);

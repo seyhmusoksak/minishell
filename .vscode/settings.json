@@ -9,5 +9,6 @@
 		"vector": "c",
 		"complex": "c",
 		"locale": "c"
-	}
+	},
+	"codam-norminette-3.highlight-color": "rgba(255,255,255,0.2)"
 }

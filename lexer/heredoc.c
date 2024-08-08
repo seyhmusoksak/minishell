@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:38 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/07 13:35:36 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/08 18:17:26 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
 static void	ft_heradoc_helper(char *line, t_files *node)
 {
@@ -77,4 +77,3 @@ void	ft_heredoc_check(t_files *node, char **arg)
 	if (node->heredoc == NULL)
 		node->heredoc = ft_strdup("");
 }
-

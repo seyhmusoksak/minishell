@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:10:49 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/07 13:21:53 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/08 18:17:34 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
 int	ft_open_output(char *file)
 {
@@ -19,7 +19,6 @@ int	ft_open_output(char *file)
 	fd = open(file, O_CREAT | O_TRUNC | O_RDWR, 0777);
 	if (fd == -1)
 		return (-1);
-	printf("fddd->%d\n",fd);
 	return (fd);
 }
 

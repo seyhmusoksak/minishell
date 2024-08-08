@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   route.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 19:07:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/07 20:49:34 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:38:48 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../INCLUDES/minishell.h"
 
 void	ft_route(t_state *state, t_cluster *tmp)
 {
-
 	if ((tmp->cmd) == NULL)
 		return ;
 	else if (ft_strcmp(tmp->cmd[0], "exit") == 0
-		&& sig_status == 0)
+		&& tmp->pid != 0)
 		ft_built_exit_cmd(state, tmp);
 	else if (ft_strcmp(tmp->cmd[0], "cd") == 0)
 		ft_cd(&state);
@@ -29,7 +28,7 @@ void	ft_route(t_state *state, t_cluster *tmp)
 	else if (ft_strcmp(tmp->cmd[0], "export") == 0)
 		ft_export_status(&state, tmp);
 	else if ((ft_strcmp(tmp->cmd[0], "env") == 0
-		|| ft_strcmp(tmp->cmd[0], "ENV") == 0))
+			|| ft_strcmp(tmp->cmd[0], "ENV") == 0))
 		ft_print_env(state, tmp);
 	else if (ft_strcmp(tmp->cmd[0], "unset") == 0)
 		ft_del_env(&state, tmp);

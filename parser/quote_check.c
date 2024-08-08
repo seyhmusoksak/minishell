@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quote_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:29:21 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/26 18:49:18 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:20:26 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
 // echo "iyi" "ozam'an" 'hal"a' c"al"isiyor
 int	ft_quote_check(char *str, int len, t_parser *pars)

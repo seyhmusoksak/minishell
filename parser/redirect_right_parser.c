@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_right_parser.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:00:18 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/07 19:50:16 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:20:48 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
-// > veya >> sona gelince patlaması normal onu mustafa hallediyor geriye kalan her şey tamam.
 char	**ft_redirect_parser(t_parser *pars, t_node *list)
 {
 	int		i;

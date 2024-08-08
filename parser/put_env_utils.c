@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   put_env_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:54:53 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/06 18:09:26 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:20:15 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
 void	ft_pars_str(char *s, t_parser *prs)
 {
@@ -103,12 +103,32 @@ int	ft_check_is_in(char *str, int index, t_parser *parser)
 	return (0);
 }
 
-int	ft_check_special(char c)
+int	ft_check_special(char *str, int i)
 {
-	if ((c >= 36 && c < 48)
-		|| (c > 57 && c <= 62)
-		|| (c > 122 && c < 127)
-		|| (c > 90 && c < 97))
+	char	*sub;
+	int		start;
+
+	start = 0;
+	sub = NULL;
+	if ((str[i] > 36 && str[i] < 48)
+		|| (str[i] > 57 && str[i] <= 62)
+		|| (str[i] > 122 && str[i] < 127)
+		|| (str[i] > 90 && str[i] < 97))
 		return (0);
+	else if (str[i] == '$')
+	{
+		start = i;
+		while (str[i] && str[i] != ' ')
+			i++;
+		sub = ft_substr(str, start, (i - start));
+		i = -1;
+		while (sub[++i])
+			if (ft_isalnum(sub[i]) || sub[i] == '_')
+				start = -1;
+		free(sub);
+		if (start != -1)
+			return (0);
+	}
 	return (1);
 }
+

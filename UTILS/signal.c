@@ -6,17 +6,15 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:05:15 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/07 14:21:07 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/08 19:22:50 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
+#include "../INCLUDES/minishell.h"
 
 static void	ft_signal_handler(int sig)
 {
 	(void)sig;
-	// printf("sintyal->%d",sig_status);
 	if (sig_status == IN_CAT)
 	{
 		write (1, "\n", 1);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   node_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 17:48:05 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/06 17:55:42 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:19:12 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
 t_node	*ft_dolar_new(char *content)
 {

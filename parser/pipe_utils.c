@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:56:39 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/07 20:39:29 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:20:10 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
 static int	ft_wordlen(char *s, char c, int j, t_parser *parser)
 {
