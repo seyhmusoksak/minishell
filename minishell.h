@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/07 20:41:09 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 17:53:09 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,11 +167,8 @@ void	ft_clean_env(t_env **env);
 //			parser function (6)
 int		ft_parser(t_state *state);
 char	**ft_pipe_split(char *line, char c, t_parser *parser);
-void	ft_quote_control(char **src, char **tmp, char c, t_parser *parser);
 int		ft_count_real_char(char *line, char c, t_parser *parser);
 int		ft_wait_for_input(t_state *state);
-void	ft_strjoin_and_free(char **dst, char *s2, char c);
-char	**ft_new_split(char *s, char c, t_parser *parser);
 int		ft_exit(char *line, char *msg, t_state *state);
 
 //			string clean functions (11)
@@ -193,7 +190,7 @@ int		ft_sign_in(t_parser *parser, char c);
 int		ft_redirection_in(t_parser *parser, char c, char d);
 int		ft_new_redirection(t_parser *parser, char c, char d, int k);
 int		ft_redirect(t_parser *parser, int k, char c, char d);
-int	ft_exit_redirect(char *line, char *msg, t_state  *state);
+int		ft_exit_redirect(char *line, char *msg, t_state  *state);
 int		ft_pipe_check(char *line, t_parser *parser);
 
 //			quote functions (8)
@@ -225,10 +222,12 @@ int		ft_init_united(int **chk_dq, int **chk_dolr, char **tmp, t_parser *prs);
 char	*ft_put_united_env(char *key, t_parser *pars, t_env *env);
 int		ft_mini_dolar_counter(char *str, int ***chck_dolr, int ***chck_dq);
 int		ft_check_after_key(char *key);
-int		ft_check_special(char c);
+int		ft_check_special(char *str, int i);
 char	*ft_dup_key(char *key, t_parser *pars, t_env *env);
 char	*ft_join_key(char *key, int index, t_env *env);
 char	*ft_resizer(char **str);
+char	*ft_refind_env(t_parser *parser, t_env *env);
+char	*ft_put_refind(t_parser *parser, t_env *env, char *tmp);
 
 //				Redirect functions(11)
 char	**ft_redirect_parser(t_parser *pars, t_node *list);

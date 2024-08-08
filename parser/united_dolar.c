@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:33:05 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/02 18:00:44 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 17:10:23 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ void	ft_united_handler(int *chk_dq, int *chk_dlr, t_parser *prs, t_env *env)
 char	*ft_put_united_env(char *key, t_parser *pars, t_env *env)
 {
 	char	*dest;
-
 	if (!key)
 		return (NULL);
 	if (ft_isdigit(key[0])

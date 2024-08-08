@@ -6,7 +6,7 @@
 /*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:58:11 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/06 18:09:21 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 17:48:40 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_isdolr(char *str, int i, t_parser *parser)
 
 	if (str[i] == '$' && str[i +1] != '\0' && str[i +1] != ' '
 		&& str[i +1] != '"' && str[i +1] != '\''
-		&& str[ft_strlen(str)- 1] != '\'' && ft_check_special(str[i +1]))
+		&& str[ft_strlen(str)- 1] != '\'' && ft_check_special(str, i +1))
 	{
 		start = i;
 		while (str[i] != ' ' && str[i])
@@ -62,3 +62,52 @@ int	ft_isdolr(char *str, int i, t_parser *parser)
 	return (0);
 }
 
+char	*ft_refind_env(t_parser *parser, t_env *env)
+{
+	char	*tmp;
+	char	*tmp_key;
+	int		i;
+	int		start;
+	int		len;
+
+	i = 0;
+	start = i ;
+	while (parser->key[i] && parser->key[i] == '$')
+		i++;
+	while (parser->key[i] && parser->key[i] != '$')
+		i++;
+	len = i;
+	if (parser->key[0] == '$')
+	{
+		while (parser->key[i] == '$')
+			i++;
+		i--;
+	}
+	tmp = ft_substr(parser->key, start, (len - start));
+	tmp_key = ft_strdup(parser->key + i + 1);
+	free(parser->key);
+	parser->key = ft_strdup(tmp_key);
+	free(tmp_key);
+	return (ft_put_refind(parser, env, tmp));
+}
+
+char	*ft_put_refind(t_parser *parser, t_env *env, char *tmp)
+{
+	char	*united;
+	char	*dest;
+
+	united = NULL;
+	if (ft_isdigit(parser->key[0])
+		|| parser->key[0] == '@' || parser->key[0] == '*')
+		united = ft_strdup(parser->key + 1);
+	else if (ft_strchr(parser->key, '$'))
+		united = ft_united_dolar(parser, env);
+	else if (!ft_check_after_key(parser->key))
+		united = ft_dup_key(parser->key, parser, env);
+	else
+		united = ft_join_key(parser->key, ft_check_after_key(parser->key), env);
+	dest = ft_strjoin(tmp, united);
+	free(united);
+	free(tmp);
+	return (dest);
+}
