@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:11:58 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/07 14:04:46 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/08 18:17:05 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
 static char	**ft_clean_cmd(char **str)
 {
@@ -33,6 +33,7 @@ static char	**ft_clean_cmd(char **str)
 	ft_free_double_str(str);
 	return (dest);
 }
+
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;

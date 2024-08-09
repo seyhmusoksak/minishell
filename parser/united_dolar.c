@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   united_dolar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:33:05 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/08 17:10:23 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:20:53 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
 char	*ft_united_dolar(t_parser *parser, t_env *env)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   char_control.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 19:43:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/07 20:43:45 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:18:50 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
 int	ft_redirection_control(t_parser *parser)
 {

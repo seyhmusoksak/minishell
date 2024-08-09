@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 14:57:55 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/06 14:30:12 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/08 18:16:02 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
 void	ft_notdefine_dir(char *s, t_state *state)
 {

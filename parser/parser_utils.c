@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/07 20:38:59 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:19:58 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
 int	ft_count_real_char(char *line, char c, t_parser *parser)
 {
@@ -55,6 +55,7 @@ int	ft_wait_for_input(t_state *state)
 	}
 	return (0);
 }
+
 char	*ft_resizer(char **str)
 {
 	char	*line;

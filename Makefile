@@ -1,23 +1,23 @@
 NAME = minishell
 
-SRCS = get_env.c minishell.c signal.c parser/parser.c parser/parser_utils.c \
-		parser/parser_clean.c error_utils.c parser/quote_utils.c \
-		parser/quote_check.c parser/put_env.c parser/put_env_utils.c \
-		parser/dolar_check_utils.c  lexer/add_cluster.c \
-		error/file_error.c   lexer/open_files.c  lexer/files_utils.c lexer/arg_utils.c \
-		route.c builtin/cd.c builtin/error.c builtin/pwd.c  builtin/echo.c builtin/env.c builtin/export.c \
-		builtin/unset.c  parser/united_dolar.c parser/redirect_right_parser.c \
-		parser/redirect_left_parser.c parser/len_utils.c executor/exec.c executor/exec_utils.c error/executer_error.c \
-		parser/char_control.c GNL/get_next_line.c lexer/free_cluster.c lexer/heredoc.c parser/node_utils.c \
-		parser/pipe_utils.c  builtin/exit.c parser/free_utils.c
+SRCS =   UTILS/get_env.c minishell.c UTILS/signal.c PARSER/parser.c PARSER/parser_utils.c \
+		PARSER/parser_clean.c ERROR/error_utils.c PARSER/quote_utils.c \
+		PARSER/quote_check.c PARSER/put_env.c PARSER/put_env_utils.c \
+		PARSER/dolar_check_utils.c  LEXER/add_cluster.c \
+		ERROR/error_utils_2.c  LEXER/open_files.c  LEXER/files_utils.c LEXER/arg_utils.c \
+		UTILS/route.c BUILTIN/cd.c BUILTIN/error.c BUILTIN/pwd.c  BUILTIN/echo.c BUILTIN/env.c BUILTIN/export.c \
+		BUILTIN/unset.c  PARSER/united_dolar.c PARSER/redirect_right_parser.c \
+		PARSER/redirect_left_parser.c PARSER/len_utils.c EXECUTOR/exec.c EXECUTOR/exec_utils.c \
+		PARSER/char_control.c GNL/get_next_line.c LEXER/free_cluster.c LEXER/heredoc.c PARSER/node_utils.c \
+		PARSER/pipe_utils.c  BUILTIN/exit.c PARSER/free_utils.c
 
 OBJS = $(SRCS:.c=.o)
-LIBFT_DIR = ./libft
+LIBFT_DIR = ./INCLUDES/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 CC = gcc
 READLINE_LIB_LOC = readline/lib
 READLINE_INC_LOC = readline/include
-CFLAGS = -g -Wall -Wextra -Werror -fsanitize=address -I $(READLINE_INC_LOC)
+CFLAGS = -g -Wall -Wextra -Werror -I $(READLINE_INC_LOC)
 LDFLAGS = -L$(READLINE_LIB_LOC) -I$(READLINE_INC_LOC) -lreadline -lhistory -lncurses
 
 READLINE_URL = https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz

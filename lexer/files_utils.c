@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:39:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/07 14:05:11 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/08 18:17:13 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
 static	t_files	*ft_files_init(t_files *node)
 {
@@ -50,7 +50,6 @@ static	t_files	*ft_files_init_output(t_files *node, char *arg)
 static t_files	*ft_files_init_append(t_files *node, char *arg)
 {
 	free(node->output);
-	printf("aa\n");
 	node->output = ft_strdup(arg);
 	if (node->fd_output > 2)
 		close(node->fd_output);

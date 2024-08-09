@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   put_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 20:23:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/08 17:49:33 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:20:21 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
 char	*ft_dolar_handler(char *str, t_node *dolar, t_parser *prs, t_env *env)
 {

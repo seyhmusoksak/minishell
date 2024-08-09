@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   dolar_check_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:58:11 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/08 17:48:40 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:18:54 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../INCLUDES/minishell.h"
 
 int	ft_count_dolar(char *str, t_parser *parser)
 {

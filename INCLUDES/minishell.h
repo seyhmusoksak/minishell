@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/08 17:53:09 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/08 18:33:57 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ typedef struct s_state
 //			get env functions (4)
 t_env	*get_env(t_state *state, char **env);
 void	env_addback(t_env **lst, t_env *new);
-void	free_split(char **split);
 
 void	ft_sep_path(t_state *state);
 t_env	*new_env(char *key, char *value);
