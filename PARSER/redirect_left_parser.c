@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_left_parser.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 17:09:14 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/08 20:43:46 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/09 13:39:36 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,14 @@ t_node	*ft_finish_redirect(char *str, int i, t_parser *pars)
 	return (dest);
 }
 
-int	ft_check_full_char(char *str)
+int	ft_check_redirect_char(char *str)
 {
 	int	i;
 
 	i = 0;
 	if (ft_strlen(str) == 1 && (str[0] == '"' || str[0] == '\''))
+		return (1);
+	else if (!ft_check_full_char(str, ' ', ft_strlen(str) -1))
 		return (1);
 	while (i < (int)(ft_strlen(str) -1) && str[i])
 	{

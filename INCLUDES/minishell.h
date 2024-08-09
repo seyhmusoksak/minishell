@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/08 18:33:57 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/09 18:54:34 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ typedef struct s_parser
 	// clean func parameter
 	int		i;
 	int		j;
-	int		space;
 	char	**cleaned;
 	char	**src;
 	char	**clean_argv;
@@ -237,7 +236,7 @@ void	ft_left_redirect(char *str, int len, char type, t_parser *pars);
 int		ft_listlen(t_node *lst);
 char	**ft_node_to_double(t_node **list, int i, int list_size);
 t_node	*ft_finish_redirect(char *str, int i, t_parser *pars);
-int		ft_check_full_char(char *str);
+int		ft_check_redirect_char(char *str);
 void	ft_check_control(t_parser *parser);
 void	ft_free_substr(char **sub, char **sub2, char **sub3, t_parser *pars);
 
@@ -245,6 +244,7 @@ void	ft_free_substr(char **sub, char **sub2, char **sub3, t_parser *pars);
 char	***ft_parser_to_lexer(char **str, t_parser *parser);
 char	*ft_clean_first_last_quote(char *str);
 void	ft_free_thrd_str(char ***str);
+int		ft_check_full_char(char *str, char c, int len);
 void	ft_write_double_str(char **str); //kaldırcam bunu
 void	ft_init_signals(void);
 

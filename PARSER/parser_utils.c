@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/08 18:19:58 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/09 13:39:49 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,17 @@ char	*ft_resizer(char **str)
 		line = ft_strjoin(line, str[i]);
 	ft_free_double_str(str);
 	return (line);
+}
+int	ft_check_full_char(char *str, char c, int len)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && i < len)
+	{
+		if (str[i] != c)
+			return (1);
+		i++;
+	}
+	return (0);
 }

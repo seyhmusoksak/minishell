@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_clean.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:07:17 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/08 18:19:49 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/09 11:22:58 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	ft_send_cleaner(t_parser *parser)
 {
 	parser->i = -1;
-	parser->space = 0;
 	while (parser->src[++parser->i])
 	{
 		parser->j = 0;
@@ -27,12 +26,12 @@ void	ft_cleaner(t_parser *pars, int i)
 {
 	while (pars->src[pars->i][++i])
 	{
-		if (pars->src[pars->i][i] == ' ' && pars->space == 0
+		if (pars->src[pars->i][i] == ' '
 			&& ft_quote_check(pars->src[pars->i], i, pars) == 0)
 		{
 			pars->cleaned[pars->i][pars->j++] = pars->src[pars->i][i];
 			while (pars->src[pars->i][i] == ' ')
-				pars->space = i++;
+				i++;
 			i--;
 		}
 		else
@@ -43,15 +42,13 @@ void	ft_cleaner(t_parser *pars, int i)
 
 void	ft_cleaner_helper(t_parser *prs, int *i)
 {
-	if (prs->space > 0
-		&& (prs->src[prs->i][*i] == '"' && *i -1 >= 0
-		&& ((prs->src[prs->i][*i -1] != '\0' && prs->src[prs->i][*i -1] == ' ')
+	if ((prs->src[prs->i][*i] == '"'
+		&& (((*i -1 >= 0 && prs->src[prs->i][*i -1] == ' ') || *i == 0)
 		&& ft_quote_check(prs->src[prs->i], *i, prs) == 0))
 		&& ft_is_first(prs->src[prs->i] + *i, '"', *i, prs) == 2)
 		*i += ft_write_in_quote(prs->src[prs->i] + *i, 'F', '"', prs);
-	else if (prs->space > 0
-		&& (prs->src[prs->i][*i] == '\'' && *i -1 >= 0
-		&& ((prs->src[prs->i][*i -1] != '\0' && prs->src[prs->i][*i -1] == ' ')
+	else if ((prs->src[prs->i][*i] == '\''
+		&& (((*i -1 >= 0 && prs->src[prs->i][*i -1] == ' ') || *i == 0)
 		&& ft_quote_check(prs->src[prs->i], *i, prs) == 0))
 		&& ft_is_first(prs->src[prs->i] + *i, '\'', *i, prs) == 1)
 		*i += ft_write_in_quote(prs->src[prs->i] + *i, 'F', '\'', prs);
@@ -111,10 +108,9 @@ int	ft_write_in_quote(char *str, char cod, char q, t_parser *prs)
 		if (str[c] != q)
 			prs->cleaned[prs->i][prs->j++] = str[c];
 		else if ((str[c] == q && ((str[c +1] && str[c +1] == ' ') || !str[c +1])
-				&& !ft_quote_check(str, c +1, prs)) && cod == 'F' && prs->space)
+				&& !ft_quote_check(str, c +1, prs)) && cod == 'F')
 		{
 			prs->cleaned[prs->i][prs->j++] = str[c];
-			prs->space = 0;
 			break ;
 		}
 	}
