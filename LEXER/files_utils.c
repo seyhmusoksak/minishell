@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:39:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:17:13 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/10 13:23:44 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static	t_files	*ft_files_init_input(t_files *node, char *arg)
 	return (node);
 }
 
-static	t_files	*ft_files_init_output(t_files *node, char *arg)
+static	t_files	*ft_files_init_output(t_files *node, char *arg, int *i)
 {
 	free(node->output);
 	node->output = ft_strdup(arg);
@@ -44,10 +44,11 @@ static	t_files	*ft_files_init_output(t_files *node, char *arg)
 	node->fd_output = ft_open_output(node->output);
 	if (node->fd_output == -1)
 		node->error = 2;
+	(*i)++;
 	return (node);
 }
 
-static t_files	*ft_files_init_append(t_files *node, char *arg)
+static t_files	*ft_files_init_append(t_files *node, char *arg, int *i)
 {
 	free(node->output);
 	node->output = ft_strdup(arg);
@@ -56,6 +57,7 @@ static t_files	*ft_files_init_append(t_files *node, char *arg)
 	node->fd_output = ft_open_append(node->output);
 	if (node->fd_output == -1)
 		node->error = 2;
+	(*i)++;
 	return (node);
 }
 
@@ -76,13 +78,12 @@ t_files	*ft_new_files_node(char **arg, int i)
 		}
 		else if (arg[i][0] == '>')
 		{
-			if (arg[i][1] == '>')
-				node = ft_files_init_append(node, arg[i + 1]);
-			else
-				node = ft_files_init_output(node, arg[i + 1]);
+			if (arg[i][1] && arg[i][1] == '>')
+				node = ft_files_init_append(node, arg[i + 1], &i);
+			else if (ft_strcmp(arg[i], ">") == 0)
+				node = ft_files_init_output(node, arg[i + 1], &i);
 			if (node->error == 2)
 				return (node);
-			i++;
 		}
 	}
 	return (node);

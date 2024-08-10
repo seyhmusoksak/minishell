@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dolar_check_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:58:11 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/08 18:18:54 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/10 16:10:55 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,27 @@ int	ft_isdolr(char *str, int i, t_parser *parser)
 	return (0);
 }
 
+static char	*ft_put_refind(t_parser *parser, t_env *env, char *tmp)
+{
+	char	*united;
+	char	*dest;
+
+	united = NULL;
+	if (ft_isdigit(parser->key[0])
+		|| parser->key[0] == '@' || parser->key[0] == '*')
+		united = ft_strdup(parser->key + 1);
+	else if (ft_strchr(parser->key, '$'))
+		united = ft_united_dolar(parser, env);
+	else if (!ft_check_after_key(parser->key))
+		united = ft_dup_key(parser->key, parser, env);
+	else
+		united = ft_join_key(parser->key, ft_check_after_key(parser->key), env);
+	dest = ft_strjoin(tmp, united);
+	free(united);
+	free(tmp);
+	return (dest);
+}
+
 char	*ft_refind_env(t_parser *parser, t_env *env)
 {
 	char	*tmp;
@@ -89,25 +110,4 @@ char	*ft_refind_env(t_parser *parser, t_env *env)
 	parser->key = ft_strdup(tmp_key);
 	free(tmp_key);
 	return (ft_put_refind(parser, env, tmp));
-}
-
-char	*ft_put_refind(t_parser *parser, t_env *env, char *tmp)
-{
-	char	*united;
-	char	*dest;
-
-	united = NULL;
-	if (ft_isdigit(parser->key[0])
-		|| parser->key[0] == '@' || parser->key[0] == '*')
-		united = ft_strdup(parser->key + 1);
-	else if (ft_strchr(parser->key, '$'))
-		united = ft_united_dolar(parser, env);
-	else if (!ft_check_after_key(parser->key))
-		united = ft_dup_key(parser->key, parser, env);
-	else
-		united = ft_join_key(parser->key, ft_check_after_key(parser->key), env);
-	dest = ft_strjoin(tmp, united);
-	free(united);
-	free(tmp);
-	return (dest);
 }

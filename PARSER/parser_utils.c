@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/09 13:39:49 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/10 16:24:50 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,29 @@ char	*ft_resizer(char **str)
 	ft_free_double_str(str);
 	return (line);
 }
-int	ft_check_full_char(char *str, char c, int len)
+
+char	*ft_clean_first_last_quote(char *str)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	*dest;
+	int		dq;
+	int		sq;
 
 	i = 0;
-	while (str[i] && i < len)
+	j = -1;
+	dq = (str[0] == '"' && str[ft_strlen(str) - 1] == '"');
+	sq = (str[0] == '\'' && str[ft_strlen(str) - 1] == '\'');
+	if ((dq || sq) && ft_check_redirect_char(str + 1))
 	{
-		if (str[i] != c)
-			return (1);
-		i++;
+		dest = malloc(sizeof(char) * ft_strlen(str) - 1);
+		if (!dest)
+			return (NULL);
+		while (str[++i] && (i < ((int)ft_strlen(str))))
+			dest[++j] = str[i];
+		dest[j] = '\0';
+		free(str);
+		return (dest);
 	}
-	return (0);
+	return (str);
 }
