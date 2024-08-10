@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:38 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:17:26 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/10 16:05:38 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	ft_heredoc(t_files *node)
 	pid = fork();
 	if (pid == 0)
 	{
-		sig_status = IN_HERADOC;
+		g_sig_status = IN_HERADOC;
 		while (1)
 		{
 			line = readline(">");
@@ -48,7 +48,7 @@ static void	ft_heredoc(t_files *node)
 	}
 	else
 	{
-		sig_status = IN_PARENT;
+		g_sig_status = IN_PARENT;
 		waitpid(pid, &error, 0);
 	}
 	close(node->fd_heredoc[1]);

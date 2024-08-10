@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   node_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 17:48:05 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/08 18:19:12 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/10 16:13:50 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/minishell.h"
 
-t_node	*ft_dolar_new(char *content)
+t_node	*ft_new_node(char *content)
 {
 	t_node	*new_node;
 
@@ -24,7 +24,7 @@ t_node	*ft_dolar_new(char *content)
 	return (new_node);
 }
 
-void	ft_dolar_add_back(t_node **lst, t_node *new_node)
+void	ft_node_add_back(t_node **lst, t_node *new_node)
 {
 	t_node	*temp;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 15:35:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:25:34 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/10 16:06:25 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_init_program(int argc, char **argv, char **envp, t_state **state)
 	(*state)->pars = malloc(sizeof(t_parser));
 	if (!(*state)->pars || !(*state))
 		ft_error_mesage("Error: Malloc problem !");
-	sig_status = 0;
+	g_sig_status = 0;
 	ft_init_signals();
 	(*state)->env = get_env(*state, envp);
 	(*state)->exp = get_env(*state, envp);
@@ -37,11 +37,11 @@ int	main(int argc, char **argv, char **envp)
 	ft_init_program(argc, argv, envp, &state);
 	while (1)
 	{
-		sig_status = 0;
+		g_sig_status = 0;
 		ft_sep_path(state);
 		state->pars->ptr_errno = &(state->error);
 		state->line = readline("minishell>");
-		if (state->line)
+		if (state->line && ft_wait_for_input(state) == 1)
 			add_history(state->line);
 		if (ft_parser(state))
 			break ;

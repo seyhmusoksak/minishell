@@ -3,39 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_right_parser.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:00:18 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/08 18:20:48 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/10 16:34:29 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/minishell.h"
 
-char	**ft_redirect_parser(t_parser *pars, t_node *list)
+static int	ft_right_redirect(char *str, int len, t_parser *pars)
 {
-	int		i;
 	t_node	*new_node;
+	char	*sub;
+	char	*join;
 
-	list = NULL;
-	i = -1;
-	while (pars->cleaned[++i])
-	{
-		pars->r = -1;
-		pars->nr = 0;
-		pars->control = 0;
-		pars->check_redirect = 0;
-		if (ft_count_real_char(pars->cleaned[i], '>', pars)
-			|| ft_count_real_char(pars->cleaned[i], '<', pars))
-			new_node = ft_redirect_handler(pars->cleaned[i], pars);
-		else
-			new_node = ft_dolar_new(ft_strdup(pars->cleaned[i]));
-		ft_dolar_add_back(&list, new_node);
-	}
-	return (ft_node_to_double(&list, 0, 0));
+	sub = ft_substr(str, pars->nr, len - pars->nr);
+	join = ft_strjoin(sub, " ");
+	new_node = ft_new_node(join);
+	ft_node_add_back(&pars->sublist, new_node);
+	pars->nr = len;
+	pars->r = pars->nr;
+	pars->check_redirect++;
+	free(sub);
+	return (1);
 }
 
-t_node	*ft_redirect_handler(char *str, t_parser *prs)
+static void	ft_heradoc_handler(char *str, t_parser *prs)
+{
+	if (str[prs->r] == '<' && !ft_quote_check(str, prs->r, prs)
+		&& (str[prs->r +1] && str[prs->r +1] == '<')
+		&& prs->r -1 >= 0 && str[prs->r -1] != ' ')
+		ft_left_redirect(str, prs->r, 'h', prs);
+	if (str[prs->r] == '<' && !ft_quote_check(str, prs->r, prs)
+		&& (str[prs->r +1] && str[prs->r +1] == '<')
+		&& str[prs->r +2] && str[prs->r +2] != ' ')
+		ft_right_redirect(str, (++prs->r +1), prs);
+	ft_check_control(prs);
+	if (str[prs->r] == '>' && !ft_quote_check(str, prs->r, prs)
+		&& (str[prs->r +1] && str[prs->r +1] == '>')
+		&& prs->r -1 >= 0 && str[prs->r -1] != ' ')
+		ft_left_redirect(str, prs->r, 'h', prs);
+	if (str[prs->r] == '>' && !ft_quote_check(str, prs->r, prs)
+		&& (str[prs->r +1] && str[prs->r +1] == '>')
+		&& str[prs->r +2] && str[prs->r +2] != ' ')
+		ft_right_redirect(str, (++prs->r +1), prs);
+	ft_check_control(prs);
+}
+
+static t_node	*ft_redirect_handler(char *str, t_parser *prs)
 {
 	prs->sublist = NULL;
 	while (str[++prs->r])
@@ -59,47 +75,31 @@ t_node	*ft_redirect_handler(char *str, t_parser *prs)
 		ft_check_control(prs);
 	}
 	if (!prs->check_redirect)
-		return (ft_dolar_new(ft_strdup(str)));
+		return (ft_new_node(ft_strdup(str)));
 	return (ft_finish_redirect(str, prs->r, prs));
 }
 
-void	ft_heradoc_handler(char *str, t_parser *prs)
+char	**ft_redirect_parser(t_parser *pars, t_node *list)
 {
-	if (str[prs->r] == '<' && !ft_quote_check(str, prs->r, prs)
-		&& (str[prs->r +1] && str[prs->r +1] == '<')
-		&& prs->r -1 >= 0 && str[prs->r -1] != ' ')
-		ft_left_redirect(str, prs->r, 'h', prs);
-	if (str[prs->r] == '<' && !ft_quote_check(str, prs->r, prs)
-		&& (str[prs->r +1] && str[prs->r +1] == '<')
-		&& str[prs->r +2] && str[prs->r +2] != ' ')
-		ft_right_redirect(str, (++prs->r +1), prs);
-	ft_check_control(prs);
-	if (str[prs->r] == '>' && !ft_quote_check(str, prs->r, prs)
-		&& (str[prs->r +1] && str[prs->r +1] == '>')
-		&& prs->r -1 >= 0 && str[prs->r -1] != ' ')
-		ft_left_redirect(str, prs->r, 'h', prs);
-	if (str[prs->r] == '>' && !ft_quote_check(str, prs->r, prs)
-		&& (str[prs->r +1] && str[prs->r +1] == '>')
-		&& str[prs->r +2] && str[prs->r +2] != ' ')
-		ft_right_redirect(str, (++prs->r +1), prs);
-	ft_check_control(prs);
-}
-
-int	ft_right_redirect(char *str, int len, t_parser *pars)
-{
+	int		i;
 	t_node	*new_node;
-	char	*sub;
-	char	*join;
 
-	sub = ft_substr(str, pars->nr, len - pars->nr);
-	join = ft_strjoin(sub, " ");
-	new_node = ft_dolar_new(join);
-	ft_dolar_add_back(&pars->sublist, new_node);
-	pars->nr = len;
-	pars->r = pars->nr;
-	pars->check_redirect++;
-	free(sub);
-	return (1);
+	list = NULL;
+	i = -1;
+	while (pars->cleaned[++i])
+	{
+		pars->r = -1;
+		pars->nr = 0;
+		pars->control = 0;
+		pars->check_redirect = 0;
+		if (ft_count_real_char(pars->cleaned[i], '>', pars)
+			|| ft_count_real_char(pars->cleaned[i], '<', pars))
+			new_node = ft_redirect_handler(pars->cleaned[i], pars);
+		else
+			new_node = ft_new_node(ft_strdup(pars->cleaned[i]));
+		ft_node_add_back(&list, new_node);
+	}
+	return (ft_node_to_double(&list, 0, 0));
 }
 
 char	**ft_node_to_double(t_node **list, int i, int list_size)
