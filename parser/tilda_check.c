@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 16:28:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/12 17:25:25 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/12 17:37:36 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 static char	*ft_env_find(t_state *state, char *key)
 {
 	t_env		*tmp;
-	t_cluster	*cluster;
 
-	cluster = state->cluster;
 	tmp = state->env;
 	while (tmp)
 	{
