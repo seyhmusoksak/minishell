@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:53:36 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/12 14:39:17 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/12 17:12:20 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,6 @@ static void	ft_dir_check(t_state **state, char *dir)
 		ft_cd_error(dir,*state);
 }
 
-static void	ft_env_find(t_state *state, char *key)
-{
-	t_env		*tmp;
-	t_cluster	*cluster;
-	char		*tmp_dir;
-
-	cluster = state->cluster;
-	tmp = state->env;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->key, key, ft_strlen(key)) == 0)
-		{
-			tmp_dir = ft_strjoin(tmp->value, cluster->cmd[1] + 1);
-			free(cluster->cmd[1]);
-			cluster->cmd[1] = tmp_dir;
-		}
-		tmp = tmp->next;
-	}
-	ft_dir_check(&state, cluster->cmd[1]);
-}
 static void	ft_select_dir(t_state **state, char *type)//home dizinimi oldpwd mi
 {
 	t_env	*tmp_env;
@@ -73,10 +53,7 @@ static void	ft_select_dir(t_state **state, char *type)//home dizinimi oldpwd mi
 				"OLDPWD", ft_strlen("OLDPWD"))) //envde oldpwd aranır
 			tmp_env = tmp_env->next;
 	if (tmp_env == NULL)//dizin bulunmuş mu bulunmadı ise notset yazdır
-	{
-		ft_notdefine_dir(type, *state); //notdefine fonkiyonunu geliştirilebilir
-		return ;
-	}
+		return (ft_notdefine_dir(type, *state)); //notdefine fonkiyonunu geliştirilebilir
 	dir = tmp_env->value;
 	ft_dir_check(state, dir);
 	if (ft_strcmp("OLDPWD", type) == 0)
@@ -95,6 +72,7 @@ static void	ft_up_dir(t_state **state)
 	if (getcwd(cwd, sizeof(cwd)) == NULL)	//şuan ki dizin alınır
 	{
 		perror("getcwd");
+		(*state)->error = 1;
 		return ;
 	}
 	len = ft_strlen(ft_strrchr(cwd, '/'));
@@ -106,7 +84,6 @@ static void	ft_up_dir(t_state **state)
 	}
 	ft_dir_check(state, dir);
 	free(dir);
-	(*state)->error = 0;
 }
 
 void	ft_cd(t_state **state)
@@ -116,23 +93,20 @@ void	ft_cd(t_state **state)
 	char		*oldpwd;
 
 	getcwd(pwd, sizeof(pwd));
-	oldpwd = ft_strjoin("OLDPWD=", pwd);
-	ft_add_exp(state, oldpwd);
-	ft_add_env(state, oldpwd);
 	tmp = (*state)->cluster;
 	if (tmp->cmd == NULL || tmp->cmd[1] == NULL)
 		ft_select_dir(state, "HOME");
-	else if (ft_strncmp(tmp->cmd[1], "~", ft_strlen(tmp->cmd[0])) == 0)
-		ft_select_dir(state, "HOME");
-	else if (ft_strncmp(tmp->cmd[1], "-", ft_strlen(tmp->cmd[1])) == 0)
+	else if (ft_strcmp(tmp->cmd[1], "-") == 0)
 		ft_select_dir(state, "OLDPWD");
-	else if (ft_strncmp(tmp->cmd[1], ".", ft_strlen(tmp->cmd[1])) == 0)
-		return ;
-	else if (ft_strncmp(tmp->cmd[1], "..", ft_strlen(tmp->cmd[1])) == 0)
+	else if (ft_strcmp(tmp->cmd[1], "..") == 0)
 		ft_up_dir(state);
-	else if (tmp->cmd[1][0] == '~')
-		ft_env_find(*state, "HOME");
-	else
+	else if (ft_strcmp(tmp->cmd[1], ".") != 0)
 		ft_dir_check(state, tmp->cmd[1]);
-	free(oldpwd);
+	if ((*state)->error == 0)
+	{
+		oldpwd = ft_strjoin("OLDPWD=", pwd);
+		ft_add_exp(state, oldpwd);
+		ft_add_env(state, oldpwd);
+		free(oldpwd);
+	}
 }

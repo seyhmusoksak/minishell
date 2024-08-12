@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/10 16:25:56 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/12 16:28:25 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int	ft_parser(t_state *state)
 	// 	while (state->clean_thrd_argv[i][++j])
 	// 		printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
 	// }
+	ft_tilda_handler(state);
 	ft_free_double_str(state->pars->clean_argv);
 	ft_cluster(state);
 	ft_free_thrd_str(state->clean_thrd_argv);

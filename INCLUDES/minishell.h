@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/12 14:45:26 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/12 17:13:02 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,4 +239,5 @@ char		*get_next_line(int fd);
 void		ft_all_cluster_free(t_state *state);
 void		ft_built_exit_cmd(t_state *state, t_cluster *cluster);
 void		ft_int_free(t_state *state);
+void		ft_tilda_handler(t_state *state);
 #endif
