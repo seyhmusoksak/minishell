@@ -14,8 +14,12 @@
 
 static void	ft_init_program(int argc, char **argv, char **envp, t_state **state)
 {
-	(void)argc;
 	(void)argv;
+	if (argc > 1)
+	{
+		ft_error_mesage("Invalid argument!");
+		exit(1);
+	}
 	*state = (t_state *)malloc(sizeof(t_state));
 	(*state)->pars = malloc(sizeof(t_parser));
 	if (!(*state)->pars || !(*state))
