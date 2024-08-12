@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/10 18:12:31 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/12 23:58:46 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ typedef struct s_parser
 	int		control;
 	int		nr;
 	int		r;
+
+	int		check_tilde;
 }	t_parser;
 
 typedef struct s_lexer
@@ -207,6 +209,7 @@ int			ft_check_redirect_char(char *str);
 void		ft_check_control(t_parser *parser);
 void		ft_free_substr(char **sub, char **sub2, char **sub3,
 				t_parser *pars);
+char		*ft_env_finder(char *str, t_env *env);
 
 //					3D string functions (3)
 char		*ft_clean_first_last_quote(char *str);

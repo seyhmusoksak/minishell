@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/10 16:25:56 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/13 00:02:51 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,67 @@ static char	**ft_put_env(char **str, t_state *state)
 	return (dest);
 }
 
+char	**ft_put_tilde(char **str, t_state *state, t_parser *parser)
+{
+	int		i;
+	int		j;
+	t_node	*new_node;;
+	t_node	*tilde;
+	t_env	*env;
+
+	tilde = NULL;
+	env = state->env;
+	i = -1;
+	while (str[++i])
+	{
+		parser->check_tilde = 0;
+		if (ft_count_real_char(str[i], '~', parser))
+		{
+			j = -1;
+			while (str[i][++j])
+				if (str[i][j] == '~' && !ft_quote_check(str[i], j, parser))
+					new_node = ft_new_node(ft_check_tilde(str[i], &j, parser, env));
+			if (!parser->check_tilde)
+				new_node = ft_new_node(ft_strdup(str[i]));
+		}
+		else
+			new_node = ft_new_node(ft_strdup(str[i]));
+		ft_node_add_back(&tilde, new_node);
+	}
+}
+char	*ft_check_tilde(char *str, int *i, t_parser *prs, t_env *env)
+{
+	char	*tmp;
+	char	*tmp2;
+	char	*dest;
+
+	prs->check_tilde = 1;
+	tmp = ft_substr(str, 0, i);
+	if (str[*i +1] && str[*i +1] == '/')
+	{
+		while (str[*i] != '/')
+			++(*i);
+		tmp2 = ft_strdup(str + *i);
+	}
+	else if (str[*i +1] && !ft_check_full_char(str + *i + 1, ' ', prs))
+		tmp2 = ft_strdup(str + *i + 1);
+	else if (str[*i +1] == '\0')
+		tmp2 = ft_strdup("");
+	dest = ft_tilde_handler(tmp, tmp2, *i, env);
+//burayı bitir
+	return (dest);
+}
+
+char	*ft_tilde_handler(char *tmp, char *tmp2, int len, t_env *env)
+{
+
+}
 int	ft_parser(t_state *state)
 {
 	char	*line;
 	char	**split_str;
 	char	**pars_redirect;
+	char	**get_env
 	// int		i;
 	// int		j;
 
@@ -115,7 +171,8 @@ int	ft_parser(t_state *state)
 	// ft_write_double_str(pars_redirect);
 
 	ft_free_double_str(state->pars->cleaned);
-	state->pars->clean_argv = ft_put_env(pars_redirect, state);
+	get_env = ft_put_env(pars_redirect, state);
+	state->pars->clean_argv = ft_put_tilde(get_env, state->pars);
 	// printf("--------------------Put_Env-------------------------\n");
 	// ft_write_double_str(state->pars->clean_argv);
 

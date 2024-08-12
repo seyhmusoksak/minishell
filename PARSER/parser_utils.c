@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/10 16:24:50 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/12 22:45:58 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,19 @@ char	*ft_clean_first_last_quote(char *str)
 		return (dest);
 	}
 	return (str);
+}
+
+char	*ft_env_finder(char *str, t_env *env)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->key, str, ft_strlen(str))
+			&& ft_strlen(str) == ft_strlen(tmp->key))
+			return (tmp->value);
+		tmp = tmp->next;
+	}
+	return (ft_strdup(""));
 }
