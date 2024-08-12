@@ -6,15 +6,14 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:31:02 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:16:17 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/12 14:08:34 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/minishell.h"
 
-void	ft_pwd(t_cluster *cluster)
+void	ft_pwd(t_cluster *cluster, t_state *state)
 {
-	//write fonkiyonu standart çıktı fd ile değiştirilecek
 	char	pwd[1024];
 	int		fd;
 
@@ -23,8 +22,8 @@ void	ft_pwd(t_cluster *cluster)
 	{
 		write(fd, pwd, ft_strlen(pwd));
 		write(fd, "\n", 1);
+		state->error = 0;
 	}
 	else
 		perror("PWD");
-
 }

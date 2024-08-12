@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:48:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:16:14 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/12 14:49:34 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	ft_print_exp(t_state **state, t_cluster *cluster)
 		}
 		tmp = tmp->next;
 	}
+	(*state)->error = 0;
 }
 
 void	ft_add_exp(t_state **state, char *arg)
@@ -87,15 +88,14 @@ void	ft_add_exp(t_state **state, char *arg)
 
 	i = 0;
 	tmp_exp = (*state)->exp;
-	ft_del_node(&tmp_exp, arg); //Aynı keyden varsa silmek için
-	if(ft_key_check(arg[0], 0) == 0)
-		return (ft_key_error(arg, "export"));
-
+	ft_del_node(&tmp_exp, arg);	//Aynı keyden varsa silmek için
+	if (ft_key_check(arg[0], 0) == 0)
+		return (ft_key_error(arg, "export", *state));
 	while (arg[i] && arg[i] != '=' )
 	{
 		if (ft_key_check(arg[i], i) == 0)//key uygun mu isalnum kontorlü
 		{
-			ft_key_error(arg, "export");
+			ft_key_error(arg, "export", *state);
 			return ;
 		}
 		i++;
@@ -107,4 +107,5 @@ void	ft_add_exp(t_state **state, char *arg)
 		env_addback(&tmp_exp, new_env(ft_substr(arg, 0, i), NULL));
 	bubble_sort(tmp_exp, ft_strcmp);
 	(*state)->exp = tmp_exp;
+	(*state)->error = 0;
 }

@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "__config": "cpp",
+        "__errc": "cpp",
+        "__hash_table": "cpp",
+        "__locale": "cpp",
+        "__tuple": "cpp",
+        "bitset": "cpp",
+        "ios": "cpp",
+        "locale": "cpp"
+    }
+}

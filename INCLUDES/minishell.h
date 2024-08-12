@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/10 18:12:31 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/12 14:45:26 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,9 +135,9 @@ void		ft_sep_path(t_state *state);
 t_env		*new_env(char *key, char *value);
 void		env_addback(t_env **lst, t_env *new);
 void		ft_add_env(t_state **state, char *arg);
-void		ft_echo(t_cluster *cluster);
+void		ft_echo(t_cluster *cluster, t_state *state);
 void		ft_del_env(t_state **state, t_cluster *cluster);
-void		ft_pwd(t_cluster *cluster);
+void		ft_pwd(t_cluster *cluster, t_state *state);
 void		ft_cd(t_state **state);
 void		ft_notdefine_dir(char *s, t_state *state);
 void		ft_cd_error(char *dir, t_state *state);
@@ -147,7 +147,7 @@ void		ft_print_exp(t_state **state, t_cluster *cluster);
 void		ft_add_exp(t_state **state, char *arg);
 void		ft_del_node(t_env **list, char *key);
 void		ft_export_status(t_state **state, t_cluster *cluster);
-void		ft_key_error(char *s, char *cmd);
+void		ft_key_error(char *s, char *cmd, t_state *state);
 int			ft_key_check(char arg, int index);
 void		ft_clean_env(t_env **env);
 

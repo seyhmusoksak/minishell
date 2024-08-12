@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:36:59 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 20:44:57 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/12 14:05:36 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	ft_flag_check(char **cmd)
 	return (i);
 }
 
-void	ft_echo(t_cluster *cluster)
+void	ft_echo(t_cluster *cluster, t_state *state)
 {
 	char	**cmd;
 	int		i;
@@ -58,4 +58,5 @@ void	ft_echo(t_cluster *cluster)
 	}
 	if (i == 1)
 		write(fd, "\n", 1);
+	state->error = 0;
 }

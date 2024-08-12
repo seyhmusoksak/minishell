@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 19:07:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:38:48 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/12 14:07:31 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	ft_route(t_state *state, t_cluster *tmp)
 	else if (ft_strcmp(tmp->cmd[0], "cd") == 0)
 		ft_cd(&state);
 	else if (ft_strcmp(tmp->cmd[0], "pwd") == 0)
-		ft_pwd(tmp);
+		ft_pwd(tmp, state);
 	else if (ft_strcmp(tmp->cmd[0], "echo") == 0)
-		ft_echo(tmp);
+		ft_echo(tmp, state);
 	else if (ft_strcmp(tmp->cmd[0], "export") == 0)
 		ft_export_status(&state, tmp);
 	else if ((ft_strcmp(tmp->cmd[0], "env") == 0

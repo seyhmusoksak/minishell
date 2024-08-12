@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:35:15 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:15:50 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/12 14:43:18 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_print_env(t_state *state, t_cluster *cluster)
 		write(fd, "\n", 1);
 		tmp = tmp->next;
 	}
+	state->error = 0;
 }
 
 int	ft_key_check(char arg, int index)//key isalnum(a-z A-Z 0-9 '-') kontrolü
@@ -80,6 +81,7 @@ void	ft_add_env(t_state **state, char *arg)//yeni env eklemk için
 	env_addback(&tmp_env, new_env(ft_substr(arg, 0, i),
 			ft_substr(arg, i + 1, ft_strlen(arg) - i - 1)));
 	(*state)->env = tmp_env;
+	(*state)->error = 0;
 }
 
 void	ft_export_status(t_state **state, t_cluster *cluster) //export komutu
@@ -88,7 +90,7 @@ void	ft_export_status(t_state **state, t_cluster *cluster) //export komutu
 
 	i = 1;
 	if (cluster->cmd[i] == NULL)
-		return (ft_print_exp(state,cluster));
+		return (ft_print_exp(state, cluster));
 	while (cluster->cmd[i])
 	{
 		if (ft_strchr(cluster->cmd[i], '=') != NULL) //export argumanını envye eklenip eklenmiyeceği kontrolü

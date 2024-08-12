@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:16:26 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:16:20 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/12 14:50:10 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	ft_del_if(t_state **state, t_cluster *cluster, int i, int j)//key ve 
 				ft_strlen(tmp->cmd[i]) - j - 1);
 		if (ft_value_check(state, key, value) == 1)
 		{
-			ft_key_error(tmp->cmd[i], "unset");
+			ft_key_error(tmp->cmd[i], "unset", *state);
 			free(key);
 			free(value);
 			return (1);
@@ -68,13 +68,14 @@ void	ft_del_env(t_state **state, t_cluster *cluster)
 		while (tmp->cmd[i][j] && tmp->cmd[i][j] != '=')
 		{
 			if (ft_key_check(tmp->cmd[i][j], j) == 0)
-				ft_key_error(tmp->cmd[i], "unset");
+				return (ft_key_error(tmp->cmd[i], "unset", *state));
 			j++;
 		}
 		if (ft_del_if(state, cluster, i, j) == 0)
 		{
 			ft_del_node(&(*state)->env, tmp->cmd[i]);
 			ft_del_node(&(*state)->exp, tmp->cmd[i]);
+			(*state)->error = 0;
 		}
 		i++;
 	}
