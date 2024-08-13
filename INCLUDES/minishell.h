@@ -198,6 +198,8 @@ char		*ft_dup_key(char *key, t_parser *pars, t_env *env);
 char		*ft_join_key(char *key, int index, t_env *env);
 char		*ft_resizer(char **str);
 char		*ft_refind_env(t_parser *parser, t_env *env);
+char		**ft_put_tilde(char **str, t_state *state, t_parser *parser);
+char		*ft_env_finder(char *str, t_env *env);
 
 //					Redirect functions(11)
 char		**ft_redirect_parser(t_parser *pars, t_node *list);
@@ -209,7 +211,7 @@ int			ft_check_redirect_char(char *str);
 void		ft_check_control(t_parser *parser);
 void		ft_free_substr(char **sub, char **sub2, char **sub3,
 				t_parser *pars);
-char		*ft_env_finder(char *str, t_env *env);
+
 
 //					3D string functions (3)
 char		*ft_clean_first_last_quote(char *str);

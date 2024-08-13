@@ -86,67 +86,12 @@ static char	**ft_put_env(char **str, t_state *state)
 	return (dest);
 }
 
-char	**ft_put_tilde(char **str, t_state *state, t_parser *parser)
-{
-	int		i;
-	int		j;
-	t_node	*new_node;;
-	t_node	*tilde;
-	t_env	*env;
-
-	tilde = NULL;
-	env = state->env;
-	i = -1;
-	while (str[++i])
-	{
-		parser->check_tilde = 0;
-		if (ft_count_real_char(str[i], '~', parser))
-		{
-			j = -1;
-			while (str[i][++j])
-				if (str[i][j] == '~' && !ft_quote_check(str[i], j, parser))
-					new_node = ft_new_node(ft_check_tilde(str[i], &j, parser, env));
-			if (!parser->check_tilde)
-				new_node = ft_new_node(ft_strdup(str[i]));
-		}
-		else
-			new_node = ft_new_node(ft_strdup(str[i]));
-		ft_node_add_back(&tilde, new_node);
-	}
-}
-char	*ft_check_tilde(char *str, int *i, t_parser *prs, t_env *env)
-{
-	char	*tmp;
-	char	*tmp2;
-	char	*dest;
-
-	prs->check_tilde = 1;
-	tmp = ft_substr(str, 0, i);
-	if (str[*i +1] && str[*i +1] == '/')
-	{
-		while (str[*i] != '/')
-			++(*i);
-		tmp2 = ft_strdup(str + *i);
-	}
-	else if (str[*i +1] && !ft_check_full_char(str + *i + 1, ' ', prs))
-		tmp2 = ft_strdup(str + *i + 1);
-	else if (str[*i +1] == '\0')
-		tmp2 = ft_strdup("");
-	dest = ft_tilde_handler(tmp, tmp2, *i, env);
-//burayı bitir
-	return (dest);
-}
-
-char	*ft_tilde_handler(char *tmp, char *tmp2, int len, t_env *env)
-{
-
-}
 int	ft_parser(t_state *state)
 {
 	char	*line;
 	char	**split_str;
 	char	**pars_redirect;
-	char	**get_env
+	char	**get_env;
 	// int		i;
 	// int		j;
 
@@ -161,8 +106,8 @@ int	ft_parser(t_state *state)
 		return (ft_exit(line, "Error: Failure to use pipe ! ", state));
 	split_str = ft_pipe_split(line, '|', state->pars);
 	ft_clean_str(split_str, state->pars);
-	// printf("--------------------cleaned_argv--------------------\n");
-	// ft_write_double_str(state->pars->cleaned);
+	printf("--------------------cleaned_argv--------------------\n");
+	ft_write_double_str(state->pars->cleaned);
 	if (ft_redirection_control(state->pars, -1))
 		return (ft_exit_redirect(line, "Error: Redirect syntax error !", state));
 	free(line);
@@ -172,11 +117,14 @@ int	ft_parser(t_state *state)
 
 	ft_free_double_str(state->pars->cleaned);
 	get_env = ft_put_env(pars_redirect, state);
-	state->pars->clean_argv = ft_put_tilde(get_env, state->pars);
 	// printf("--------------------Put_Env-------------------------\n");
 	// ft_write_double_str(state->pars->clean_argv);
-
 	ft_free_double_str(pars_redirect);
+	state->pars->clean_argv = ft_put_tilde(get_env, state, state->pars);
+	printf("----------------------Put_Tilde----------------------\n");
+	ft_write_double_str(state->pars->clean_argv);
+
+	ft_free_double_str(get_env);
 	state->cmd_count = ft_double_str_len(state->pars->clean_argv);
 	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
 	// printf("----------------------3d_Str------------------------\n");

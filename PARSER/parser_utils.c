@@ -97,15 +97,12 @@ char	*ft_clean_first_last_quote(char *str)
 
 char	*ft_env_finder(char *str, t_env *env)
 {
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp)
+	while (env)
 	{
-		if (!ft_strncmp(tmp->key, str, ft_strlen(str))
-			&& ft_strlen(str) == ft_strlen(tmp->key))
-			return (tmp->value);
-		tmp = tmp->next;
+		if (!ft_strncmp(env->key, str, ft_strlen(str))
+			&& ft_strlen(str) == ft_strlen(env->key))
+			return (env->value);
+		env = env->next;
 	}
 	return (ft_strdup(""));
 }
