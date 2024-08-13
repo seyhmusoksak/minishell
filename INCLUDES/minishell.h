@@ -198,7 +198,7 @@ char		*ft_join_key(char *key, int index, t_env *env);
 char		*ft_resizer(char **str);
 char		*ft_refind_env(t_parser *parser, t_env *env);
 char		**ft_put_tilde(char **str, t_state *state, t_parser *parser);
-char		*ft_env_finder(char *str, t_env *env);
+char		*ft_new_strjoin(char *s1, char *s2);
 
 //					Redirect functions(11)
 char		**ft_redirect_parser(t_parser *pars, t_node *list);

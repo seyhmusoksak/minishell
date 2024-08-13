@@ -41,7 +41,7 @@ void	ft_node_add_back(t_node **lst, t_node *new_node)
 	}
 }
 
-static char	*ft_new_strjoin(char *s1, char *s2)
+char	*ft_new_strjoin(char *s1, char *s2)
 {
 	size_t	i;
 	size_t	lens1;

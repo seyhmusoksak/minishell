@@ -1,6 +1,6 @@
 #include "../INCLUDES/minishell.h"
 
-static char	*ft_tilde_handler(char *tmp, t_env *env)
+static char	*ft_tilde_handler(char *tmp, char *str, int *index, t_env *env)
 {
     char    *home;
     char    *dest;
@@ -21,10 +21,10 @@ static char	*ft_tilde_handler(char *tmp, t_env *env)
     if (check_home)
         home = ft_strdup("");
     dest = ft_strjoin(tmp, home);
-    free(home);
-    home = NULL;   
+    if (*index + 1 == (int)(ft_strlen(str) -1))
+        dest = ft_new_strjoin(dest, str + (++(*index)));
+    free(home);   
     free(tmp);
-    tmp = NULL;
     return (dest);
 }
 
@@ -32,7 +32,6 @@ static char	*ft_check_tilde(char *str, int i, t_parser *prs, t_env *env)
 {
 	char	*tmp;
     int      point;
-	t_node    *new_node;
     t_node    *tilde_line;
 
     tilde_line = NULL;
@@ -41,18 +40,17 @@ static char	*ft_check_tilde(char *str, int i, t_parser *prs, t_env *env)
     {
         if (str[i] == '~' && !ft_quote_check(str, i, prs)  
             && ((str[i +1] && (str[i +1] == '/' || str[i +1] == ' ')) 
-            || str[i +1] == '\0') && ((i -1 >= 0 && (str[i -1] == ' ')) || !i))
+            || str[i +1] == '\0') && ((i -1 >= 0 && (str[i -1] == ' ')) 
+            || !i))
         {
             tmp = ft_substr(str, point, i - point);
-            point = i + 1;
-            new_node = ft_new_node(ft_tilde_handler(tmp, env));
-            ft_node_add_back(&tilde_line, new_node);
+            point = i +1;
+            ft_node_add_back(&tilde_line,
+                ft_new_node(ft_tilde_handler(tmp, str, &i, env)));
         }
         if (i == (int)ft_strlen(str) - 1 && point != i)
-        {
-            new_node = ft_new_node(ft_substr(str, point, i - point + 1));
-            ft_node_add_back(&tilde_line, new_node);
-        }
+            ft_node_add_back(&tilde_line,
+                ft_new_node(ft_substr(str, point, i - point + 1)));
     }
     return(ft_node_resizer(tilde_line));
 }
