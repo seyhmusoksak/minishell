@@ -94,15 +94,3 @@ char	*ft_clean_first_last_quote(char *str)
 	}
 	return (str);
 }
-
-char	*ft_env_finder(char *str, t_env *env)
-{
-	while (env)
-	{
-		if (!ft_strncmp(env->key, str, ft_strlen(str))
-			&& ft_strlen(str) == ft_strlen(env->key))
-			return (env->value);
-		env = env->next;
-	}
-	return (ft_strdup(""));
-}

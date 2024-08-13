@@ -101,7 +101,6 @@ typedef struct s_parser
 	int		nr;
 	int		r;
 
-	int		check_tilde;
 }	t_parser;
 
 typedef struct s_lexer
