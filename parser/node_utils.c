@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 17:48:05 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/10 16:13:50 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/13 17:55:10 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_node_add_back(t_node **lst, t_node *new_node)
 	}
 }
 
-static char	*ft_new_strjoin(char *s1, char *s2)
+char	*ft_new_strjoin(char *s1, char *s2)
 {
 	size_t	i;
 	size_t	lens1;

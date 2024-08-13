@@ -6,13 +6,13 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:49:04 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/13 16:42:24 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/13 18:06:39 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/minishell.h"
 
-static char	*ft_tilde_handler(char *tmp, t_env *env)
+static char	*ft_tilde_handler(char *tmp, char *str, int *index, t_env *env)
 {
 	char	*home;
 	char	*dest;
@@ -33,18 +33,18 @@ static char	*ft_tilde_handler(char *tmp, t_env *env)
 	if (check_home)
 		home = ft_strdup("");
 	dest = ft_strjoin(tmp, home);
+	if (*index + 1 == (int)(ft_strlen(str) -1))
+		dest = ft_new_strjoin(dest, str + (++(*index)));
 	free(home);
-	home = NULL;
 	free(tmp);
-	tmp = NULL;
 	return (dest);
 }
 
 static char	*ft_check_tilde(char *str, int i, t_parser *prs, t_env *env)
 {
-	char		*tmp;
-	int			point;
-	t_node		*tilde_line;
+	char	*tmp;
+	int		point;
+	t_node	*tilde_line;
 
 	tilde_line = NULL;
 	point = 0;
@@ -56,11 +56,11 @@ static char	*ft_check_tilde(char *str, int i, t_parser *prs, t_env *env)
 				|| !i))
 		{
 			tmp = ft_substr(str, point, i - point);
-			point = i + 1;
+			point = i +1;
 			ft_node_add_back(&tilde_line,
-				ft_new_node(ft_tilde_handler(tmp, env)));
+				ft_new_node(ft_tilde_handler(tmp, str, &i, env)));
 		}
-		if (i == (int)ft_strlen(str) - 1 && point != i + 1)
+		if (i == (int)ft_strlen(str) - 1 && point != i)
 			ft_node_add_back(&tilde_line,
 				ft_new_node(ft_substr(str, point, i - point + 1)));
 	}

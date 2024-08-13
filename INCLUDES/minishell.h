@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/13 16:07:10 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/13 17:55:47 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ char		*ft_join_key(char *key, int index, t_env *env);
 char		*ft_resizer(char **str);
 char		*ft_refind_env(t_parser *parser, t_env *env);
 char		**ft_put_tilde(char **str, t_state *state, t_parser *parser);
+char		*ft_new_strjoin(char *s1, char *s2);
 
 //					Redirect functions(11)
 char		**ft_redirect_parser(t_parser *pars, t_node *list);
@@ -227,7 +228,6 @@ t_cluster	*ft_file_open_error(t_cluster *cluster, char *file);
 void		ft_print_env(t_state *state, t_cluster *cluster);
 void		ft_route(t_state *state, t_cluster *tmp);
 int			ft_check_built(t_cluster *cluster);
-
 
 void		ft_close_pipe(t_state *state, int check);
 void		ft_dup_init(t_state *state, t_cluster *cluster, int i, int check);
