@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 15:35:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/12 14:46:00 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/13 16:50:38 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 
 static void	ft_init_program(int argc, char **argv, char **envp, t_state **state)
 {
-	(void)argc;
 	(void)argv;
+
+	if (argc > 1)
+	{
+		ft_error_mesage("Invalid argument!");
+		exit(1);
+	}
 	*state = (t_state *)malloc(sizeof(t_state));
 	(*state)->pars = malloc(sizeof(t_parser));
 	if (!(*state)->pars || !(*state))
