@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 14:57:55 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/12 15:38:34 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/13 13:51:49 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ft_notdefine_dir(char *s, t_state *state)
 {
-	// GELIŞTIRILEBİLİR bunun yerine yeni bir error fonkiyonu
 	state->error = 1;
 	write(2, "cd: ", 4);
 	write(2, s, ft_strlen(s));
@@ -24,7 +23,6 @@ void	ft_notdefine_dir(char *s, t_state *state)
 
 void	ft_cd_error(char *dir, t_state *state)
 {
-	//standart çıktı fd ile dğiştirilecek
 	state->error = 1;
 	write(2, "cd: ", ft_strlen("cd: "));
 	perror(dir);

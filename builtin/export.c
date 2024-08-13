@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:48:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/12 14:49:34 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/13 14:09:28 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,12 @@ void	ft_add_exp(t_state **state, char *arg)
 
 	i = 0;
 	tmp_exp = (*state)->exp;
-	ft_del_node(&tmp_exp, arg);	//Aynı keyden varsa silmek için
+	ft_del_node(&tmp_exp, arg);
 	if (ft_key_check(arg[0], 0) == 0)
 		return (ft_key_error(arg, "export", *state));
 	while (arg[i] && arg[i] != '=' )
 	{
-		if (ft_key_check(arg[i], i) == 0)//key uygun mu isalnum kontorlü
+		if (ft_key_check(arg[i], i) == 0)
 		{
 			ft_key_error(arg, "export", *state);
 			return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 20:23:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/12 14:01:33 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/10 17:51:33 by mehmyilm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ char	*ft_dup_key(char *key, t_parser *pars, t_env *env)
 		quest = ft_itoa(*(pars->ptr_errno));
 		result = ft_strjoin(quest, key +1);
 		free(quest);
+		*(pars->ptr_errno) = 0;
 		return (result);
 	}
 	while (env != NULL)

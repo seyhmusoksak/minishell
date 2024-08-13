@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/12 16:28:25 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/13 16:44:36 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int	ft_parser(t_state *state)
 	char	*line;
 	char	**split_str;
 	char	**pars_redirect;
+	char	**get_env;
 	// int		i;
 	// int		j;
 
@@ -115,11 +116,15 @@ int	ft_parser(t_state *state)
 	// ft_write_double_str(pars_redirect);
 
 	ft_free_double_str(state->pars->cleaned);
-	state->pars->clean_argv = ft_put_env(pars_redirect, state);
+	get_env = ft_put_env(pars_redirect, state);
 	// printf("--------------------Put_Env-------------------------\n");
 	// ft_write_double_str(state->pars->clean_argv);
-
 	ft_free_double_str(pars_redirect);
+	state->pars->clean_argv = ft_put_tilde(get_env, state, state->pars);
+	// printf("----------------------Put_Tilde----------------------\n");
+	// ft_write_double_str(state->pars->clean_argv);
+
+	ft_free_double_str(get_env);
 	state->cmd_count = ft_double_str_len(state->pars->clean_argv);
 	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
 	// printf("----------------------3d_Str------------------------\n");
@@ -130,7 +135,6 @@ int	ft_parser(t_state *state)
 	// 	while (state->clean_thrd_argv[i][++j])
 	// 		printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
 	// }
-	ft_tilda_handler(state);
 	ft_free_double_str(state->pars->clean_argv);
 	ft_cluster(state);
 	ft_free_thrd_str(state->clean_thrd_argv);

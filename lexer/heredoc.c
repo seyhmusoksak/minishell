@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:38 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/10 16:05:38 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:43:36 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void	ft_heradoc_helper(char *line, t_files *node)
 
 static void	ft_heredoc(t_files *node)
 {
-	int		error;
 	int		pid;
 	char	*line;
 
@@ -49,7 +48,7 @@ static void	ft_heredoc(t_files *node)
 	else
 	{
 		g_sig_status = IN_PARENT;
-		waitpid(pid, &error, 0);
+		waitpid(pid, NULL, 0);
 	}
 	close(node->fd_heredoc[1]);
 }
@@ -75,5 +74,5 @@ void	ft_heredoc_check(t_files *node, char **arg)
 		i++;
 	}
 	if (node->heredoc == NULL)
-		node->heredoc = ft_strdup("");
+		node->heredoc = ft_strdup(" ");
 }

@@ -43,7 +43,7 @@ int	ft_isdolr(char *str, int i, t_parser *parser)
 
 	if (str[i] == '$' && str[i +1] != '\0' && str[i +1] != ' '
 		&& str[i +1] != '"' && str[i +1] != '\''
-		&& str[ft_strlen(str)- 1] != '\'' && ft_check_special(str, i +1))
+		&& ft_check_special(str, i +1))
 	{
 		start = i;
 		while (str[i] != ' ' && str[i])

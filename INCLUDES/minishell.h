@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/12 17:13:02 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/13 16:07:10 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ char		*ft_dup_key(char *key, t_parser *pars, t_env *env);
 char		*ft_join_key(char *key, int index, t_env *env);
 char		*ft_resizer(char **str);
 char		*ft_refind_env(t_parser *parser, t_env *env);
+char		**ft_put_tilde(char **str, t_state *state, t_parser *parser);
 
 //					Redirect functions(11)
 char		**ft_redirect_parser(t_parser *pars, t_node *list);
