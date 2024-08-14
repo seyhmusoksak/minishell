@@ -64,7 +64,7 @@ char	*ft_resizer(char **str)
 	line = ft_strdup("");
 	i = -1;
 	while (str[++i])
-		line = ft_strjoin(line, str[i]);
+		line = ft_new_strjoin(line, str[i]);
 	ft_free_double_str(str);
 	return (line);
 }

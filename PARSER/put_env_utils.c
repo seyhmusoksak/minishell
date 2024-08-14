@@ -110,7 +110,7 @@ int	ft_check_special(char *str, int i)
 
 	start = 0;
 	sub = NULL;
-	if ((str[i] > 36 && str[i] < 48)
+	if (((str[i] > 36 && str[i] < 48) && str[i] != '*')
 		|| (str[i] > 57 && str[i] <= 62)
 		|| (str[i] > 122 && str[i] < 127)
 		|| (str[i] > 90 && str[i] < 97))
