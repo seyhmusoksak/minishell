@@ -15,28 +15,23 @@ LIBFT = $(LIBFT_DIR)/libft.a
 CC = gcc
 READLINE_LIB_LOC = readline/lib
 READLINE_INC_LOC = readline/include
-CFLAGS = -g -Wall -Wextra -Werror -I $(READLINE_INC_LOC) -fsanitize=address
+CFLAGS = -g -Wall -Wextra -Werror -fsanitize=address -I $(READLINE_INC_LOC)
 LDFLAGS = -L$(READLINE_LIB_LOC) -I$(READLINE_INC_LOC) -lreadline -lhistory -lncurses
+
 READLINE_URL = https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz
 READLINE_DIR = readline-8.2
 READLINE_ARCHIVE = readline-8.2.tar.gz
-all: $(READLINE_LIB_LOC)/libreadline.a $(NAME)
-# Readline kütüphanesi kurulumu
-$(READLINE_LIB_LOC)/libreadline.a: progress_bar.sh
-	@clear
-	@echo "\033[1;31mCompiling readline please wait...\n\033[0m"
-	@echo "\033[1;30mDownloading readline...\033[0m"
-	@bash progress_bar.sh
-	@curl -s -O $(READLINE_URL)
-	@echo "\033[1;30mRedline file extracting...\033[0m"
-	@tar -xvf $(READLINE_ARCHIVE) 2>&1 | bash progress_bar.sh & wait
-	@echo "\033[1;30mReadline extracted!\033[0m"
-	@cd $(READLINE_DIR) && ./configure --prefix=${PWD}/readline 2>&1 | awk '{printf ""; fflush()}' & bash progress_bar.sh & wait
-	@echo "\033[1;30mReadline configuration!\033[0m"
-	@cd $(READLINE_DIR) && make install 2>&1 | awk '{printf ""; fflush()}' & bash progress_bar.sh & wait
-	@wait
-	@echo "\n\033[0;42mReadline installation completed!\033[0m"
-	@rm -rf $(READLINE_ARCHIVE) $(READLINE_DIR)
+READLINE_TARGET = $(READLINE_LIB_LOC)/libreadline.a
+all: $(READLINE_TARGET) $(NAME)
+
+$(READLINE_TARGET):
+	@echo "Updating readline library..."
+	@curl -O $(READLINE_URL)
+	@tar -xvf $(READLINE_ARCHIVE)
+	@cd $(READLINE_DIR) && ./configure --prefix=${PWD}/readline && make && make install
+	@echo "set echo-control-characters 0" > $(HOME)/.inputrc
+	@rm -rf $(READLINE_DIR) $(READLINE_ARCHIVE)
+
 $(NAME): $(LIBFT) $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) $(LDFLAGS)
 	@echo "\033[0;32m"
