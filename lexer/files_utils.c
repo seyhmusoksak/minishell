@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:39:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/10 13:23:44 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:52:30 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_files	*ft_new_files_node(char **arg, int i)
 
 	node = ft_files_init(NULL);
 	ft_heredoc_check(node, arg);
-	while (arg[++i])
+	while (arg[++i] && node->error == 0)
 	{
 		if (ft_strcmp(arg[i], "<") == 0)
 		{

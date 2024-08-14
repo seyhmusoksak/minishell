@@ -6,12 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:53:36 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/13 13:56:03 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/14 14:17:01 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../INCLUDES/minishell.h"
-
 
 static void	ft_dir_check(t_state **state, char *dir)
 {

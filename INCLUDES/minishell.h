@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/13 17:55:47 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/14 14:18:55 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <signal.h>
-
 
 # define IN_CAT 1
 # define IN_HERADOC 2
@@ -125,7 +124,6 @@ typedef struct s_state
 	t_env		*exp;
 	t_node		*dolar;
 }	t_state;
-
 
 //			get env functions (4)
 t_env		*get_env(t_state *state, char **env);
@@ -241,4 +239,6 @@ void		ft_all_cluster_free(t_state *state);
 void		ft_built_exit_cmd(t_state *state, t_cluster *cluster);
 void		ft_int_free(t_state *state);
 void		ft_tilda_handler(t_state *state);
+void		ft_cluster_free(t_cluster *cluster);
+void		ft_document(int signal);
 #endif

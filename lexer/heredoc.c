@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:38 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/13 15:43:36 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/14 13:37:17 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,36 @@ static void	ft_heradoc_helper(char *line, t_files *node)
 	free(line);
 }
 
-static void	ft_heredoc(t_files *node)
+static	int	ft_parent_heredoc(t_files *node, int pid)
+{
+	int	status;
+
+	g_sig_status = IN_PARENT;
+	waitpid(pid, &status, 0);
+	if (status != 0)
+	{
+		close(node->fd_heredoc[1]);
+		return (3);
+	}
+	else
+	{
+		close(node->fd_heredoc[1]);
+		return (0);
+	}
+}
+
+static int	ft_heredoc(t_files *node)
 {
 	int		pid;
 	char	*line;
+	int		status;
 
 	pipe(node->fd_heredoc);
 	pid = fork();
+	status = 0;
 	if (pid == 0)
 	{
+		signal(SIGINT, ft_document);
 		g_sig_status = IN_HERADOC;
 		while (1)
 		{
@@ -46,11 +67,8 @@ static void	ft_heredoc(t_files *node)
 		}
 	}
 	else
-	{
-		g_sig_status = IN_PARENT;
-		waitpid(pid, NULL, 0);
-	}
-	close(node->fd_heredoc[1]);
+		status = ft_parent_heredoc(node, pid);
+	return (status);
 }
 
 void	ft_heredoc_check(t_files *node, char **arg)
@@ -63,10 +81,12 @@ void	ft_heredoc_check(t_files *node, char **arg)
 	{
 		if (ft_strcmp(arg[i], "<<") == 0)
 		{
-			free(node->heredoc);
 			free(node->input);
 			node->input = ft_strdup(arg[i + 1]);
-			ft_heredoc(node);
+			node->error = ft_heredoc(node);
+			if (node->error == 3)
+				return ;
+			free(node->heredoc);
 			node->heredoc = get_next_line(node->fd_heredoc[0]);
 			close(node->fd_heredoc[0]);
 			i++;

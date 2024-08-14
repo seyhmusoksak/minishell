@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:16:26 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/12 14:50:10 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/14 14:17:48 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	ft_value_check(t_state **state, char *key, char *value)
 	return (check);
 }
 
-static int	ft_del_if(t_state **state, t_cluster *cluster, int i, int j)//key ve value envde ki key ve value ile eşleşiyor mu
+static int	ft_del_if(t_state **state, t_cluster *cluster, int i, int j)
 {
 	t_cluster	*tmp;
 	char		*value;

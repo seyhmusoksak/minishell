@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/12 22:45:58 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/14 14:21:20 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*ft_resizer(char **str)
 	line = ft_strdup("");
 	i = -1;
 	while (str[++i])
-		line = ft_strjoin(line, str[i]);
+		line = ft_new_strjoin(line, str[i]);
 	ft_free_double_str(str);
 	return (line);
 }

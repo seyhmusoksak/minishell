@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 15:35:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/13 16:50:38 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/14 14:16:32 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	ft_init_program(int argc, char **argv, char **envp, t_state **state)
 {
 	(void)argv;
-
 	if (argc > 1)
 	{
 		ft_error_mesage("Invalid argument!");
