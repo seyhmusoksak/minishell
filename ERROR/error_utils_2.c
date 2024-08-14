@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:40:08 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/13 19:13:54 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/14 15:02:22 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	ft_cluster_free(t_cluster *cluster)
 	i = 0;
 	while (cluster->cmd[i])
 		free(cluster->cmd[i++]);
+	if (cluster->files->heredoc)
+		free(cluster->files->heredoc);
 	free(cluster->cmd);
 	free(cluster->files->input);
 	free(cluster->files->output);

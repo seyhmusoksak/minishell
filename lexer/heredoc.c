@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:38 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/14 13:37:17 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/14 15:25:09 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static int	ft_heredoc(t_files *node)
 	status = 0;
 	if (pid == 0)
 	{
-		signal(SIGINT, ft_document);
 		g_sig_status = IN_HERADOC;
 		while (1)
 		{
