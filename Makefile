@@ -12,7 +12,7 @@ SRCS =	utils/get_env.c minishell.c utils/signal.c parser/parser.c \
 		lexer/free_cluster.c lexer/heredoc.c parser/node_utils.c \
 		parser/pipe_utils.c  builtin/exit.c parser/free_utils.c parser/put_tilde.c
 OBJS = $(SRCS:.c=.o)
-LIBFT_DIR = ./INCLUDES/libft
+LIBFT_DIR = ./includes/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 CC = gcc
 READLINE_LIB_LOC = readline/lib
