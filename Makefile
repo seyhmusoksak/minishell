@@ -17,7 +17,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 CC = gcc
 READLINE_LIB_LOC = readline/lib
 READLINE_INC_LOC = readline/include
-CFLAGS = -g -Wall -Wextra -Werror -fsanitize=address -I $(READLINE_INC_LOC)
+CFLAGS = -g -Wall -Wextra -Werror -I $(READLINE_INC_LOC)
 LDFLAGS = -L$(READLINE_LIB_LOC) -I$(READLINE_INC_LOC) -lreadline -lhistory -lncurses
 
 READLINE_URL = https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz
