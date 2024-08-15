@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 12:48:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/13 14:09:28 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:07:40 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static void	ft_transaction(t_env **ptr1, int *swapped)
 {

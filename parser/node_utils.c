@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 17:48:05 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/14 14:21:05 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:16 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 t_node	*ft_new_node(char *content)
 {

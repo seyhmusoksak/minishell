@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:54:48 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/14 14:22:55 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:52 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 char	*ft_cut_dquote(char *str, int len, t_parser *pars)
 {

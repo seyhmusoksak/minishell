@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:20:17 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:16:35 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:08:12 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 void	ft_int_free(t_state *state)
 {

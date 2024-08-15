@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:05:15 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/14 15:25:04 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:30:14 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static void	ft_signal_handler(int sig)
 {

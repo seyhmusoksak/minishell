@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:31:02 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/12 14:08:34 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:07:47 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 void	ft_pwd(t_cluster *cluster, t_state *state)
 {

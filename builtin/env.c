@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 16:35:15 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/14 14:17:38 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:07:23 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 void	ft_print_env(t_state *state, t_cluster *cluster)
 {

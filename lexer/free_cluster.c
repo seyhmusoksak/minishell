@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 18:31:23 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:17:21 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:08:44 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 void	ft_all_cluster_free(t_state *state)
 {

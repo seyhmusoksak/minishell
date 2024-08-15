@@ -6,7 +6,7 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/14 15:25:19 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:13:01 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,10 @@ typedef struct s_state
 //			get env functions (4)
 t_env		*get_env(t_state *state, char **env);
 void		env_addback(t_env **lst, t_env *new);
-
 void		ft_sep_path(t_state *state);
 t_env		*new_env(char *key, char *value);
+
+//			built in functions (20)
 void		env_addback(t_env **lst, t_env *new);
 void		ft_add_env(t_state **state, char *arg);
 void		ft_echo(t_cluster *cluster, t_state *state);
@@ -212,9 +213,9 @@ void		ft_free_substr(char **sub, char **sub2, char **sub3,
 char		*ft_clean_first_last_quote(char *str);
 void		ft_free_thrd_str(char ***str);
 int			ft_check_full_char(char *str, char c, int len);
-void		ft_write_double_str(char **str); //kaldırcam bunu
 void		ft_init_signals(void);
 
+//					lexer functions (11)
 void		ft_cluster(t_state *state);
 int			ft_strcmp(char *s1, char *s2);
 char		**ft_fill_cmd(char **arg);
@@ -227,6 +228,7 @@ void		ft_print_env(t_state *state, t_cluster *cluster);
 void		ft_route(t_state *state, t_cluster *tmp);
 int			ft_check_built(t_cluster *cluster);
 
+//					executer functions (12)
 void		ft_close_pipe(t_state *state, int check);
 void		ft_dup_init(t_state *state, t_cluster *cluster, int i, int check);
 void		ft_executer_error(char	**cmd, char *s, int exit_code);

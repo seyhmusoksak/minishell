@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:53:36 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/14 14:17:01 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:07:11 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static void	ft_dir_check(t_state **state, char *dir)
 {
@@ -43,12 +43,12 @@ static void	ft_select_dir(t_state **state, char *type)
 	char	*dir;
 
 	tmp_env = (*state)->env;
-	if (ft_strncmp(type, "HOME", ft_strlen(type)) == 0)
-		while (tmp_env && ft_strncmp(tmp_env->key, "HOME", ft_strlen("HOME")))
+	if (ft_strcmp(type, "HOME") == 0)
+		while (tmp_env && ft_strcmp(tmp_env->key, "HOME"))
 			tmp_env = tmp_env->next;
-	else if (ft_strncmp(type, "OLDPWD", ft_strlen(type)) == 0)
-		while (tmp_env && ft_strncmp(tmp_env->key,
-				"OLDPWD", ft_strlen("OLDPWD")))
+	else if (ft_strcmp(type, "OLDPWD") == 0)
+		while (tmp_env && ft_strcmp(tmp_env->key,
+				"OLDPWD"))
 			tmp_env = tmp_env->next;
 	if (tmp_env == NULL)
 		return (ft_notdefine_dir(type, *state));

@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:23:38 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/14 15:25:09 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:30:20 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static void	ft_heradoc_helper(char *line, t_files *node)
 {

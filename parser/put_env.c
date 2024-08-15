@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 20:23:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/14 14:40:06 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:18:52 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static char	*ft_find_env(char *str, int n, t_parser *parser, t_env *env)
 {
@@ -63,7 +63,6 @@ static char	*ft_env_handler(char *str, t_env *env, t_parser *parser)
 	free(env_str);
 	return (dest);
 }
-
 
 char	*ft_dolar_handler(char *str, t_node *dolar, t_parser *prs, t_env *env)
 {
@@ -125,7 +124,6 @@ char	*ft_dup_key(char *key, t_parser *pars, t_env *env)
 		quest = ft_itoa(*(pars->ptr_errno));
 		result = ft_strjoin(quest, key +1);
 		free(quest);
-		*(pars->ptr_errno) = 0;
 		return (result);
 	}
 	while (env != NULL)

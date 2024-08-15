@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 16:37:07 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/08 18:20:59 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:10:35 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 void	env_addback(t_env **lst, t_env *new)
 {

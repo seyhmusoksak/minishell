@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 19:43:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/14 14:20:29 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:08:54 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static int	ft_check_last_redirect(t_parser *parser)
 {

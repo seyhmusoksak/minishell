@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   dolar_check_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:58:11 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/10 16:10:55 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:08:56 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 int	ft_count_dolar(char *str, t_parser *parser)
 {
@@ -41,24 +41,25 @@ int	ft_isdolr(char *str, int i, t_parser *parser)
 	int		sval;
 	int		start;
 
+	start = 0;
 	if (str[i] == '$' && str[i +1] != '\0' && str[i +1] != ' '
-		&& str[i +1] != '"' && str[i +1] != '\''
-		&& ft_check_special(str, i +1))
+		&& str[i +1] != '"' && str[i +1] != '\'' && ft_check_special(str, i +1))
 	{
 		start = i;
-		while (str[i] != ' ' && str[i])
+		while (str[i] && (str[i] != ' ' || (str[i] == ' '
+					&& ft_quote_check(str, i, parser))))
 			i++;
 		check_str = ft_substr(str, start, (i - start));
 		dval = ft_count_quote(check_str, i - start, '"') % 2;
 		sval = ft_count_quote(check_str, i - start, '\'') % 2;
-		if ((dval && sval) || (!dval && !sval) || (dval && !sval)
+		if ((dval && sval && check_str[i - start -1] != '\'')
+			|| (!dval && !sval) || (dval && !sval)
 			|| (sval && ft_check_is_in(str, i, parser)))
-		{
-			free(check_str);
-			return (1);
-		}
+			start = -1;
 		free(check_str);
 	}
+	if (start == -1)
+		return (1);
 	return (0);
 }
 

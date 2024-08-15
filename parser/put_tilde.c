@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 15:49:04 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/13 18:06:39 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:47 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static char	*ft_tilde_handler(char *tmp, char *str, int *index, t_env *env)
 {

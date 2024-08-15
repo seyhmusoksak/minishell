@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:11:58 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/14 14:19:59 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:08:32 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static char	**ft_clean_cmd(char **str)
 {

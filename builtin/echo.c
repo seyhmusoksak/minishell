@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:36:59 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/12 14:05:36 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:07:26 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static int	ft_flag_check(char **cmd)
 {
@@ -22,6 +22,8 @@ static int	ft_flag_check(char **cmd)
 	{
 		j = 0;
 		if (cmd[i][j] != '-')
+			return (i);
+		if (cmd[i][j] == '-' && cmd[i][j + 1] == '\0')
 			return (i);
 		while (cmd[i][++j])
 		{

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quote_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 21:29:21 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/10 16:31:21 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:50 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static int	ft_quote_count_check(char *str, int *check,
 	char quote_type, int num)

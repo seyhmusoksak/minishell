@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:16:26 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/14 14:17:48 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:07:49 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static int	ft_value_check(t_state **state, char *key, char *value)
 {

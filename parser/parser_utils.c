@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/14 14:21:20 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:26 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 int	ft_count_real_char(char *line, char c, t_parser *parser)
 {

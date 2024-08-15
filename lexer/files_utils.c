@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:39:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/14 12:52:30 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:08:42 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static	t_files	*ft_files_init(t_files *node)
 {

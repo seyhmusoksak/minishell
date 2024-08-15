@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   united_dolar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:33:05 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/10 16:39:44 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:10:03 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static int	ft_mini_dolar_counter(char *str, int ***chck_dolr, int ***chck_dq)
 {
@@ -40,9 +40,10 @@ static int	ft_mini_dolar_counter(char *str, int ***chck_dolr, int ***chck_dq)
 static int	ft_init_united(int **chk_dq, int **chk_dolr, char **tmp,
 	t_parser *prs)
 {
-	int	count;
-	int	len;
-	int	check_sub;
+	int		count;
+	int		len;
+	int		check_sub;
+	char	*sub;
 
 	check_sub = 0;
 	len = ft_strlen(prs->key);
@@ -52,8 +53,10 @@ static int	ft_init_united(int **chk_dq, int **chk_dolr, char **tmp,
 	if (prs->key[len -1] == '"' && len - 2 >= 0
 		&& prs->key[len -2] != '$')
 	{
+		sub = ft_substr(prs->key, 0, len -1);
 		check_sub = 1;
-		prs->united_key = ft_split(ft_substr(prs->key, 0, len -1), '$');
+		prs->united_key = ft_split(sub, '$');
+		free(sub);
 	}
 	else
 		prs->united_key = ft_split(prs->key, '$');
@@ -66,18 +69,15 @@ static int	ft_init_united(int **chk_dq, int **chk_dolr, char **tmp,
 
 static char	*ft_put_united_env(char *key, t_parser *pars, t_env *env)
 {
-	char	*dest;
-
 	if (!key)
 		return (NULL);
 	if (ft_isdigit(key[0])
 		|| key[0] == '@' || key[0] == '*')
-		dest = ft_strdup(key + 1);
+		return (ft_strdup(key + 1));
 	else if (!ft_check_after_key(key))
-		dest = ft_dup_key(key, pars, env);
+		return (ft_dup_key(key, pars, env));
 	else
-		dest = ft_join_key(key, ft_check_after_key(key), env);
-	return (dest);
+		return (ft_join_key(key, ft_check_after_key(key), env));
 }
 
 static void	ft_united_handler(int *chk_dq, int *chk_dlr,
@@ -97,13 +97,13 @@ static void	ft_united_handler(int *chk_dq, int *chk_dlr,
 	i--;
 	if (*chk_dq)
 	{
-		prs->united_env[i] = ft_strjoin(prs->united_env[i], tmp);
+		prs->united_env[i] = ft_new_strjoin(prs->united_env[i], tmp);
 		free(tmp);
 	}
 	else if (check_sub)
-		prs->united_env[i] = ft_strjoin(prs->united_env[i], "\"");
+		prs->united_env[i] = ft_new_strjoin(prs->united_env[i], "\"");
 	else if (*chk_dlr)
-		prs->united_env[i] = ft_strjoin(prs->united_env[i], "$");
+		prs->united_env[i] = ft_new_strjoin(prs->united_env[i], "$");
 }
 
 char	*ft_united_dolar(t_parser *parser, t_env *env)

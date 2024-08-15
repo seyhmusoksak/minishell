@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 19:07:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/12 14:07:31 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:10:39 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 void	ft_route(t_state *state, t_cluster *tmp)
 {

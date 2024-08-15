@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_clean.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:07:17 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/10 16:18:57 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:23 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static int	ft_is_first(char *str, char keycode, int i, t_parser *pars)
 {

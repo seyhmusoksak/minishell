@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:54:53 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/14 14:22:17 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:39 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 void	ft_pars_str(char *s, t_parser *prs)
 {

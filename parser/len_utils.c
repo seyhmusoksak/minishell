@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 18:50:09 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/14 14:20:37 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:07 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 int	ft_listlen(t_node *lst)
 {
