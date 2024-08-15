@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:59:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/15 14:01:37 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 14:16:46 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static void	ft_exex_file_check(t_state *state, t_cluster *cluster)
 {
