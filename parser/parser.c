@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/15 13:09:32 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/18 14:14:47 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	ft_parser(t_state *state)
 		return (ft_exit(line, "Error: Failure to use pipe ! ", state));
 	split_str = ft_pipe_split(line, '|', state->pars);
 	ft_clean_str(split_str, state->pars);
-	if (ft_redirection_control(state->pars, -1))
+	if (ft_redirection_control(state->pars, -1) || r(state->pars, '<', '>'))
 		return (ft_exit_redirect(line, "Error: Redirect syntax error !",
 				state));
 	free(line);

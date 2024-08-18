@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   char_control.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
+/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 19:43:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/15 13:08:54 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/18 14:12:24 by musozer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,3 +101,58 @@ int	ft_check_full_char(char *str, char c, int len)
 	}
 	return (0);
 }
+
+int	r(t_parser *parser, char r, char l)
+{
+	parser->one = -1;
+	while (parser->cleaned[++parser->one])
+	{
+		parser->two = -1;
+		while (parser->cleaned[parser->one][++parser->two])
+		{
+			if (parser->cleaned[parser->one][parser->two] == l
+			&& ft_quote_check(parser->cleaned[parser->one],
+				parser->two, parser) == 0)
+			{
+				if (ft_control_red(parser, r, l) == 1)
+					return (1);
+			}
+			else if (parser->cleaned[parser->one][parser->two] == r
+			&& ft_quote_check(parser->cleaned[parser->one],
+				parser->two, parser) == 0)
+			{
+				if (ft_control_red(parser, l, r) == 1)
+					return (1);
+			}
+		}
+	}
+	return (0);
+}
+
+
+
+
+
+
+
+
+
+// 			&& parser->cleaned[i][j + 1] == '>' )|| (parser->cleaned[i][j] == '<') && !ft_quote_check(parser->cleaned[i], j, parser))
+// 				return (1);
+// 			j++;
+// 		}
+// 		{
+// 			/* code */
+// 		}
+
+
+// 	}
+// 	{
+// 		if (str[i] == '>')
+// 			return (1);
+// 		if (str[i] == '<')
+// 			return (1);
+// 		i++;
+// 	}
+// 	return (0);
+// }
