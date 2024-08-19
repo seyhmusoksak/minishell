@@ -32,33 +32,44 @@ static int	ft_check_last_redirect(t_parser *parser)
 	return (0);
 }
 
-static int	ft_check_redirect(char **split, int i, int result)
+static int ft_check_sub_redirect(char *line, int start, int i)
 {
-	while (++i < ft_double_str_len(split) - 1)
+	char	*sub;
+
+	sub = NULL;
+	if (i - start == 0)
+		return (0);
+	sub = ft_substr(line, start, i - start);
+	if (!ft_check_redirect_char(sub, ft_strlen(sub)))
 	{
-		if (split[i +1]
-			&& !ft_check_full_char(split[i +1], ' ', ft_strlen(split[i +1])))
-		{
-			result = 1;
-			break ;
-		}
-		else if (split[i +1] && !ft_check_redirect_char(split[i +1]))
-		{
-			result = 1;
-			break ;
-		}
-		else if (split[i +1] == NULL)
-		{
-			result = 1;
-			break ;
-		}
-	}
-	ft_free_double_str(split);
-	if (result)
+		free(sub);
 		return (1);
+	}	
+	free(sub);
 	return (0);
 }
+static int	ft_redher_check(char *line, char typ, char typ2, t_parser *parser)
+{
+	int		i;
+	int		start;
 
+	i = -1;
+	while (line[++i])
+	{
+		if (line[i] == typ && !ft_quote_check(line, i, parser))
+		{
+			if (line[i +1] == typ)
+				++i;
+			start = ++i;
+			while (line[i] && !ft_quote_check(line, i, parser)
+				&& (line[i] == typ || line[i] == typ2 || line[i] == ' '))
+				i++;
+			if (ft_check_sub_redirect(line, start, i))
+				return (1);
+		}
+	}
+	return (0);
+}
 int	ft_redirection_control(t_parser *parser, int i)
 {
 	int		check;
@@ -77,27 +88,11 @@ int	ft_redirection_control(t_parser *parser, int i)
 	}
 	i = -1;
 	while (parser->cleaned[++i] && check == 0)
-		check = ft_check_redirect(
-				ft_pipe_split(parser->cleaned[i], '>', parser), -1, 0);
+		check = ft_redher_check(parser->cleaned[i], '>', '<', parser);
 	i = -1;
 	while (parser->cleaned[++i] && check == 0)
-		check = ft_check_redirect(
-				ft_pipe_split(parser->cleaned[i], '>', parser), -1, 0);
+		check = ft_redher_check(parser->cleaned[i], '<', '>', parser);
 	if (check == 0 || check == -1)
 		return (0);
 	return (1);
-}
-
-int	ft_check_full_char(char *str, char c, int len)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && i < len)
-	{
-		if (str[i] != c)
-			return (1);
-		i++;
-	}
-	return (0);
 }

@@ -204,7 +204,7 @@ void		ft_left_redirect(char *str, int len, char type, t_parser *pars);
 int			ft_listlen(t_node *lst);
 char		**ft_node_to_double(t_node **list, int i, int list_size);
 t_node		*ft_finish_redirect(char *str, int i, t_parser *pars);
-int			ft_check_redirect_char(char *str);
+int			ft_check_redirect_char(char *str, int len);
 void		ft_check_control(t_parser *parser);
 void		ft_free_substr(char **sub, char **sub2, char **sub3,
 				t_parser *pars);
