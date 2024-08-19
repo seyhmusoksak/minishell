@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   put_env_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:54:53 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/15 21:51:43 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:39 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 void	ft_pars_str(char *s, t_parser *prs)
 {
@@ -20,7 +20,7 @@ void	ft_pars_str(char *s, t_parser *prs)
 		while (s[prs->d] != '\0' && s[prs->d] != ' ')
 			prs->d++;
 		prs->len_dolar[1] = prs->d -1;
-		if (prs->d >= (int)(ft_strlen(s) - 1))
+		if (s[prs->d] != ' ' && prs->d >= (int)(ft_strlen(s) - 1))
 		{
 			prs->len_str[0] = -1;
 			return ;
@@ -54,7 +54,7 @@ void	ft_pars_str_helper(char *s, t_parser *prs)
 			prs->d++;
 	}
 	prs->len_str[1] = prs->d -1;
-	if (prs->d >= (int)(ft_strlen(s) -1))
+	if (s[prs->d] != ' ' && prs->d >= (int)(ft_strlen(s) -1))
 	{
 		prs->len_dolar[0] = -1;
 		return ;
@@ -63,19 +63,6 @@ void	ft_pars_str_helper(char *s, t_parser *prs)
 	while (s[prs->d] != '\0' && s[prs->d] != ' ')
 		prs->d++;
 	prs->len_dolar[1] = prs->d -1;
-}
-
-char	*ft_resizer(char **str)
-{
-	char	*line;
-	int		i;
-
-	line = ft_strdup("");
-	i = -1;
-	while (str[++i])
-		line = ft_strjoin(line, str[i]);
-	ft_free_double_str(str);
-	return (line);
 }
 
 int	ft_check_after_key(char *key)
@@ -100,22 +87,47 @@ int	ft_check_after_key(char *key)
 	return (0);
 }
 
-int	ft_check_space(char *str, int len, int i)
+int	ft_check_is_in(char *str, int index, t_parser *parser)
 {
-	char	*tmp;
+	char	*sub;
 
-	if (str[len] == '"' && len - 1 >= 0 && str[len -1] == ' ')
+	sub = ft_substr(str, 0, index);
+	if (ft_quote_check(sub, index, parser) == 2)
 	{
-		i--;
-		while (i >= 0 && str[i] == ' ')
-			i--;
-	}
-	tmp = ft_substr(str, i, len - i);
-	if (ft_strchr(tmp, '$'))
-	{
-		free(tmp);
+		free(sub);
+		sub = NULL;
 		return (1);
 	}
-	free(tmp);
+	free(sub);
+	sub = NULL;
 	return (0);
+}
+
+int	ft_check_special(char *str, int i)
+{
+	char	*sub;
+	int		start;
+
+	start = 0;
+	sub = NULL;
+	if ((str[i] > 36 && str[i] < 48 && str[i] != '*')
+		|| (str[i] > 57 && str[i] <= 62)
+		|| (str[i] > 122 && str[i] < 127)
+		|| (str[i] > 90 && str[i] < 97))
+		return (0);
+	else if (str[i] == '$')
+	{
+		start = i;
+		while (str[i] && str[i] != ' ')
+			i++;
+		sub = ft_substr(str, start, (i - start));
+		i = -1;
+		while (sub[++i])
+			if (ft_isalnum(sub[i]) || sub[i] == '_')
+				start = -1;
+		free(sub);
+		if (start != -1)
+			return (0);
+	}
+	return (1);
 }

@@ -3,52 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/19 05:29:01 by soksak           ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:32 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
-int	ft_parser(t_state *state)
+static int	ft_clean_str(char **str, t_parser *pars)
 {
-	char	*line;
-	char	**split_str;
-	int		i;
-	int		j;
-
-	if (!ft_wait_for_input(state))
-		return (0);
-	line = ft_strtrim(state->line, " ");
-	free(state->line);
-	if (ft_quote_check(line, (int) ft_strlen(line), state->pars))
-		return (ft_exit(line, "Error: open quotation mark", state->pars));
-	if (line[0] == '|' || line[ft_strlen(line) - 1] == '|')
-		return (ft_exit(line, "Error: Failure to use pipe ", state->pars));
-	split_str = ft_pipe_split(line, '|', state->pars);
-	ft_init_quote_str(split_str, state->pars);
-	state->pars->clean_argv = ft_put_env(state->pars->cleaned, state);
-	ft_free_double_str(state->pars->cleaned);
-	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
-	ft_free_double_str(state->pars->clean_argv);
-	i = -1;
-	while (state->clean_thrd_argv[++i])
-	{
-		j = -1;
-		while (state->clean_thrd_argv[i][++j])
-			printf("i(%d) j(%d): %s\n", i, j, state->clean_thrd_argv[i][j]);
-	}
-	free(line);
-	//ft_free_thrd_str(state->clean_thrd_argv);
-	return (0);
-}
-
-int	ft_init_quote_str(char **str, t_parser *pars)
-{
-	int		i;
-	int		len;
+	int	i;
+	int	len;
 
 	i = -1;
 	len = ft_double_str_len(str);
@@ -71,7 +38,7 @@ int	ft_init_quote_str(char **str, t_parser *pars)
 	return (1);
 }
 
-char	***ft_parser_to_lexer(char **str, t_parser *parser)
+static char	***ft_parser_to_lexer(char **str, t_parser *parser)
 {
 	int		i;
 	int		j;
@@ -94,37 +61,15 @@ char	***ft_parser_to_lexer(char **str, t_parser *parser)
 	return (dest);
 }
 
-char	*ft_clean_first_last_quote(char *str)
+static char	**ft_put_env(char **str, t_state *state)
 {
+	t_env	*env;
+	char	**dest;
 	int		i;
-	int		j;
-	char	*dest;
-
-	i = 0;
-	j = -1;
-	if ((str[0] == '"' && str[ft_strlen(str) -1] == '"')
-		|| (str[0] == '\'' && str[ft_strlen(str) -1] == '\''))
-	{
-		dest = malloc(sizeof(char) * ft_strlen(str) - 1);
-		if (!dest)
-			return (NULL);
-		while (str[++i] && (i < ((int )ft_strlen(str))))
-			dest[++j] = str[i];
-		dest[j] = '\0';
-		return (dest);
-	}
-	return (str);
-}
-
-char	**ft_put_env(char **str, t_state *state)
-{
-	t_env		*env;
-	char		**dest;
-	int			i;
-	int			count_dolr;
+	int		count_dolr;
 
 	env = state->env;
-	dest = malloc(sizeof(char *) * (ft_double_str_len(str) +1));
+	dest = malloc(sizeof(char *) * (ft_double_str_len(str) + 1));
 	if (!dest)
 		return (NULL);
 	dest[ft_double_str_len(str)] = NULL;
@@ -134,10 +79,53 @@ char	**ft_put_env(char **str, t_state *state)
 		count_dolr = ft_count_dolar(str[i], state->pars);
 		env = state->env;
 		if (count_dolr)
-			dest[i] = ft_dolar_handler(str[i], count_dolr, state->pars, env);
+			dest[i] = ft_dolar_handler(str[i], state->dolar, state->pars, env);
 		else
 			dest[i] = ft_strdup(str[i]);
 	}
 	return (dest);
 }
 
+static void	ft_parser_handler(t_state *state, char **get_env,
+	char **pars_redirect)
+{
+	ft_free_double_str(pars_redirect);
+	state->pars->clean_argv = ft_put_tilde(get_env, state, state->pars);
+	ft_free_double_str(get_env);
+	state->cmd_count = ft_double_str_len(state->pars->clean_argv);
+	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv,
+			state->pars);
+	ft_free_double_str(state->pars->clean_argv);
+	ft_cluster(state);
+	ft_free_thrd_str(state->clean_thrd_argv);
+	ft_executer(state, 0);
+}
+
+int	ft_parser(t_state *state)
+{
+	char	*line;
+	char	**split_str;
+	char	**pars_redirect;
+	char	**get_env;
+
+	if (ft_wait_for_input(state) == 2)
+		return (1);
+	if (!ft_wait_for_input(state))
+		return (0);
+	line = ft_strtrim(state->line, " ");
+	if (ft_quote_check(line, (int)ft_strlen(line), state->pars))
+		return (ft_exit(line, "Error: Open quotation mark !", state));
+	if (ft_pipe_check(line, state->pars))
+		return (ft_exit(line, "Error: Failure to use pipe ! ", state));
+	split_str = ft_pipe_split(line, '|', state->pars);
+	ft_clean_str(split_str, state->pars);
+	if (ft_redirection_control(state->pars, -1))
+		return (ft_exit_redirect(line, "Error: Redirect syntax error !",
+				state));
+	free(line);
+	pars_redirect = ft_redirect_parser(state->pars, state->dolar);
+	ft_free_double_str(state->pars->cleaned);
+	get_env = ft_put_env(pars_redirect, state);
+	ft_parser_handler(state, get_env, pars_redirect);
+	return (0);
+}
