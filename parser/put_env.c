@@ -3,51 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   put_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 20:23:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/18 13:54:17 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:18:52 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
-//TEST MWTNİ:
-// "e"c"h"o '$USER' "a'm'a bu kez $USER.dayii $" | ls -a "$PWD $USER" $PWD "$USER" | c"a"t "a"."txt b'.'txt" "$DAYI" | "Deneyin $USER sizde"
-
-char	*ft_dolar_handler(char *str, int cnt_dolr, t_parser *pars, t_env *env)
+static char	*ft_find_env(char *str, int n, t_parser *parser, t_env *env)
 {
-	char	**put_env;
-	int		j;
+	char	*dest;
 
-	pars->d = 0;
-	j = 0;
-	put_env = malloc(sizeof(char *) * (cnt_dolr +1));
-	if (!put_env)
+	dest = NULL;
+	parser->key = ft_substr(str, 0, n);
+	if (!parser->key || !str)
 		return (NULL);
-	put_env[cnt_dolr] = NULL;
-	while (str[pars->d])
-	{
-		if (str[pars->d] == '$' && ft_isdolr(str, pars->d, pars))
-			pars->dolar_is_first = 1;
-		else
-			pars->dolar_is_first = 0;
-		ft_pars_str(str, pars);
-		put_env[j++] = ft_env_handler(str, env, pars);
-	}
-	return (ft_resizer(put_env));
+	if (ft_isdigit(parser->key[0])
+		|| parser->key[0] == '@' || parser->key[0] == '*')
+		dest = ft_strdup(parser->key + 1);
+	else if (parser->key[0] == '$' && !ft_strchr(parser->key + 1, '$'))
+		dest = ft_strdup(parser->key);
+	else if (parser->key[0] == '$' && ft_strchr(parser->key + 1, '$'))
+		dest = ft_refind_env(parser, env);
+	else if (parser->key[0] != '$' && ft_strchr(parser->key + 1, '$'))
+		dest = ft_united_dolar(parser, env);
+	else if (!ft_check_after_key(parser->key))
+		dest = ft_dup_key(parser->key, parser, env);
+	else
+		dest = ft_join_key(parser->key, ft_check_after_key(parser->key), env);
+	free(parser->key);
+	return (dest);
 }
 
-char	*ft_env_handler(char *str, t_env *env, t_parser *parser)
+static char	*ft_env_handler(char *str, t_env *env, t_parser *parser)
 {
 	char	*tmp_str;
 	char	*env_str;
 	char	*dest;
 	int		str_len;
-	int		dolr_len;
+	int		dolrlen;
 
-	str_len = (parser->len_str[1] - parser->len_str[0] +1);
-	dolr_len = (parser->len_dolar[1] - parser->len_dolar[0] +1);
+	str_len = (parser->len_str[1] - parser->len_str[0] + 1);
+	dolrlen = (parser->len_dolar[1] - parser->len_dolar[0] + 1);
 	if (parser->len_str[0] == -1)
 		tmp_str = ft_strdup("");
 	else
@@ -55,32 +54,35 @@ char	*ft_env_handler(char *str, t_env *env, t_parser *parser)
 	if (parser->len_dolar[0] == -1)
 		env_str = ft_strdup("");
 	else
-		env_str = ft_find_env(str + parser->len_dolar[0], dolr_len, env);
+		env_str = ft_find_env(str + parser->len_dolar[0], dolrlen, parser, env);
 	if (parser->dolar_is_first)
 		dest = ft_strjoin(env_str, tmp_str);
 	else
 		dest = ft_strjoin(tmp_str, env_str);
 	free(tmp_str);
-	tmp_str = NULL;
 	free(env_str);
-	env_str = NULL;
 	return (dest);
 }
 
-char	*ft_find_env(char *str, int n, t_env *env)
+char	*ft_dolar_handler(char *str, t_node *dolar, t_parser *prs, t_env *env)
 {
-	char	*key;
-	char	*dest;
+	t_node	*new_node;
 
-	key = ft_substr(str, 0, n);
-	if (!key || !str)
-		return (NULL);
-	if (!ft_check_after_key(key))
-		dest = ft_dup_key(key, n, env);
-	else
-		dest = ft_join_key(key, ft_check_after_key(key), env);
-	free(key);
-	return (dest);
+	dolar = NULL;
+	prs->d = 0;
+	while (str[prs->d])
+	{
+		if (str[prs->d] == '$' && ft_isdolr(str, prs->d, prs))
+			prs->dolar_is_first = 1;
+		else
+			prs->dolar_is_first = 0;
+		ft_pars_str(str, prs);
+		new_node = ft_new_node(ft_env_handler(str, env, prs));
+		if (!new_node)
+			return (NULL);
+		ft_node_add_back(&dolar, new_node);
+	}
+	return (ft_node_resizer(dolar));
 }
 
 char	*ft_join_key(char *key, int index, t_env *env)
@@ -93,7 +95,8 @@ char	*ft_join_key(char *key, int index, t_env *env)
 	after_key = ft_substr(key, index, ft_strlen(key));
 	while (env != NULL)
 	{
-		if (ft_strncmp(new_key, env->key, index) == 0)
+		if (ft_strncmp(new_key, env->key, ft_strlen(env->key)) == 0
+			&& ft_strlen(env->key) == ft_strlen(new_key))
 		{
 			dest = ft_strjoin(env->value, after_key);
 			free(new_key);
@@ -106,11 +109,27 @@ char	*ft_join_key(char *key, int index, t_env *env)
 	return (after_key);
 }
 
-char	*ft_dup_key(char *key, int n, t_env *env)
+char	*ft_dup_key(char *key, t_parser *pars, t_env *env)
 {
+	char	*quest;
+	char	*result;
+
+	if (key[0] == '#')
+	{
+		key[0] = '0';
+		return (ft_strdup(key));
+	}
+	else if (key[0] == '?')
+	{
+		quest = ft_itoa(*(pars->ptr_errno));
+		result = ft_strjoin(quest, key +1);
+		free(quest);
+		return (result);
+	}
 	while (env != NULL)
 	{
-		if (ft_strncmp(key, env->key, n) == 0)
+		if (ft_strncmp(key, env->key, ft_strlen(env->key)) == 0
+			&& ft_strlen(env->key) == ft_strlen(key))
 			return (ft_strdup(env->value));
 		env = env->next;
 	}

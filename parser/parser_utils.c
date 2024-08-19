@@ -3,62 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 17:13:38 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/18 16:29:49 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:26 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
-char	**ft_pipe_split(char *line, char c, t_parser *parser)
-{
-	char	**src;
-	char	**tmp;
-	int		pc;
-
-	parser->char_check = 1;
-	pc = (pipe_c(line, c, parser) + 1);
-	src = ft_split(line, c);
-	tmp = (char **)malloc(sizeof(char *) * (pc + 1));
-	if (!tmp)
-		return (NULL);
-	tmp[pc] = NULL;
-	ft_quote_control(src, tmp, c, parser);
-	ft_free_double_str(src);
-	return (tmp);
-}
-
-void	ft_quote_control(char **src, char **tmp, char c, t_parser *parser)
-{
-	char		*dst;
-	int			j;
-	int			i;
-
-	i = 0;
-	j = 0;
-	while (src[i] != NULL)
-	{
-		if (parser->char_check)
-		{
-			dst = ft_strdup(src[i]);
-			parser->char_check = 0;
-		}
-		if (ft_quote_check(dst, ft_strlen(dst), parser) != 0)
-			ft_strjoin_and_free(&dst, src[++i], c);
-		if (ft_quote_check(dst, ft_strlen(dst), parser) == 0 && dst != NULL)
-		{
-			tmp[j] = ft_strdup(dst);
-			parser->char_check = 1;
-			j++;
-			i++;
-		}
-	}
-	tmp[j] = NULL;
-}
-
-int	pipe_c(char *line, char c, t_parser *parser)
+int	ft_count_real_char(char *line, char c, t_parser *parser)
 {
 	int	i;
 	int	count;
@@ -86,43 +40,69 @@ int	pipe_c(char *line, char c, t_parser *parser)
 	return (count);
 }
 
-void	ft_strjoin_and_free(char **dst, char *s2, char c)
-{
-	char	*result;
-	char	*tmp;
-	char	c_str[2];
-
-	c_str[0] = c;
-	c_str[1] = '\0';
-
-	if (!*dst || !s2)
-		return ;
-	tmp = ft_strjoin(*dst, c_str);
-	result = ft_strjoin(tmp, s2);
-	free(tmp);
-	free(*dst);
-	*dst = NULL;
-	*dst = ft_strdup(result);
-	free(result);
-	return ;
-}
-int	ft_double_str_len(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
 int	ft_wait_for_input(t_state *state)
 {
 	int	i;
 
 	i = 0;
+	if (!state->line)
+		return (2);
 	while (state->line[i])
 	{
 		if ((state->line[i] != 10) && (state->line[i] != 32))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_resizer(char **str)
+{
+	char	*line;
+	int		i;
+
+	line = ft_strdup("");
+	i = -1;
+	while (str[++i])
+		line = ft_new_strjoin(line, str[i]);
+	ft_free_double_str(str);
+	return (line);
+}
+
+char	*ft_clean_first_last_quote(char *str)
+{
+	int		i;
+	int		j;
+	char	*dest;
+	int		dq;
+	int		sq;
+
+	i = 0;
+	j = -1;
+	dq = (str[0] == '"' && str[ft_strlen(str) - 1] == '"');
+	sq = (str[0] == '\'' && str[ft_strlen(str) - 1] == '\'');
+	if ((dq || sq) && ft_check_redirect_char(str +1, ft_strlen(str +1) -1))
+	{
+		dest = malloc(sizeof(char) * ft_strlen(str) - 1);
+		if (!dest)
+			return (NULL);
+		while (str[++i] && (i < ((int)ft_strlen(str))))
+			dest[++j] = str[i];
+		dest[j] = '\0';
+		free(str);
+		return (dest);
+	}
+	return (str);
+}
+
+int	ft_check_full_char(char *str, char c, int len)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && i < len)
+	{
+		if (str[i] != c)
 			return (1);
 		i++;
 	}

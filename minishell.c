@@ -3,62 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soksak <soksak@42istanbul.com.tr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/04 16:22:02 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/19 05:29:05 by soksak           ###   ########.fr       */
+/*   Created: 2024/08/08 15:35:43 by ekose             #+#    #+#             */
+/*   Updated: 2024/08/15 13:10:07 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./includes/minishell.h"
+
+static void	ft_init_program(int argc, char **argv, char **envp, t_state **state)
+{
+	(void)argv;
+	if (argc > 1)
+	{
+		ft_error_mesage("Invalid argument!");
+		exit(1);
+	}
+	*state = (t_state *)malloc(sizeof(t_state));
+	(*state)->pars = malloc(sizeof(t_parser));
+	if (!(*state)->pars || !(*state))
+		ft_error_mesage("Error: Malloc problem !");
+	g_sig_status = 0;
+	ft_init_signals();
+	(*state)->env = get_env(*state, envp);
+	(*state)->exp = get_env(*state, envp);
+	(*state)->envp = envp;
+	(*state)->error = 0;
+	(*state)->cluster = NULL;
+	(*state)->fd = NULL;
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_state	*state;
-	// t_env	*tmp;
-	// int		i;
-	// i = 0;
-	state = (t_state *)malloc(sizeof(t_state));
-	state->pars = malloc(sizeof(t_parser));
-	// if (!state->pars || !state->lexer || !state)
-	// 	ft_error_mesage("Error: Malloc problem !");
-	(void)argc;
-	(void)argv;
-	state->pars->exit_check = 0;
-	state->env = get_env(state, envp);
-	state->pars->env = state->env;
 
-	// tmp = state->env;
-	// while (tmp != NULL)
-	// {
-	// 	printf("Key: %s\n", tmp->key);
-	// 	printf("Value: %s\n", tmp->value);
-	// 	tmp = tmp->next;
-	// }
-	// printf("pid : %d\n", getpid());
+	ft_init_program(argc, argv, envp, &state);
 	while (1)
 	{
+		g_sig_status = 0;
+		ft_sep_path(state);
+		state->pars->ptr_errno = &(state->error);
 		state->line = readline("minishell>");
+		if (state->line && ft_wait_for_input(state) == 1)
+			add_history(state->line);
 		if (ft_parser(state))
 			break ;
-		state->lexer = add_lexer_node(state);
-		int a = 0;
-		while (state->lexer[a] != NULL)
-		{
-
-				printf("pipe = %d\n", a);
-				printf("-------------------------\n");
-			while (state->lexer[a])
-			{
-				printf("command: %s\n", state->lexer[a]->command);
-				printf("type: %d\n", state->lexer[a]->type);
-				state->lexer[a] = state->lexer[a]->next;
-			}
-				printf("-------------------------\n");
-			a++;
-		}
-		my_lexer_free(state->lexer);
-		ft_free_thrd_str(state->clean_thrd_argv);
+		ft_free_double_str(state->sep_path);
+		free(state->line);
+		ft_all_cluster_free(state);
 	}
-	ft_full_free(state);
+	ft_full_free(state, 0);
 	return (0);
 }
