@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quote_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:54:48 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/07/05 17:10:58 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:52 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 char	*ft_cut_dquote(char *str, int len, t_parser *pars)
 {
@@ -46,7 +46,7 @@ char	*ft_cut_squote(char *str, int len, t_parser *pars)
 	c = -1;
 	while (str[++(pars->m)] && pars->m < len)
 	{
-		if ((str[pars->m] == '\'' || str[(pars->m) +1] == '\0')
+		if ((str[pars->m] == '\'' || str[(pars->m) + 1] == '\0')
 			&& pars->check == 0)
 		{
 			tmp = ft_substr(str, pars->k, (pars->m - pars->k) + 1);
@@ -68,7 +68,7 @@ int	ft_count_quote(char *str, int len, char quote_type)
 
 	quote_len = 0;
 	i = 0;
-	while (i < len)
+	while (i < len && str[i])
 	{
 		if (str[i] == quote_type)
 			quote_len++;
