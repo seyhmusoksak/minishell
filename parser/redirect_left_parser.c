@@ -59,16 +59,16 @@ t_node	*ft_finish_redirect(char *str, int i, t_parser *pars)
 	return (dest);
 }
 
-int	ft_check_redirect_char(char *str)
+int	ft_check_redirect_char(char *str, int len)
 {
 	int	i;
 
 	i = 0;
 	if (ft_strlen(str) == 1 && (str[0] == '"' || str[0] == '\''))
 		return (1);
-	else if (!ft_check_full_char(str, ' ', ft_strlen(str) -1))
+	else if (!ft_check_full_char(str, ' ', len))
 		return (1);
-	while (i < (int)(ft_strlen(str) -1) && str[i])
+	while (i < len && str[i])
 	{
 		if (str[i] == '>' || str[i] == ' ' || str[i] == '<')
 			i++;

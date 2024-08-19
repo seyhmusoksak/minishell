@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: musozer <musozer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/18 14:12:03 by musozer          ###   ########.fr       */
+/*   Updated: 2024/08/15 13:13:01 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,6 @@ typedef struct s_parser
 	int		control;
 	int		nr;
 	int		r;
-	int		one;
-	int		two;
-
 }	t_parser;
 
 typedef struct s_lexer
@@ -207,12 +204,10 @@ void		ft_left_redirect(char *str, int len, char type, t_parser *pars);
 int			ft_listlen(t_node *lst);
 char		**ft_node_to_double(t_node **list, int i, int list_size);
 t_node		*ft_finish_redirect(char *str, int i, t_parser *pars);
-int			ft_check_redirect_char(char *str);
+int			ft_check_redirect_char(char *str, int len);
 void		ft_check_control(t_parser *parser);
 void		ft_free_substr(char **sub, char **sub2, char **sub3,
 				t_parser *pars);
-int			r(t_parser *parser, char r, char l);
-int			ft_control_red(t_parser *parser, char r, char l);
 
 //					3D string functions (3)
 char		*ft_clean_first_last_quote(char *str);

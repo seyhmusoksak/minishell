@@ -81,7 +81,7 @@ char	*ft_clean_first_last_quote(char *str)
 	j = -1;
 	dq = (str[0] == '"' && str[ft_strlen(str) - 1] == '"');
 	sq = (str[0] == '\'' && str[ft_strlen(str) - 1] == '\'');
-	if ((dq || sq) && ft_check_redirect_char(str + 1))
+	if ((dq || sq) && ft_check_redirect_char(str +1, ft_strlen(str +1) -1))
 	{
 		dest = malloc(sizeof(char) * ft_strlen(str) - 1);
 		if (!dest)
@@ -93,4 +93,18 @@ char	*ft_clean_first_last_quote(char *str)
 		return (dest);
 	}
 	return (str);
+}
+
+int	ft_check_full_char(char *str, char c, int len)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && i < len)
+	{
+		if (str[i] != c)
+			return (1);
+		i++;
+	}
+	return (0);
 }
