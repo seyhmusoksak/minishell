@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   united_dolar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 18:33:05 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/10 16:39:44 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:10:03 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static int	ft_mini_dolar_counter(char *str, int ***chck_dolr, int ***chck_dq)
 {
@@ -40,9 +40,9 @@ static int	ft_mini_dolar_counter(char *str, int ***chck_dolr, int ***chck_dq)
 static int	ft_init_united(int **chk_dq, int **chk_dolr, char **tmp,
 	t_parser *prs)
 {
-	int	count;
-	int	len;
-	int	check_sub;
+	int		count;
+	int		len;
+	int		check_sub;
 	char	*sub;
 
 	check_sub = 0;
@@ -69,16 +69,15 @@ static int	ft_init_united(int **chk_dq, int **chk_dolr, char **tmp,
 
 static char	*ft_put_united_env(char *key, t_parser *pars, t_env *env)
 {
-
 	if (!key)
 		return (NULL);
 	if (ft_isdigit(key[0])
 		|| key[0] == '@' || key[0] == '*')
-		 return(ft_strdup(key + 1));
+		return (ft_strdup(key + 1));
 	else if (!ft_check_after_key(key))
-		return(ft_dup_key(key, pars, env));
+		return (ft_dup_key(key, pars, env));
 	else
-		return(ft_join_key(key, ft_check_after_key(key), env));
+		return (ft_join_key(key, ft_check_after_key(key), env));
 }
 
 static void	ft_united_handler(int *chk_dq, int *chk_dlr,

@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:36:59 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 20:44:57 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:07:26 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static int	ft_flag_check(char **cmd)
 {
@@ -23,6 +23,8 @@ static int	ft_flag_check(char **cmd)
 		j = 0;
 		if (cmd[i][j] != '-')
 			return (i);
+		if (cmd[i][j] == '-' && cmd[i][j + 1] == '\0')
+			return (i);
 		while (cmd[i][++j])
 		{
 			if (cmd[i][j] != 'n')
@@ -33,7 +35,7 @@ static int	ft_flag_check(char **cmd)
 	return (i);
 }
 
-void	ft_echo(t_cluster *cluster)
+void	ft_echo(t_cluster *cluster, t_state *state)
 {
 	char	**cmd;
 	int		i;
@@ -58,4 +60,5 @@ void	ft_echo(t_cluster *cluster)
 	}
 	if (i == 1)
 		write(fd, "\n", 1);
+	state->error = 0;
 }

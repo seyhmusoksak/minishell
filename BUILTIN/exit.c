@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 15:11:13 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:16:10 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:07:35 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 void	ft_built_exit_cmd(t_state *state, t_cluster *cluster)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 01:08:30 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/10 17:57:54 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:08:07 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 int	ft_error_mesage(char *str)
 {

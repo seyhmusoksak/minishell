@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:52:02 by soksak            #+#    #+#             */
-/*   Updated: 2024/08/12 23:58:46 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:13:01 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <signal.h>
-
 
 # define IN_CAT 1
 # define IN_HERADOC 2
@@ -100,7 +99,6 @@ typedef struct s_parser
 	int		control;
 	int		nr;
 	int		r;
-
 }	t_parser;
 
 typedef struct s_lexer
@@ -127,18 +125,18 @@ typedef struct s_state
 	t_node		*dolar;
 }	t_state;
 
-
 //			get env functions (4)
 t_env		*get_env(t_state *state, char **env);
 void		env_addback(t_env **lst, t_env *new);
-
 void		ft_sep_path(t_state *state);
 t_env		*new_env(char *key, char *value);
+
+//			built in functions (20)
 void		env_addback(t_env **lst, t_env *new);
 void		ft_add_env(t_state **state, char *arg);
-void		ft_echo(t_cluster *cluster);
+void		ft_echo(t_cluster *cluster, t_state *state);
 void		ft_del_env(t_state **state, t_cluster *cluster);
-void		ft_pwd(t_cluster *cluster);
+void		ft_pwd(t_cluster *cluster, t_state *state);
 void		ft_cd(t_state **state);
 void		ft_notdefine_dir(char *s, t_state *state);
 void		ft_cd_error(char *dir, t_state *state);
@@ -148,7 +146,7 @@ void		ft_print_exp(t_state **state, t_cluster *cluster);
 void		ft_add_exp(t_state **state, char *arg);
 void		ft_del_node(t_env **list, char *key);
 void		ft_export_status(t_state **state, t_cluster *cluster);
-void		ft_key_error(char *s, char *cmd);
+void		ft_key_error(char *s, char *cmd, t_state *state);
 int			ft_key_check(char arg, int index);
 void		ft_clean_env(t_env **env);
 
@@ -211,14 +209,13 @@ void		ft_check_control(t_parser *parser);
 void		ft_free_substr(char **sub, char **sub2, char **sub3,
 				t_parser *pars);
 
-
 //					3D string functions (3)
 char		*ft_clean_first_last_quote(char *str);
 void		ft_free_thrd_str(char ***str);
 int			ft_check_full_char(char *str, char c, int len);
-void		ft_write_double_str(char **str); //kaldırcam bunu
 void		ft_init_signals(void);
 
+//					lexer functions (11)
 void		ft_cluster(t_state *state);
 int			ft_strcmp(char *s1, char *s2);
 char		**ft_fill_cmd(char **arg);
@@ -231,7 +228,7 @@ void		ft_print_env(t_state *state, t_cluster *cluster);
 void		ft_route(t_state *state, t_cluster *tmp);
 int			ft_check_built(t_cluster *cluster);
 
-
+//					executer functions (12)
 void		ft_close_pipe(t_state *state, int check);
 void		ft_dup_init(t_state *state, t_cluster *cluster, int i, int check);
 void		ft_executer_error(char	**cmd, char *s, int exit_code);
@@ -243,4 +240,6 @@ char		*get_next_line(int fd);
 void		ft_all_cluster_free(t_state *state);
 void		ft_built_exit_cmd(t_state *state, t_cluster *cluster);
 void		ft_int_free(t_state *state);
+void		ft_tilda_handler(t_state *state);
+void		ft_cluster_free(t_cluster *cluster);
 #endif

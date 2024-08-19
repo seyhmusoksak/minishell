@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_right_parser.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:00:18 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/10 16:34:29 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:10:00 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static int	ft_right_redirect(char *str, int len, t_parser *pars)
 {

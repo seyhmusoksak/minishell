@@ -6,12 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 13:20:50 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:16:51 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:08:25 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
-
+#include "../includes/minishell.h"
 
 char	*ft_line_read(int fd, char *buf, char *reserv)
 {

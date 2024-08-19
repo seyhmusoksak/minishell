@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:20:17 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:16:35 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 18:06:51 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 void	ft_int_free(t_state *state)
 {
@@ -81,7 +81,7 @@ void	ft_dup_init(t_state *state, t_cluster *cluster, int i, int check)
 	t_files	*files;
 
 	files = cluster->files;
-	if (state->cmd_count > 1 && ft_strcmp(state->cluster->cmd[0], "exit"))
+	if (state->cmd_count > 1)
 		ft_pipe_connect(state, cluster, i, check);
 	if (files->fd_input == -2)
 	{

@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 15:40:08 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:16:26 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:08:03 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 void	ft_cluster_free(t_cluster *cluster)
 {
@@ -19,6 +19,8 @@ void	ft_cluster_free(t_cluster *cluster)
 	i = 0;
 	while (cluster->cmd[i])
 		free(cluster->cmd[i++]);
+	if (cluster->files->heredoc)
+		free(cluster->files->heredoc);
 	free(cluster->cmd);
 	free(cluster->files->input);
 	free(cluster->files->output);

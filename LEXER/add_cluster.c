@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 13:11:58 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/08 18:17:05 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:08:32 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static char	**ft_clean_cmd(char **str)
 {
@@ -26,7 +26,7 @@ static char	**ft_clean_cmd(char **str)
 	{
 		if ((ft_strchr(str[i], '>') || ft_strchr(str[i], '<'))
 			&& (ft_strchr(str[i], '"') || ft_strchr(str[i], '\'')))
-			dest[j++] = ft_substr(str[i], 1, ft_strlen(str[i]) -2);
+			dest[j++] = ft_substr(str[i], 1, ft_strlen(str[i]) - 2);
 		else
 			dest[j++] = ft_strdup(str[i]);
 	}
@@ -78,6 +78,11 @@ static t_cluster	*ft_new_cluster_node(char	**arg)
 		return (ft_file_open_error(new, new->files->output));
 	if (new->files->error == 1)
 		return (ft_file_open_error(new, new->files->input));
+	if (new->files->error == 3)
+	{
+		ft_cluster_free(new);
+		return (NULL);
+	}
 	return (new);
 }
 
@@ -101,4 +106,3 @@ void	ft_cluster(t_state *state)
 	}
 	state->cluster = tmp_node;
 }
-

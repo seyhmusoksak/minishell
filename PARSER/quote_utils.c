@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:54:48 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/08 18:20:33 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:52 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 char	*ft_cut_dquote(char *str, int len, t_parser *pars)
 {
@@ -46,7 +46,7 @@ char	*ft_cut_squote(char *str, int len, t_parser *pars)
 	c = -1;
 	while (str[++(pars->m)] && pars->m < len)
 	{
-		if ((str[pars->m] == '\'' || str[(pars->m) +1] == '\0')
+		if ((str[pars->m] == '\'' || str[(pars->m) + 1] == '\0')
 			&& pars->check == 0)
 		{
 			tmp = ft_substr(str, pars->k, (pars->m - pars->k) + 1);
@@ -86,5 +86,3 @@ void	ft_init_paremeter(t_parser *pars)
 	pars->count_sq = 0;
 	pars->check_if = 1;
 }
-
-

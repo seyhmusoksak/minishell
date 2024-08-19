@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:46:01 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/13 00:02:51 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:32 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static int	ft_clean_str(char **str, t_parser *pars)
 {
@@ -86,13 +86,15 @@ static char	**ft_put_env(char **str, t_state *state)
 	return (dest);
 }
 
-static void	ft_parser_handler(t_state *state, char **get_env, char **pars_redirect)
+static void	ft_parser_handler(t_state *state, char **get_env,
+	char **pars_redirect)
 {
 	ft_free_double_str(pars_redirect);
 	state->pars->clean_argv = ft_put_tilde(get_env, state, state->pars);
 	ft_free_double_str(get_env);
 	state->cmd_count = ft_double_str_len(state->pars->clean_argv);
-	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv, state->pars);
+	state->clean_thrd_argv = ft_parser_to_lexer(state->pars->clean_argv,
+			state->pars);
 	ft_free_double_str(state->pars->clean_argv);
 	ft_cluster(state);
 	ft_free_thrd_str(state->clean_thrd_argv);
@@ -112,13 +114,14 @@ int	ft_parser(t_state *state)
 		return (0);
 	line = ft_strtrim(state->line, " ");
 	if (ft_quote_check(line, (int)ft_strlen(line), state->pars))
-		return (ft_exit(line, "Error: Open quotation mark !" , state));
+		return (ft_exit(line, "Error: Open quotation mark !", state));
 	if (ft_pipe_check(line, state->pars))
 		return (ft_exit(line, "Error: Failure to use pipe ! ", state));
 	split_str = ft_pipe_split(line, '|', state->pars);
 	ft_clean_str(split_str, state->pars);
 	if (ft_redirection_control(state->pars, -1))
-		return (ft_exit_redirect(line, "Error: Redirect syntax error !", state));
+		return (ft_exit_redirect(line, "Error: Redirect syntax error !",
+				state));
 	free(line);
 	pars_redirect = ft_redirect_parser(state->pars, state->dolar);
 	ft_free_double_str(state->pars->cleaned);

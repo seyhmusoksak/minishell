@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 20:21:02 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/08 18:19:02 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:04 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 void	ft_free_double_str(char **str)
 {

@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 13:56:39 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/08 18:20:10 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:35 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static int	ft_wordlen(char *s, char c, int j, t_parser *parser)
 {

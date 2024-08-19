@@ -6,11 +6,11 @@
 /*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 18:54:53 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/08 18:20:15 by ekose            ###   ########.fr       */
+/*   Updated: 2024/08/15 13:09:39 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 void	ft_pars_str(char *s, t_parser *prs)
 {
@@ -110,7 +110,7 @@ int	ft_check_special(char *str, int i)
 
 	start = 0;
 	sub = NULL;
-	if (((str[i] > 36 && str[i] < 48) && str[i] != '*')
+	if ((str[i] > 36 && str[i] < 48 && str[i] != '*')
 		|| (str[i] > 57 && str[i] <= 62)
 		|| (str[i] > 122 && str[i] < 127)
 		|| (str[i] > 90 && str[i] < 97))
@@ -131,4 +131,3 @@ int	ft_check_special(char *str, int i)
 	}
 	return (1);
 }
-

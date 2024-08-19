@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:05:15 by mehmyilm          #+#    #+#             */
-/*   Updated: 2024/08/10 16:06:03 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:30:14 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCLUDES/minishell.h"
+#include "../includes/minishell.h"
 
 static void	ft_signal_handler(int sig)
 {
@@ -23,7 +23,7 @@ static void	ft_signal_handler(int sig)
 	else if (g_sig_status == IN_HERADOC)
 	{
 		write (1, "\n", 1);
-		exit(0);
+		exit(1);
 	}
 	else if (g_sig_status == 0)
 	{

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmyilm <mehmyilm@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: ekose <ekose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 15:35:43 by ekose             #+#    #+#             */
-/*   Updated: 2024/08/12 21:54:06 by mehmyilm         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:10:07 by ekose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./INCLUDES/minishell.h"
+#include "./includes/minishell.h"
 
 static void	ft_init_program(int argc, char **argv, char **envp, t_state **state)
 {
